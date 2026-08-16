@@ -128,6 +128,7 @@ leaderboards, then spaced-repetition revision.
 Quran text via [Quran.com](https://quran.com) (Tanzil.net Uthmani edition). Surah names
 and metadata from the same API.
 
-## LICENSE
+## License
 
-Personal & Non-Commercial License — free for personal use, commercial use requires permission.
+Free for personal, educational, and other non-commercial use — see [LICENSE](LICENSE) for the
+full terms. Commercial use requires separate written permission from the copyright holder.
