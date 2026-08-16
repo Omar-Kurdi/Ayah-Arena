@@ -1,0 +1,2648 @@
+{
+  "fetchedAt": "2026-08-16T09:49:01.231Z",
+  "source": {
+    "name": "Quran.com API v4",
+    "url": "https://api.quran.com/api/v4",
+    "scriptEdition": "Uthmani (Tanzil / King Fahd Complex, via Quran.com)",
+    "attribution": "Quran text via Quran.com (Tanzil.net Uthmani edition)"
+  },
+  "verseCount": 6236,
+  "surahs": [
+    {
+      "id": 1,
+      "nameArabic": "الفاتحة",
+      "nameSimple": "Al-Fatihah",
+      "nameEnglish": "The Opener",
+      "versesCount": 7,
+      "revelationPlace": "makkah",
+      "pairCount": 6,
+      "juzFrom": 1,
+      "juzTo": 1
+    },
+    {
+      "id": 2,
+      "nameArabic": "البقرة",
+      "nameSimple": "Al-Baqarah",
+      "nameEnglish": "The Cow",
+      "versesCount": 286,
+      "revelationPlace": "madinah",
+      "pairCount": 285,
+      "juzFrom": 1,
+      "juzTo": 3
+    },
+    {
+      "id": 3,
+      "nameArabic": "آل عمران",
+      "nameSimple": "Ali 'Imran",
+      "nameEnglish": "Family of Imran",
+      "versesCount": 200,
+      "revelationPlace": "madinah",
+      "pairCount": 199,
+      "juzFrom": 3,
+      "juzTo": 4
+    },
+    {
+      "id": 4,
+      "nameArabic": "النساء",
+      "nameSimple": "An-Nisa",
+      "nameEnglish": "The Women",
+      "versesCount": 176,
+      "revelationPlace": "madinah",
+      "pairCount": 175,
+      "juzFrom": 4,
+      "juzTo": 6
+    },
+    {
+      "id": 5,
+      "nameArabic": "المائدة",
+      "nameSimple": "Al-Ma'idah",
+      "nameEnglish": "The Table Spread",
+      "versesCount": 120,
+      "revelationPlace": "madinah",
+      "pairCount": 119,
+      "juzFrom": 6,
+      "juzTo": 7
+    },
+    {
+      "id": 6,
+      "nameArabic": "الأنعام",
+      "nameSimple": "Al-An'am",
+      "nameEnglish": "The Cattle",
+      "versesCount": 165,
+      "revelationPlace": "makkah",
+      "pairCount": 164,
+      "juzFrom": 7,
+      "juzTo": 8
+    },
+    {
+      "id": 7,
+      "nameArabic": "الأعراف",
+      "nameSimple": "Al-A'raf",
+      "nameEnglish": "The Heights",
+      "versesCount": 206,
+      "revelationPlace": "makkah",
+      "pairCount": 205,
+      "juzFrom": 8,
+      "juzTo": 9
+    },
+    {
+      "id": 8,
+      "nameArabic": "الأنفال",
+      "nameSimple": "Al-Anfal",
+      "nameEnglish": "The Spoils of War",
+      "versesCount": 75,
+      "revelationPlace": "madinah",
+      "pairCount": 74,
+      "juzFrom": 9,
+      "juzTo": 10
+    },
+    {
+      "id": 9,
+      "nameArabic": "التوبة",
+      "nameSimple": "At-Tawbah",
+      "nameEnglish": "The Repentance",
+      "versesCount": 129,
+      "revelationPlace": "madinah",
+      "pairCount": 128,
+      "juzFrom": 10,
+      "juzTo": 11
+    },
+    {
+      "id": 10,
+      "nameArabic": "يونس",
+      "nameSimple": "Yunus",
+      "nameEnglish": "Jonah",
+      "versesCount": 109,
+      "revelationPlace": "makkah",
+      "pairCount": 108,
+      "juzFrom": 11,
+      "juzTo": 11
+    },
+    {
+      "id": 11,
+      "nameArabic": "هود",
+      "nameSimple": "Hud",
+      "nameEnglish": "Hud",
+      "versesCount": 123,
+      "revelationPlace": "makkah",
+      "pairCount": 122,
+      "juzFrom": 11,
+      "juzTo": 12
+    },
+    {
+      "id": 12,
+      "nameArabic": "يوسف",
+      "nameSimple": "Yusuf",
+      "nameEnglish": "Joseph",
+      "versesCount": 111,
+      "revelationPlace": "makkah",
+      "pairCount": 110,
+      "juzFrom": 12,
+      "juzTo": 13
+    },
+    {
+      "id": 13,
+      "nameArabic": "الرعد",
+      "nameSimple": "Ar-Ra'd",
+      "nameEnglish": "The Thunder",
+      "versesCount": 43,
+      "revelationPlace": "madinah",
+      "pairCount": 42,
+      "juzFrom": 13,
+      "juzTo": 13
+    },
+    {
+      "id": 14,
+      "nameArabic": "ابراهيم",
+      "nameSimple": "Ibrahim",
+      "nameEnglish": "Abraham",
+      "versesCount": 52,
+      "revelationPlace": "makkah",
+      "pairCount": 51,
+      "juzFrom": 13,
+      "juzTo": 13
+    },
+    {
+      "id": 15,
+      "nameArabic": "الحجر",
+      "nameSimple": "Al-Hijr",
+      "nameEnglish": "The Rocky Tract",
+      "versesCount": 99,
+      "revelationPlace": "makkah",
+      "pairCount": 98,
+      "juzFrom": 14,
+      "juzTo": 14
+    },
+    {
+      "id": 16,
+      "nameArabic": "النحل",
+      "nameSimple": "An-Nahl",
+      "nameEnglish": "The Bee",
+      "versesCount": 128,
+      "revelationPlace": "makkah",
+      "pairCount": 127,
+      "juzFrom": 14,
+      "juzTo": 14
+    },
+    {
+      "id": 17,
+      "nameArabic": "الإسراء",
+      "nameSimple": "Al-Isra",
+      "nameEnglish": "The Night Journey",
+      "versesCount": 111,
+      "revelationPlace": "makkah",
+      "pairCount": 110,
+      "juzFrom": 15,
+      "juzTo": 15
+    },
+    {
+      "id": 18,
+      "nameArabic": "الكهف",
+      "nameSimple": "Al-Kahf",
+      "nameEnglish": "The Cave",
+      "versesCount": 110,
+      "revelationPlace": "makkah",
+      "pairCount": 109,
+      "juzFrom": 15,
+      "juzTo": 16
+    },
+    {
+      "id": 19,
+      "nameArabic": "مريم",
+      "nameSimple": "Maryam",
+      "nameEnglish": "Mary",
+      "versesCount": 98,
+      "revelationPlace": "makkah",
+      "pairCount": 97,
+      "juzFrom": 16,
+      "juzTo": 16
+    },
+    {
+      "id": 20,
+      "nameArabic": "طه",
+      "nameSimple": "Taha",
+      "nameEnglish": "Ta-Ha",
+      "versesCount": 135,
+      "revelationPlace": "makkah",
+      "pairCount": 134,
+      "juzFrom": 16,
+      "juzTo": 16
+    },
+    {
+      "id": 21,
+      "nameArabic": "الأنبياء",
+      "nameSimple": "Al-Anbya",
+      "nameEnglish": "The Prophets",
+      "versesCount": 112,
+      "revelationPlace": "makkah",
+      "pairCount": 111,
+      "juzFrom": 17,
+      "juzTo": 17
+    },
+    {
+      "id": 22,
+      "nameArabic": "الحج",
+      "nameSimple": "Al-Hajj",
+      "nameEnglish": "The Pilgrimage",
+      "versesCount": 78,
+      "revelationPlace": "madinah",
+      "pairCount": 77,
+      "juzFrom": 17,
+      "juzTo": 17
+    },
+    {
+      "id": 23,
+      "nameArabic": "المؤمنون",
+      "nameSimple": "Al-Mu'minun",
+      "nameEnglish": "The Believers",
+      "versesCount": 118,
+      "revelationPlace": "makkah",
+      "pairCount": 117,
+      "juzFrom": 18,
+      "juzTo": 18
+    },
+    {
+      "id": 24,
+      "nameArabic": "النور",
+      "nameSimple": "An-Nur",
+      "nameEnglish": "The Light",
+      "versesCount": 64,
+      "revelationPlace": "madinah",
+      "pairCount": 63,
+      "juzFrom": 18,
+      "juzTo": 18
+    },
+    {
+      "id": 25,
+      "nameArabic": "الفرقان",
+      "nameSimple": "Al-Furqan",
+      "nameEnglish": "The Criterion",
+      "versesCount": 77,
+      "revelationPlace": "makkah",
+      "pairCount": 76,
+      "juzFrom": 18,
+      "juzTo": 19
+    },
+    {
+      "id": 26,
+      "nameArabic": "الشعراء",
+      "nameSimple": "Ash-Shu'ara",
+      "nameEnglish": "The Poets",
+      "versesCount": 227,
+      "revelationPlace": "makkah",
+      "pairCount": 226,
+      "juzFrom": 19,
+      "juzTo": 19
+    },
+    {
+      "id": 27,
+      "nameArabic": "النمل",
+      "nameSimple": "An-Naml",
+      "nameEnglish": "The Ant",
+      "versesCount": 93,
+      "revelationPlace": "makkah",
+      "pairCount": 92,
+      "juzFrom": 19,
+      "juzTo": 20
+    },
+    {
+      "id": 28,
+      "nameArabic": "القصص",
+      "nameSimple": "Al-Qasas",
+      "nameEnglish": "The Stories",
+      "versesCount": 88,
+      "revelationPlace": "makkah",
+      "pairCount": 87,
+      "juzFrom": 20,
+      "juzTo": 20
+    },
+    {
+      "id": 29,
+      "nameArabic": "العنكبوت",
+      "nameSimple": "Al-'Ankabut",
+      "nameEnglish": "The Spider",
+      "versesCount": 69,
+      "revelationPlace": "makkah",
+      "pairCount": 68,
+      "juzFrom": 20,
+      "juzTo": 21
+    },
+    {
+      "id": 30,
+      "nameArabic": "الروم",
+      "nameSimple": "Ar-Rum",
+      "nameEnglish": "The Romans",
+      "versesCount": 60,
+      "revelationPlace": "makkah",
+      "pairCount": 59,
+      "juzFrom": 21,
+      "juzTo": 21
+    },
+    {
+      "id": 31,
+      "nameArabic": "لقمان",
+      "nameSimple": "Luqman",
+      "nameEnglish": "Luqman",
+      "versesCount": 34,
+      "revelationPlace": "makkah",
+      "pairCount": 33,
+      "juzFrom": 21,
+      "juzTo": 21
+    },
+    {
+      "id": 32,
+      "nameArabic": "السجدة",
+      "nameSimple": "As-Sajdah",
+      "nameEnglish": "The Prostration",
+      "versesCount": 30,
+      "revelationPlace": "makkah",
+      "pairCount": 29,
+      "juzFrom": 21,
+      "juzTo": 21
+    },
+    {
+      "id": 33,
+      "nameArabic": "الأحزاب",
+      "nameSimple": "Al-Ahzab",
+      "nameEnglish": "The Combined Forces",
+      "versesCount": 73,
+      "revelationPlace": "madinah",
+      "pairCount": 72,
+      "juzFrom": 21,
+      "juzTo": 22
+    },
+    {
+      "id": 34,
+      "nameArabic": "سبإ",
+      "nameSimple": "Saba",
+      "nameEnglish": "Sheba",
+      "versesCount": 54,
+      "revelationPlace": "makkah",
+      "pairCount": 53,
+      "juzFrom": 22,
+      "juzTo": 22
+    },
+    {
+      "id": 35,
+      "nameArabic": "فاطر",
+      "nameSimple": "Fatir",
+      "nameEnglish": "Originator",
+      "versesCount": 45,
+      "revelationPlace": "makkah",
+      "pairCount": 44,
+      "juzFrom": 22,
+      "juzTo": 22
+    },
+    {
+      "id": 36,
+      "nameArabic": "يس",
+      "nameSimple": "Ya-Sin",
+      "nameEnglish": "Ya Sin",
+      "versesCount": 83,
+      "revelationPlace": "makkah",
+      "pairCount": 82,
+      "juzFrom": 22,
+      "juzTo": 23
+    },
+    {
+      "id": 37,
+      "nameArabic": "الصافات",
+      "nameSimple": "As-Saffat",
+      "nameEnglish": "Those who set the Ranks",
+      "versesCount": 182,
+      "revelationPlace": "makkah",
+      "pairCount": 181,
+      "juzFrom": 23,
+      "juzTo": 23
+    },
+    {
+      "id": 38,
+      "nameArabic": "ص",
+      "nameSimple": "Sad",
+      "nameEnglish": "The Letter \"Saad\"",
+      "versesCount": 88,
+      "revelationPlace": "makkah",
+      "pairCount": 87,
+      "juzFrom": 23,
+      "juzTo": 23
+    },
+    {
+      "id": 39,
+      "nameArabic": "الزمر",
+      "nameSimple": "Az-Zumar",
+      "nameEnglish": "The Troops",
+      "versesCount": 75,
+      "revelationPlace": "makkah",
+      "pairCount": 74,
+      "juzFrom": 23,
+      "juzTo": 24
+    },
+    {
+      "id": 40,
+      "nameArabic": "غافر",
+      "nameSimple": "Ghafir",
+      "nameEnglish": "The Forgiver",
+      "versesCount": 85,
+      "revelationPlace": "makkah",
+      "pairCount": 84,
+      "juzFrom": 24,
+      "juzTo": 24
+    },
+    {
+      "id": 41,
+      "nameArabic": "فصلت",
+      "nameSimple": "Fussilat",
+      "nameEnglish": "Explained in Detail",
+      "versesCount": 54,
+      "revelationPlace": "makkah",
+      "pairCount": 53,
+      "juzFrom": 24,
+      "juzTo": 25
+    },
+    {
+      "id": 42,
+      "nameArabic": "الشورى",
+      "nameSimple": "Ash-Shuraa",
+      "nameEnglish": "The Consultation",
+      "versesCount": 53,
+      "revelationPlace": "makkah",
+      "pairCount": 52,
+      "juzFrom": 25,
+      "juzTo": 25
+    },
+    {
+      "id": 43,
+      "nameArabic": "الزخرف",
+      "nameSimple": "Az-Zukhruf",
+      "nameEnglish": "The Ornaments of Gold",
+      "versesCount": 89,
+      "revelationPlace": "makkah",
+      "pairCount": 88,
+      "juzFrom": 25,
+      "juzTo": 25
+    },
+    {
+      "id": 44,
+      "nameArabic": "الدخان",
+      "nameSimple": "Ad-Dukhan",
+      "nameEnglish": "The Smoke",
+      "versesCount": 59,
+      "revelationPlace": "makkah",
+      "pairCount": 58,
+      "juzFrom": 25,
+      "juzTo": 25
+    },
+    {
+      "id": 45,
+      "nameArabic": "الجاثية",
+      "nameSimple": "Al-Jathiyah",
+      "nameEnglish": "The Crouching",
+      "versesCount": 37,
+      "revelationPlace": "makkah",
+      "pairCount": 36,
+      "juzFrom": 25,
+      "juzTo": 25
+    },
+    {
+      "id": 46,
+      "nameArabic": "الأحقاف",
+      "nameSimple": "Al-Ahqaf",
+      "nameEnglish": "The Wind-Curved Sandhills",
+      "versesCount": 35,
+      "revelationPlace": "makkah",
+      "pairCount": 34,
+      "juzFrom": 26,
+      "juzTo": 26
+    },
+    {
+      "id": 47,
+      "nameArabic": "محمد",
+      "nameSimple": "Muhammad",
+      "nameEnglish": "Muhammad",
+      "versesCount": 38,
+      "revelationPlace": "madinah",
+      "pairCount": 37,
+      "juzFrom": 26,
+      "juzTo": 26
+    },
+    {
+      "id": 48,
+      "nameArabic": "الفتح",
+      "nameSimple": "Al-Fath",
+      "nameEnglish": "The Victory",
+      "versesCount": 29,
+      "revelationPlace": "madinah",
+      "pairCount": 28,
+      "juzFrom": 26,
+      "juzTo": 26
+    },
+    {
+      "id": 49,
+      "nameArabic": "الحجرات",
+      "nameSimple": "Al-Hujurat",
+      "nameEnglish": "The Rooms",
+      "versesCount": 18,
+      "revelationPlace": "madinah",
+      "pairCount": 17,
+      "juzFrom": 26,
+      "juzTo": 26
+    },
+    {
+      "id": 50,
+      "nameArabic": "ق",
+      "nameSimple": "Qaf",
+      "nameEnglish": "The Letter \"Qaf\"",
+      "versesCount": 45,
+      "revelationPlace": "makkah",
+      "pairCount": 44,
+      "juzFrom": 26,
+      "juzTo": 26
+    },
+    {
+      "id": 51,
+      "nameArabic": "الذاريات",
+      "nameSimple": "Adh-Dhariyat",
+      "nameEnglish": "The Winnowing Winds",
+      "versesCount": 60,
+      "revelationPlace": "makkah",
+      "pairCount": 59,
+      "juzFrom": 26,
+      "juzTo": 27
+    },
+    {
+      "id": 52,
+      "nameArabic": "الطور",
+      "nameSimple": "At-Tur",
+      "nameEnglish": "The Mount",
+      "versesCount": 49,
+      "revelationPlace": "makkah",
+      "pairCount": 48,
+      "juzFrom": 27,
+      "juzTo": 27
+    },
+    {
+      "id": 53,
+      "nameArabic": "النجم",
+      "nameSimple": "An-Najm",
+      "nameEnglish": "The Star",
+      "versesCount": 62,
+      "revelationPlace": "makkah",
+      "pairCount": 61,
+      "juzFrom": 27,
+      "juzTo": 27
+    },
+    {
+      "id": 54,
+      "nameArabic": "القمر",
+      "nameSimple": "Al-Qamar",
+      "nameEnglish": "The Moon",
+      "versesCount": 55,
+      "revelationPlace": "makkah",
+      "pairCount": 54,
+      "juzFrom": 27,
+      "juzTo": 27
+    },
+    {
+      "id": 55,
+      "nameArabic": "الرحمن",
+      "nameSimple": "Ar-Rahman",
+      "nameEnglish": "The Beneficent",
+      "versesCount": 78,
+      "revelationPlace": "madinah",
+      "pairCount": 77,
+      "juzFrom": 27,
+      "juzTo": 27
+    },
+    {
+      "id": 56,
+      "nameArabic": "الواقعة",
+      "nameSimple": "Al-Waqi'ah",
+      "nameEnglish": "The Inevitable",
+      "versesCount": 96,
+      "revelationPlace": "makkah",
+      "pairCount": 95,
+      "juzFrom": 27,
+      "juzTo": 27
+    },
+    {
+      "id": 57,
+      "nameArabic": "الحديد",
+      "nameSimple": "Al-Hadid",
+      "nameEnglish": "The Iron",
+      "versesCount": 29,
+      "revelationPlace": "madinah",
+      "pairCount": 28,
+      "juzFrom": 27,
+      "juzTo": 27
+    },
+    {
+      "id": 58,
+      "nameArabic": "المجادلة",
+      "nameSimple": "Al-Mujadila",
+      "nameEnglish": "The Pleading Woman",
+      "versesCount": 22,
+      "revelationPlace": "madinah",
+      "pairCount": 21,
+      "juzFrom": 28,
+      "juzTo": 28
+    },
+    {
+      "id": 59,
+      "nameArabic": "الحشر",
+      "nameSimple": "Al-Hashr",
+      "nameEnglish": "The Exile",
+      "versesCount": 24,
+      "revelationPlace": "madinah",
+      "pairCount": 23,
+      "juzFrom": 28,
+      "juzTo": 28
+    },
+    {
+      "id": 60,
+      "nameArabic": "الممتحنة",
+      "nameSimple": "Al-Mumtahanah",
+      "nameEnglish": "She that is to be examined",
+      "versesCount": 13,
+      "revelationPlace": "madinah",
+      "pairCount": 12,
+      "juzFrom": 28,
+      "juzTo": 28
+    },
+    {
+      "id": 61,
+      "nameArabic": "الصف",
+      "nameSimple": "As-Saf",
+      "nameEnglish": "The Ranks",
+      "versesCount": 14,
+      "revelationPlace": "madinah",
+      "pairCount": 13,
+      "juzFrom": 28,
+      "juzTo": 28
+    },
+    {
+      "id": 62,
+      "nameArabic": "الجمعة",
+      "nameSimple": "Al-Jumu'ah",
+      "nameEnglish": "The Congregation, Friday",
+      "versesCount": 11,
+      "revelationPlace": "madinah",
+      "pairCount": 10,
+      "juzFrom": 28,
+      "juzTo": 28
+    },
+    {
+      "id": 63,
+      "nameArabic": "المنافقون",
+      "nameSimple": "Al-Munafiqun",
+      "nameEnglish": "The Hypocrites",
+      "versesCount": 11,
+      "revelationPlace": "madinah",
+      "pairCount": 10,
+      "juzFrom": 28,
+      "juzTo": 28
+    },
+    {
+      "id": 64,
+      "nameArabic": "التغابن",
+      "nameSimple": "At-Taghabun",
+      "nameEnglish": "The Mutual Disillusion",
+      "versesCount": 18,
+      "revelationPlace": "madinah",
+      "pairCount": 17,
+      "juzFrom": 28,
+      "juzTo": 28
+    },
+    {
+      "id": 65,
+      "nameArabic": "الطلاق",
+      "nameSimple": "At-Talaq",
+      "nameEnglish": "The Divorce",
+      "versesCount": 12,
+      "revelationPlace": "madinah",
+      "pairCount": 11,
+      "juzFrom": 28,
+      "juzTo": 28
+    },
+    {
+      "id": 66,
+      "nameArabic": "التحريم",
+      "nameSimple": "At-Tahrim",
+      "nameEnglish": "The Prohibition",
+      "versesCount": 12,
+      "revelationPlace": "madinah",
+      "pairCount": 11,
+      "juzFrom": 28,
+      "juzTo": 28
+    },
+    {
+      "id": 67,
+      "nameArabic": "الملك",
+      "nameSimple": "Al-Mulk",
+      "nameEnglish": "The Sovereignty",
+      "versesCount": 30,
+      "revelationPlace": "makkah",
+      "pairCount": 29,
+      "juzFrom": 29,
+      "juzTo": 29
+    },
+    {
+      "id": 68,
+      "nameArabic": "القلم",
+      "nameSimple": "Al-Qalam",
+      "nameEnglish": "The Pen",
+      "versesCount": 52,
+      "revelationPlace": "makkah",
+      "pairCount": 51,
+      "juzFrom": 29,
+      "juzTo": 29
+    },
+    {
+      "id": 69,
+      "nameArabic": "الحاقة",
+      "nameSimple": "Al-Haqqah",
+      "nameEnglish": "The Reality",
+      "versesCount": 52,
+      "revelationPlace": "makkah",
+      "pairCount": 51,
+      "juzFrom": 29,
+      "juzTo": 29
+    },
+    {
+      "id": 70,
+      "nameArabic": "المعارج",
+      "nameSimple": "Al-Ma'arij",
+      "nameEnglish": "The Ascending Stairways",
+      "versesCount": 44,
+      "revelationPlace": "makkah",
+      "pairCount": 43,
+      "juzFrom": 29,
+      "juzTo": 29
+    },
+    {
+      "id": 71,
+      "nameArabic": "نوح",
+      "nameSimple": "Nuh",
+      "nameEnglish": "Noah",
+      "versesCount": 28,
+      "revelationPlace": "makkah",
+      "pairCount": 27,
+      "juzFrom": 29,
+      "juzTo": 29
+    },
+    {
+      "id": 72,
+      "nameArabic": "الجن",
+      "nameSimple": "Al-Jinn",
+      "nameEnglish": "The Jinn",
+      "versesCount": 28,
+      "revelationPlace": "makkah",
+      "pairCount": 27,
+      "juzFrom": 29,
+      "juzTo": 29
+    },
+    {
+      "id": 73,
+      "nameArabic": "المزمل",
+      "nameSimple": "Al-Muzzammil",
+      "nameEnglish": "The Enshrouded One",
+      "versesCount": 20,
+      "revelationPlace": "makkah",
+      "pairCount": 19,
+      "juzFrom": 29,
+      "juzTo": 29
+    },
+    {
+      "id": 74,
+      "nameArabic": "المدثر",
+      "nameSimple": "Al-Muddaththir",
+      "nameEnglish": "The Cloaked One",
+      "versesCount": 56,
+      "revelationPlace": "makkah",
+      "pairCount": 55,
+      "juzFrom": 29,
+      "juzTo": 29
+    },
+    {
+      "id": 75,
+      "nameArabic": "القيامة",
+      "nameSimple": "Al-Qiyamah",
+      "nameEnglish": "The Resurrection",
+      "versesCount": 40,
+      "revelationPlace": "makkah",
+      "pairCount": 39,
+      "juzFrom": 29,
+      "juzTo": 29
+    },
+    {
+      "id": 76,
+      "nameArabic": "الانسان",
+      "nameSimple": "Al-Insan",
+      "nameEnglish": "The Man",
+      "versesCount": 31,
+      "revelationPlace": "madinah",
+      "pairCount": 30,
+      "juzFrom": 29,
+      "juzTo": 29
+    },
+    {
+      "id": 77,
+      "nameArabic": "المرسلات",
+      "nameSimple": "Al-Mursalat",
+      "nameEnglish": "The Emissaries",
+      "versesCount": 50,
+      "revelationPlace": "makkah",
+      "pairCount": 49,
+      "juzFrom": 29,
+      "juzTo": 29
+    },
+    {
+      "id": 78,
+      "nameArabic": "النبإ",
+      "nameSimple": "An-Naba",
+      "nameEnglish": "The Tidings",
+      "versesCount": 40,
+      "revelationPlace": "makkah",
+      "pairCount": 39,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 79,
+      "nameArabic": "النازعات",
+      "nameSimple": "An-Nazi'at",
+      "nameEnglish": "Those who drag forth",
+      "versesCount": 46,
+      "revelationPlace": "makkah",
+      "pairCount": 45,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 80,
+      "nameArabic": "عبس",
+      "nameSimple": "'Abasa",
+      "nameEnglish": "He Frowned",
+      "versesCount": 42,
+      "revelationPlace": "makkah",
+      "pairCount": 41,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 81,
+      "nameArabic": "التكوير",
+      "nameSimple": "At-Takwir",
+      "nameEnglish": "The Overthrowing",
+      "versesCount": 29,
+      "revelationPlace": "makkah",
+      "pairCount": 28,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 82,
+      "nameArabic": "الإنفطار",
+      "nameSimple": "Al-Infitar",
+      "nameEnglish": "The Cleaving",
+      "versesCount": 19,
+      "revelationPlace": "makkah",
+      "pairCount": 18,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 83,
+      "nameArabic": "المطففين",
+      "nameSimple": "Al-Mutaffifin",
+      "nameEnglish": "The Defrauding",
+      "versesCount": 36,
+      "revelationPlace": "makkah",
+      "pairCount": 35,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 84,
+      "nameArabic": "الإنشقاق",
+      "nameSimple": "Al-Inshiqaq",
+      "nameEnglish": "The Sundering",
+      "versesCount": 25,
+      "revelationPlace": "makkah",
+      "pairCount": 24,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 85,
+      "nameArabic": "البروج",
+      "nameSimple": "Al-Buruj",
+      "nameEnglish": "The Mansions of the Stars",
+      "versesCount": 22,
+      "revelationPlace": "makkah",
+      "pairCount": 21,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 86,
+      "nameArabic": "الطارق",
+      "nameSimple": "At-Tariq",
+      "nameEnglish": "The Nightcommer",
+      "versesCount": 17,
+      "revelationPlace": "makkah",
+      "pairCount": 16,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 87,
+      "nameArabic": "الأعلى",
+      "nameSimple": "Al-A'la",
+      "nameEnglish": "The Most High",
+      "versesCount": 19,
+      "revelationPlace": "makkah",
+      "pairCount": 18,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 88,
+      "nameArabic": "الغاشية",
+      "nameSimple": "Al-Ghashiyah",
+      "nameEnglish": "The Overwhelming",
+      "versesCount": 26,
+      "revelationPlace": "makkah",
+      "pairCount": 25,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 89,
+      "nameArabic": "الفجر",
+      "nameSimple": "Al-Fajr",
+      "nameEnglish": "The Dawn",
+      "versesCount": 30,
+      "revelationPlace": "makkah",
+      "pairCount": 29,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 90,
+      "nameArabic": "البلد",
+      "nameSimple": "Al-Balad",
+      "nameEnglish": "The City",
+      "versesCount": 20,
+      "revelationPlace": "makkah",
+      "pairCount": 19,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 91,
+      "nameArabic": "الشمس",
+      "nameSimple": "Ash-Shams",
+      "nameEnglish": "The Sun",
+      "versesCount": 15,
+      "revelationPlace": "makkah",
+      "pairCount": 14,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 92,
+      "nameArabic": "الليل",
+      "nameSimple": "Al-Layl",
+      "nameEnglish": "The Night",
+      "versesCount": 21,
+      "revelationPlace": "makkah",
+      "pairCount": 20,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 93,
+      "nameArabic": "الضحى",
+      "nameSimple": "Ad-Duhaa",
+      "nameEnglish": "The Morning Hours",
+      "versesCount": 11,
+      "revelationPlace": "makkah",
+      "pairCount": 10,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 94,
+      "nameArabic": "الشرح",
+      "nameSimple": "Ash-Sharh",
+      "nameEnglish": "The Relief",
+      "versesCount": 8,
+      "revelationPlace": "makkah",
+      "pairCount": 7,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 95,
+      "nameArabic": "التين",
+      "nameSimple": "At-Tin",
+      "nameEnglish": "The Fig",
+      "versesCount": 8,
+      "revelationPlace": "makkah",
+      "pairCount": 7,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 96,
+      "nameArabic": "العلق",
+      "nameSimple": "Al-'Alaq",
+      "nameEnglish": "The Clot",
+      "versesCount": 19,
+      "revelationPlace": "makkah",
+      "pairCount": 18,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 97,
+      "nameArabic": "القدر",
+      "nameSimple": "Al-Qadr",
+      "nameEnglish": "The Power",
+      "versesCount": 5,
+      "revelationPlace": "makkah",
+      "pairCount": 4,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 98,
+      "nameArabic": "البينة",
+      "nameSimple": "Al-Bayyinah",
+      "nameEnglish": "The Clear Proof",
+      "versesCount": 8,
+      "revelationPlace": "madinah",
+      "pairCount": 7,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 99,
+      "nameArabic": "الزلزلة",
+      "nameSimple": "Az-Zalzalah",
+      "nameEnglish": "The Earthquake",
+      "versesCount": 8,
+      "revelationPlace": "madinah",
+      "pairCount": 7,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 100,
+      "nameArabic": "العاديات",
+      "nameSimple": "Al-'Adiyat",
+      "nameEnglish": "The Courser",
+      "versesCount": 11,
+      "revelationPlace": "makkah",
+      "pairCount": 10,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 101,
+      "nameArabic": "القارعة",
+      "nameSimple": "Al-Qari'ah",
+      "nameEnglish": "The Calamity",
+      "versesCount": 11,
+      "revelationPlace": "makkah",
+      "pairCount": 10,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 102,
+      "nameArabic": "التكاثر",
+      "nameSimple": "At-Takathur",
+      "nameEnglish": "The Rivalry in world increase",
+      "versesCount": 8,
+      "revelationPlace": "makkah",
+      "pairCount": 7,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 103,
+      "nameArabic": "العصر",
+      "nameSimple": "Al-'Asr",
+      "nameEnglish": "The Declining Day",
+      "versesCount": 3,
+      "revelationPlace": "makkah",
+      "pairCount": 2,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 104,
+      "nameArabic": "الهمزة",
+      "nameSimple": "Al-Humazah",
+      "nameEnglish": "The Traducer",
+      "versesCount": 9,
+      "revelationPlace": "makkah",
+      "pairCount": 8,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 105,
+      "nameArabic": "الفيل",
+      "nameSimple": "Al-Fil",
+      "nameEnglish": "The Elephant",
+      "versesCount": 5,
+      "revelationPlace": "makkah",
+      "pairCount": 4,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 106,
+      "nameArabic": "قريش",
+      "nameSimple": "Quraysh",
+      "nameEnglish": "Quraysh",
+      "versesCount": 4,
+      "revelationPlace": "makkah",
+      "pairCount": 3,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 107,
+      "nameArabic": "الماعون",
+      "nameSimple": "Al-Ma'un",
+      "nameEnglish": "The Small kindnesses",
+      "versesCount": 7,
+      "revelationPlace": "makkah",
+      "pairCount": 6,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 108,
+      "nameArabic": "الكوثر",
+      "nameSimple": "Al-Kawthar",
+      "nameEnglish": "The Abundance",
+      "versesCount": 3,
+      "revelationPlace": "makkah",
+      "pairCount": 2,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 109,
+      "nameArabic": "الكافرون",
+      "nameSimple": "Al-Kafirun",
+      "nameEnglish": "The Disbelievers",
+      "versesCount": 6,
+      "revelationPlace": "makkah",
+      "pairCount": 5,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 110,
+      "nameArabic": "النصر",
+      "nameSimple": "An-Nasr",
+      "nameEnglish": "The Divine Support",
+      "versesCount": 3,
+      "revelationPlace": "madinah",
+      "pairCount": 2,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 111,
+      "nameArabic": "المسد",
+      "nameSimple": "Al-Masad",
+      "nameEnglish": "The Palm Fiber",
+      "versesCount": 5,
+      "revelationPlace": "makkah",
+      "pairCount": 4,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 112,
+      "nameArabic": "الإخلاص",
+      "nameSimple": "Al-Ikhlas",
+      "nameEnglish": "The Sincerity",
+      "versesCount": 4,
+      "revelationPlace": "makkah",
+      "pairCount": 3,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 113,
+      "nameArabic": "الفلق",
+      "nameSimple": "Al-Falaq",
+      "nameEnglish": "The Daybreak",
+      "versesCount": 5,
+      "revelationPlace": "makkah",
+      "pairCount": 4,
+      "juzFrom": 30,
+      "juzTo": 30
+    },
+    {
+      "id": 114,
+      "nameArabic": "الناس",
+      "nameSimple": "An-Nas",
+      "nameEnglish": "Mankind",
+      "versesCount": 6,
+      "revelationPlace": "makkah",
+      "pairCount": 5,
+      "juzFrom": 30,
+      "juzTo": 30
+    }
+  ],
+  "juz": [
+    {
+      "number": 1,
+      "verseCount": 148,
+      "pairCount": 146,
+      "from": {
+        "key": "1:1",
+        "surahId": 1,
+        "surahName": "Al-Fatihah",
+        "ayah": 1
+      },
+      "to": {
+        "key": "2:141",
+        "surahId": 2,
+        "surahName": "Al-Baqarah",
+        "ayah": 141
+      },
+      "surahs": [
+        {
+          "id": 1,
+          "nameSimple": "Al-Fatihah",
+          "from": 1,
+          "to": 7
+        },
+        {
+          "id": 2,
+          "nameSimple": "Al-Baqarah",
+          "from": 1,
+          "to": 141
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "verseCount": 111,
+      "pairCount": 110,
+      "from": {
+        "key": "2:142",
+        "surahId": 2,
+        "surahName": "Al-Baqarah",
+        "ayah": 142
+      },
+      "to": {
+        "key": "2:252",
+        "surahId": 2,
+        "surahName": "Al-Baqarah",
+        "ayah": 252
+      },
+      "surahs": [
+        {
+          "id": 2,
+          "nameSimple": "Al-Baqarah",
+          "from": 142,
+          "to": 252
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "verseCount": 126,
+      "pairCount": 124,
+      "from": {
+        "key": "2:253",
+        "surahId": 2,
+        "surahName": "Al-Baqarah",
+        "ayah": 253
+      },
+      "to": {
+        "key": "3:92",
+        "surahId": 3,
+        "surahName": "Ali 'Imran",
+        "ayah": 92
+      },
+      "surahs": [
+        {
+          "id": 2,
+          "nameSimple": "Al-Baqarah",
+          "from": 253,
+          "to": 286
+        },
+        {
+          "id": 3,
+          "nameSimple": "Ali 'Imran",
+          "from": 1,
+          "to": 92
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "verseCount": 131,
+      "pairCount": 129,
+      "from": {
+        "key": "3:93",
+        "surahId": 3,
+        "surahName": "Ali 'Imran",
+        "ayah": 93
+      },
+      "to": {
+        "key": "4:23",
+        "surahId": 4,
+        "surahName": "An-Nisa",
+        "ayah": 23
+      },
+      "surahs": [
+        {
+          "id": 3,
+          "nameSimple": "Ali 'Imran",
+          "from": 93,
+          "to": 200
+        },
+        {
+          "id": 4,
+          "nameSimple": "An-Nisa",
+          "from": 1,
+          "to": 23
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "verseCount": 124,
+      "pairCount": 123,
+      "from": {
+        "key": "4:24",
+        "surahId": 4,
+        "surahName": "An-Nisa",
+        "ayah": 24
+      },
+      "to": {
+        "key": "4:147",
+        "surahId": 4,
+        "surahName": "An-Nisa",
+        "ayah": 147
+      },
+      "surahs": [
+        {
+          "id": 4,
+          "nameSimple": "An-Nisa",
+          "from": 24,
+          "to": 147
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "verseCount": 110,
+      "pairCount": 108,
+      "from": {
+        "key": "4:148",
+        "surahId": 4,
+        "surahName": "An-Nisa",
+        "ayah": 148
+      },
+      "to": {
+        "key": "5:81",
+        "surahId": 5,
+        "surahName": "Al-Ma'idah",
+        "ayah": 81
+      },
+      "surahs": [
+        {
+          "id": 4,
+          "nameSimple": "An-Nisa",
+          "from": 148,
+          "to": 176
+        },
+        {
+          "id": 5,
+          "nameSimple": "Al-Ma'idah",
+          "from": 1,
+          "to": 81
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "verseCount": 149,
+      "pairCount": 147,
+      "from": {
+        "key": "5:82",
+        "surahId": 5,
+        "surahName": "Al-Ma'idah",
+        "ayah": 82
+      },
+      "to": {
+        "key": "6:110",
+        "surahId": 6,
+        "surahName": "Al-An'am",
+        "ayah": 110
+      },
+      "surahs": [
+        {
+          "id": 5,
+          "nameSimple": "Al-Ma'idah",
+          "from": 82,
+          "to": 120
+        },
+        {
+          "id": 6,
+          "nameSimple": "Al-An'am",
+          "from": 1,
+          "to": 110
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "verseCount": 142,
+      "pairCount": 140,
+      "from": {
+        "key": "6:111",
+        "surahId": 6,
+        "surahName": "Al-An'am",
+        "ayah": 111
+      },
+      "to": {
+        "key": "7:87",
+        "surahId": 7,
+        "surahName": "Al-A'raf",
+        "ayah": 87
+      },
+      "surahs": [
+        {
+          "id": 6,
+          "nameSimple": "Al-An'am",
+          "from": 111,
+          "to": 165
+        },
+        {
+          "id": 7,
+          "nameSimple": "Al-A'raf",
+          "from": 1,
+          "to": 87
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "verseCount": 159,
+      "pairCount": 157,
+      "from": {
+        "key": "7:88",
+        "surahId": 7,
+        "surahName": "Al-A'raf",
+        "ayah": 88
+      },
+      "to": {
+        "key": "8:40",
+        "surahId": 8,
+        "surahName": "Al-Anfal",
+        "ayah": 40
+      },
+      "surahs": [
+        {
+          "id": 7,
+          "nameSimple": "Al-A'raf",
+          "from": 88,
+          "to": 206
+        },
+        {
+          "id": 8,
+          "nameSimple": "Al-Anfal",
+          "from": 1,
+          "to": 40
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "verseCount": 127,
+      "pairCount": 125,
+      "from": {
+        "key": "8:41",
+        "surahId": 8,
+        "surahName": "Al-Anfal",
+        "ayah": 41
+      },
+      "to": {
+        "key": "9:92",
+        "surahId": 9,
+        "surahName": "At-Tawbah",
+        "ayah": 92
+      },
+      "surahs": [
+        {
+          "id": 8,
+          "nameSimple": "Al-Anfal",
+          "from": 41,
+          "to": 75
+        },
+        {
+          "id": 9,
+          "nameSimple": "At-Tawbah",
+          "from": 1,
+          "to": 92
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "verseCount": 151,
+      "pairCount": 148,
+      "from": {
+        "key": "9:93",
+        "surahId": 9,
+        "surahName": "At-Tawbah",
+        "ayah": 93
+      },
+      "to": {
+        "key": "11:5",
+        "surahId": 11,
+        "surahName": "Hud",
+        "ayah": 5
+      },
+      "surahs": [
+        {
+          "id": 9,
+          "nameSimple": "At-Tawbah",
+          "from": 93,
+          "to": 129
+        },
+        {
+          "id": 10,
+          "nameSimple": "Yunus",
+          "from": 1,
+          "to": 109
+        },
+        {
+          "id": 11,
+          "nameSimple": "Hud",
+          "from": 1,
+          "to": 5
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "verseCount": 170,
+      "pairCount": 168,
+      "from": {
+        "key": "11:6",
+        "surahId": 11,
+        "surahName": "Hud",
+        "ayah": 6
+      },
+      "to": {
+        "key": "12:52",
+        "surahId": 12,
+        "surahName": "Yusuf",
+        "ayah": 52
+      },
+      "surahs": [
+        {
+          "id": 11,
+          "nameSimple": "Hud",
+          "from": 6,
+          "to": 123
+        },
+        {
+          "id": 12,
+          "nameSimple": "Yusuf",
+          "from": 1,
+          "to": 52
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "verseCount": 154,
+      "pairCount": 151,
+      "from": {
+        "key": "12:53",
+        "surahId": 12,
+        "surahName": "Yusuf",
+        "ayah": 53
+      },
+      "to": {
+        "key": "14:52",
+        "surahId": 14,
+        "surahName": "Ibrahim",
+        "ayah": 52
+      },
+      "surahs": [
+        {
+          "id": 12,
+          "nameSimple": "Yusuf",
+          "from": 53,
+          "to": 111
+        },
+        {
+          "id": 13,
+          "nameSimple": "Ar-Ra'd",
+          "from": 1,
+          "to": 43
+        },
+        {
+          "id": 14,
+          "nameSimple": "Ibrahim",
+          "from": 1,
+          "to": 52
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "verseCount": 227,
+      "pairCount": 225,
+      "from": {
+        "key": "15:1",
+        "surahId": 15,
+        "surahName": "Al-Hijr",
+        "ayah": 1
+      },
+      "to": {
+        "key": "16:128",
+        "surahId": 16,
+        "surahName": "An-Nahl",
+        "ayah": 128
+      },
+      "surahs": [
+        {
+          "id": 15,
+          "nameSimple": "Al-Hijr",
+          "from": 1,
+          "to": 99
+        },
+        {
+          "id": 16,
+          "nameSimple": "An-Nahl",
+          "from": 1,
+          "to": 128
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "verseCount": 185,
+      "pairCount": 183,
+      "from": {
+        "key": "17:1",
+        "surahId": 17,
+        "surahName": "Al-Isra",
+        "ayah": 1
+      },
+      "to": {
+        "key": "18:74",
+        "surahId": 18,
+        "surahName": "Al-Kahf",
+        "ayah": 74
+      },
+      "surahs": [
+        {
+          "id": 17,
+          "nameSimple": "Al-Isra",
+          "from": 1,
+          "to": 111
+        },
+        {
+          "id": 18,
+          "nameSimple": "Al-Kahf",
+          "from": 1,
+          "to": 74
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "verseCount": 269,
+      "pairCount": 266,
+      "from": {
+        "key": "18:75",
+        "surahId": 18,
+        "surahName": "Al-Kahf",
+        "ayah": 75
+      },
+      "to": {
+        "key": "20:135",
+        "surahId": 20,
+        "surahName": "Taha",
+        "ayah": 135
+      },
+      "surahs": [
+        {
+          "id": 18,
+          "nameSimple": "Al-Kahf",
+          "from": 75,
+          "to": 110
+        },
+        {
+          "id": 19,
+          "nameSimple": "Maryam",
+          "from": 1,
+          "to": 98
+        },
+        {
+          "id": 20,
+          "nameSimple": "Taha",
+          "from": 1,
+          "to": 135
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "verseCount": 190,
+      "pairCount": 188,
+      "from": {
+        "key": "21:1",
+        "surahId": 21,
+        "surahName": "Al-Anbya",
+        "ayah": 1
+      },
+      "to": {
+        "key": "22:78",
+        "surahId": 22,
+        "surahName": "Al-Hajj",
+        "ayah": 78
+      },
+      "surahs": [
+        {
+          "id": 21,
+          "nameSimple": "Al-Anbya",
+          "from": 1,
+          "to": 112
+        },
+        {
+          "id": 22,
+          "nameSimple": "Al-Hajj",
+          "from": 1,
+          "to": 78
+        }
+      ]
+    },
+    {
+      "number": 18,
+      "verseCount": 202,
+      "pairCount": 199,
+      "from": {
+        "key": "23:1",
+        "surahId": 23,
+        "surahName": "Al-Mu'minun",
+        "ayah": 1
+      },
+      "to": {
+        "key": "25:20",
+        "surahId": 25,
+        "surahName": "Al-Furqan",
+        "ayah": 20
+      },
+      "surahs": [
+        {
+          "id": 23,
+          "nameSimple": "Al-Mu'minun",
+          "from": 1,
+          "to": 118
+        },
+        {
+          "id": 24,
+          "nameSimple": "An-Nur",
+          "from": 1,
+          "to": 64
+        },
+        {
+          "id": 25,
+          "nameSimple": "Al-Furqan",
+          "from": 1,
+          "to": 20
+        }
+      ]
+    },
+    {
+      "number": 19,
+      "verseCount": 339,
+      "pairCount": 336,
+      "from": {
+        "key": "25:21",
+        "surahId": 25,
+        "surahName": "Al-Furqan",
+        "ayah": 21
+      },
+      "to": {
+        "key": "27:55",
+        "surahId": 27,
+        "surahName": "An-Naml",
+        "ayah": 55
+      },
+      "surahs": [
+        {
+          "id": 25,
+          "nameSimple": "Al-Furqan",
+          "from": 21,
+          "to": 77
+        },
+        {
+          "id": 26,
+          "nameSimple": "Ash-Shu'ara",
+          "from": 1,
+          "to": 227
+        },
+        {
+          "id": 27,
+          "nameSimple": "An-Naml",
+          "from": 1,
+          "to": 55
+        }
+      ]
+    },
+    {
+      "number": 20,
+      "verseCount": 171,
+      "pairCount": 168,
+      "from": {
+        "key": "27:56",
+        "surahId": 27,
+        "surahName": "An-Naml",
+        "ayah": 56
+      },
+      "to": {
+        "key": "29:45",
+        "surahId": 29,
+        "surahName": "Al-'Ankabut",
+        "ayah": 45
+      },
+      "surahs": [
+        {
+          "id": 27,
+          "nameSimple": "An-Naml",
+          "from": 56,
+          "to": 93
+        },
+        {
+          "id": 28,
+          "nameSimple": "Al-Qasas",
+          "from": 1,
+          "to": 88
+        },
+        {
+          "id": 29,
+          "nameSimple": "Al-'Ankabut",
+          "from": 1,
+          "to": 45
+        }
+      ]
+    },
+    {
+      "number": 21,
+      "verseCount": 178,
+      "pairCount": 173,
+      "from": {
+        "key": "29:46",
+        "surahId": 29,
+        "surahName": "Al-'Ankabut",
+        "ayah": 46
+      },
+      "to": {
+        "key": "33:30",
+        "surahId": 33,
+        "surahName": "Al-Ahzab",
+        "ayah": 30
+      },
+      "surahs": [
+        {
+          "id": 29,
+          "nameSimple": "Al-'Ankabut",
+          "from": 46,
+          "to": 69
+        },
+        {
+          "id": 30,
+          "nameSimple": "Ar-Rum",
+          "from": 1,
+          "to": 60
+        },
+        {
+          "id": 31,
+          "nameSimple": "Luqman",
+          "from": 1,
+          "to": 34
+        },
+        {
+          "id": 32,
+          "nameSimple": "As-Sajdah",
+          "from": 1,
+          "to": 30
+        },
+        {
+          "id": 33,
+          "nameSimple": "Al-Ahzab",
+          "from": 1,
+          "to": 30
+        }
+      ]
+    },
+    {
+      "number": 22,
+      "verseCount": 169,
+      "pairCount": 165,
+      "from": {
+        "key": "33:31",
+        "surahId": 33,
+        "surahName": "Al-Ahzab",
+        "ayah": 31
+      },
+      "to": {
+        "key": "36:27",
+        "surahId": 36,
+        "surahName": "Ya-Sin",
+        "ayah": 27
+      },
+      "surahs": [
+        {
+          "id": 33,
+          "nameSimple": "Al-Ahzab",
+          "from": 31,
+          "to": 73
+        },
+        {
+          "id": 34,
+          "nameSimple": "Saba",
+          "from": 1,
+          "to": 54
+        },
+        {
+          "id": 35,
+          "nameSimple": "Fatir",
+          "from": 1,
+          "to": 45
+        },
+        {
+          "id": 36,
+          "nameSimple": "Ya-Sin",
+          "from": 1,
+          "to": 27
+        }
+      ]
+    },
+    {
+      "number": 23,
+      "verseCount": 357,
+      "pairCount": 353,
+      "from": {
+        "key": "36:28",
+        "surahId": 36,
+        "surahName": "Ya-Sin",
+        "ayah": 28
+      },
+      "to": {
+        "key": "39:31",
+        "surahId": 39,
+        "surahName": "Az-Zumar",
+        "ayah": 31
+      },
+      "surahs": [
+        {
+          "id": 36,
+          "nameSimple": "Ya-Sin",
+          "from": 28,
+          "to": 83
+        },
+        {
+          "id": 37,
+          "nameSimple": "As-Saffat",
+          "from": 1,
+          "to": 182
+        },
+        {
+          "id": 38,
+          "nameSimple": "Sad",
+          "from": 1,
+          "to": 88
+        },
+        {
+          "id": 39,
+          "nameSimple": "Az-Zumar",
+          "from": 1,
+          "to": 31
+        }
+      ]
+    },
+    {
+      "number": 24,
+      "verseCount": 175,
+      "pairCount": 172,
+      "from": {
+        "key": "39:32",
+        "surahId": 39,
+        "surahName": "Az-Zumar",
+        "ayah": 32
+      },
+      "to": {
+        "key": "41:46",
+        "surahId": 41,
+        "surahName": "Fussilat",
+        "ayah": 46
+      },
+      "surahs": [
+        {
+          "id": 39,
+          "nameSimple": "Az-Zumar",
+          "from": 32,
+          "to": 75
+        },
+        {
+          "id": 40,
+          "nameSimple": "Ghafir",
+          "from": 1,
+          "to": 85
+        },
+        {
+          "id": 41,
+          "nameSimple": "Fussilat",
+          "from": 1,
+          "to": 46
+        }
+      ]
+    },
+    {
+      "number": 25,
+      "verseCount": 246,
+      "pairCount": 241,
+      "from": {
+        "key": "41:47",
+        "surahId": 41,
+        "surahName": "Fussilat",
+        "ayah": 47
+      },
+      "to": {
+        "key": "45:37",
+        "surahId": 45,
+        "surahName": "Al-Jathiyah",
+        "ayah": 37
+      },
+      "surahs": [
+        {
+          "id": 41,
+          "nameSimple": "Fussilat",
+          "from": 47,
+          "to": 54
+        },
+        {
+          "id": 42,
+          "nameSimple": "Ash-Shuraa",
+          "from": 1,
+          "to": 53
+        },
+        {
+          "id": 43,
+          "nameSimple": "Az-Zukhruf",
+          "from": 1,
+          "to": 89
+        },
+        {
+          "id": 44,
+          "nameSimple": "Ad-Dukhan",
+          "from": 1,
+          "to": 59
+        },
+        {
+          "id": 45,
+          "nameSimple": "Al-Jathiyah",
+          "from": 1,
+          "to": 37
+        }
+      ]
+    },
+    {
+      "number": 26,
+      "verseCount": 195,
+      "pairCount": 189,
+      "from": {
+        "key": "46:1",
+        "surahId": 46,
+        "surahName": "Al-Ahqaf",
+        "ayah": 1
+      },
+      "to": {
+        "key": "51:30",
+        "surahId": 51,
+        "surahName": "Adh-Dhariyat",
+        "ayah": 30
+      },
+      "surahs": [
+        {
+          "id": 46,
+          "nameSimple": "Al-Ahqaf",
+          "from": 1,
+          "to": 35
+        },
+        {
+          "id": 47,
+          "nameSimple": "Muhammad",
+          "from": 1,
+          "to": 38
+        },
+        {
+          "id": 48,
+          "nameSimple": "Al-Fath",
+          "from": 1,
+          "to": 29
+        },
+        {
+          "id": 49,
+          "nameSimple": "Al-Hujurat",
+          "from": 1,
+          "to": 18
+        },
+        {
+          "id": 50,
+          "nameSimple": "Qaf",
+          "from": 1,
+          "to": 45
+        },
+        {
+          "id": 51,
+          "nameSimple": "Adh-Dhariyat",
+          "from": 1,
+          "to": 30
+        }
+      ]
+    },
+    {
+      "number": 27,
+      "verseCount": 399,
+      "pairCount": 392,
+      "from": {
+        "key": "51:31",
+        "surahId": 51,
+        "surahName": "Adh-Dhariyat",
+        "ayah": 31
+      },
+      "to": {
+        "key": "57:29",
+        "surahId": 57,
+        "surahName": "Al-Hadid",
+        "ayah": 29
+      },
+      "surahs": [
+        {
+          "id": 51,
+          "nameSimple": "Adh-Dhariyat",
+          "from": 31,
+          "to": 60
+        },
+        {
+          "id": 52,
+          "nameSimple": "At-Tur",
+          "from": 1,
+          "to": 49
+        },
+        {
+          "id": 53,
+          "nameSimple": "An-Najm",
+          "from": 1,
+          "to": 62
+        },
+        {
+          "id": 54,
+          "nameSimple": "Al-Qamar",
+          "from": 1,
+          "to": 55
+        },
+        {
+          "id": 55,
+          "nameSimple": "Ar-Rahman",
+          "from": 1,
+          "to": 78
+        },
+        {
+          "id": 56,
+          "nameSimple": "Al-Waqi'ah",
+          "from": 1,
+          "to": 96
+        },
+        {
+          "id": 57,
+          "nameSimple": "Al-Hadid",
+          "from": 1,
+          "to": 29
+        }
+      ]
+    },
+    {
+      "number": 28,
+      "verseCount": 137,
+      "pairCount": 128,
+      "from": {
+        "key": "58:1",
+        "surahId": 58,
+        "surahName": "Al-Mujadila",
+        "ayah": 1
+      },
+      "to": {
+        "key": "66:12",
+        "surahId": 66,
+        "surahName": "At-Tahrim",
+        "ayah": 12
+      },
+      "surahs": [
+        {
+          "id": 58,
+          "nameSimple": "Al-Mujadila",
+          "from": 1,
+          "to": 22
+        },
+        {
+          "id": 59,
+          "nameSimple": "Al-Hashr",
+          "from": 1,
+          "to": 24
+        },
+        {
+          "id": 60,
+          "nameSimple": "Al-Mumtahanah",
+          "from": 1,
+          "to": 13
+        },
+        {
+          "id": 61,
+          "nameSimple": "As-Saf",
+          "from": 1,
+          "to": 14
+        },
+        {
+          "id": 62,
+          "nameSimple": "Al-Jumu'ah",
+          "from": 1,
+          "to": 11
+        },
+        {
+          "id": 63,
+          "nameSimple": "Al-Munafiqun",
+          "from": 1,
+          "to": 11
+        },
+        {
+          "id": 64,
+          "nameSimple": "At-Taghabun",
+          "from": 1,
+          "to": 18
+        },
+        {
+          "id": 65,
+          "nameSimple": "At-Talaq",
+          "from": 1,
+          "to": 12
+        },
+        {
+          "id": 66,
+          "nameSimple": "At-Tahrim",
+          "from": 1,
+          "to": 12
+        }
+      ]
+    },
+    {
+      "number": 29,
+      "verseCount": 431,
+      "pairCount": 420,
+      "from": {
+        "key": "67:1",
+        "surahId": 67,
+        "surahName": "Al-Mulk",
+        "ayah": 1
+      },
+      "to": {
+        "key": "77:50",
+        "surahId": 77,
+        "surahName": "Al-Mursalat",
+        "ayah": 50
+      },
+      "surahs": [
+        {
+          "id": 67,
+          "nameSimple": "Al-Mulk",
+          "from": 1,
+          "to": 30
+        },
+        {
+          "id": 68,
+          "nameSimple": "Al-Qalam",
+          "from": 1,
+          "to": 52
+        },
+        {
+          "id": 69,
+          "nameSimple": "Al-Haqqah",
+          "from": 1,
+          "to": 52
+        },
+        {
+          "id": 70,
+          "nameSimple": "Al-Ma'arij",
+          "from": 1,
+          "to": 44
+        },
+        {
+          "id": 71,
+          "nameSimple": "Nuh",
+          "from": 1,
+          "to": 28
+        },
+        {
+          "id": 72,
+          "nameSimple": "Al-Jinn",
+          "from": 1,
+          "to": 28
+        },
+        {
+          "id": 73,
+          "nameSimple": "Al-Muzzammil",
+          "from": 1,
+          "to": 20
+        },
+        {
+          "id": 74,
+          "nameSimple": "Al-Muddaththir",
+          "from": 1,
+          "to": 56
+        },
+        {
+          "id": 75,
+          "nameSimple": "Al-Qiyamah",
+          "from": 1,
+          "to": 40
+        },
+        {
+          "id": 76,
+          "nameSimple": "Al-Insan",
+          "from": 1,
+          "to": 31
+        },
+        {
+          "id": 77,
+          "nameSimple": "Al-Mursalat",
+          "from": 1,
+          "to": 50
+        }
+      ]
+    },
+    {
+      "number": 30,
+      "verseCount": 564,
+      "pairCount": 527,
+      "from": {
+        "key": "78:1",
+        "surahId": 78,
+        "surahName": "An-Naba",
+        "ayah": 1
+      },
+      "to": {
+        "key": "114:6",
+        "surahId": 114,
+        "surahName": "An-Nas",
+        "ayah": 6
+      },
+      "surahs": [
+        {
+          "id": 78,
+          "nameSimple": "An-Naba",
+          "from": 1,
+          "to": 40
+        },
+        {
+          "id": 79,
+          "nameSimple": "An-Nazi'at",
+          "from": 1,
+          "to": 46
+        },
+        {
+          "id": 80,
+          "nameSimple": "'Abasa",
+          "from": 1,
+          "to": 42
+        },
+        {
+          "id": 81,
+          "nameSimple": "At-Takwir",
+          "from": 1,
+          "to": 29
+        },
+        {
+          "id": 82,
+          "nameSimple": "Al-Infitar",
+          "from": 1,
+          "to": 19
+        },
+        {
+          "id": 83,
+          "nameSimple": "Al-Mutaffifin",
+          "from": 1,
+          "to": 36
+        },
+        {
+          "id": 84,
+          "nameSimple": "Al-Inshiqaq",
+          "from": 1,
+          "to": 25
+        },
+        {
+          "id": 85,
+          "nameSimple": "Al-Buruj",
+          "from": 1,
+          "to": 22
+        },
+        {
+          "id": 86,
+          "nameSimple": "At-Tariq",
+          "from": 1,
+          "to": 17
+        },
+        {
+          "id": 87,
+          "nameSimple": "Al-A'la",
+          "from": 1,
+          "to": 19
+        },
+        {
+          "id": 88,
+          "nameSimple": "Al-Ghashiyah",
+          "from": 1,
+          "to": 26
+        },
+        {
+          "id": 89,
+          "nameSimple": "Al-Fajr",
+          "from": 1,
+          "to": 30
+        },
+        {
+          "id": 90,
+          "nameSimple": "Al-Balad",
+          "from": 1,
+          "to": 20
+        },
+        {
+          "id": 91,
+          "nameSimple": "Ash-Shams",
+          "from": 1,
+          "to": 15
+        },
+        {
+          "id": 92,
+          "nameSimple": "Al-Layl",
+          "from": 1,
+          "to": 21
+        },
+        {
+          "id": 93,
+          "nameSimple": "Ad-Duhaa",
+          "from": 1,
+          "to": 11
+        },
+        {
+          "id": 94,
+          "nameSimple": "Ash-Sharh",
+          "from": 1,
+          "to": 8
+        },
+        {
+          "id": 95,
+          "nameSimple": "At-Tin",
+          "from": 1,
+          "to": 8
+        },
+        {
+          "id": 96,
+          "nameSimple": "Al-'Alaq",
+          "from": 1,
+          "to": 19
+        },
+        {
+          "id": 97,
+          "nameSimple": "Al-Qadr",
+          "from": 1,
+          "to": 5
+        },
+        {
+          "id": 98,
+          "nameSimple": "Al-Bayyinah",
+          "from": 1,
+          "to": 8
+        },
+        {
+          "id": 99,
+          "nameSimple": "Az-Zalzalah",
+          "from": 1,
+          "to": 8
+        },
+        {
+          "id": 100,
+          "nameSimple": "Al-'Adiyat",
+          "from": 1,
+          "to": 11
+        },
+        {
+          "id": 101,
+          "nameSimple": "Al-Qari'ah",
+          "from": 1,
+          "to": 11
+        },
+        {
+          "id": 102,
+          "nameSimple": "At-Takathur",
+          "from": 1,
+          "to": 8
+        },
+        {
+          "id": 103,
+          "nameSimple": "Al-'Asr",
+          "from": 1,
+          "to": 3
+        },
+        {
+          "id": 104,
+          "nameSimple": "Al-Humazah",
+          "from": 1,
+          "to": 9
+        },
+        {
+          "id": 105,
+          "nameSimple": "Al-Fil",
+          "from": 1,
+          "to": 5
+        },
+        {
+          "id": 106,
+          "nameSimple": "Quraysh",
+          "from": 1,
+          "to": 4
+        },
+        {
+          "id": 107,
+          "nameSimple": "Al-Ma'un",
+          "from": 1,
+          "to": 7
+        },
+        {
+          "id": 108,
+          "nameSimple": "Al-Kawthar",
+          "from": 1,
+          "to": 3
+        },
+        {
+          "id": 109,
+          "nameSimple": "Al-Kafirun",
+          "from": 1,
+          "to": 6
+        },
+        {
+          "id": 110,
+          "nameSimple": "An-Nasr",
+          "from": 1,
+          "to": 3
+        },
+        {
+          "id": 111,
+          "nameSimple": "Al-Masad",
+          "from": 1,
+          "to": 5
+        },
+        {
+          "id": 112,
+          "nameSimple": "Al-Ikhlas",
+          "from": 1,
+          "to": 4
+        },
+        {
+          "id": 113,
+          "nameSimple": "Al-Falaq",
+          "from": 1,
+          "to": 5
+        },
+        {
+          "id": 114,
+          "nameSimple": "An-Nas",
+          "from": 1,
+          "to": 6
+        }
+      ]
+    }
+  ]
+}

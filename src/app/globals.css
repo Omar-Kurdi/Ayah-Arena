@@ -1,0 +1,273 @@
+@import 'tailwindcss';
+
+/*
+  Ayah Arena — "night recitation".
+
+  Juz 30 is what gets recited in tarawih and in the last third of the night, so
+  the surface is a deep blue-black and the ink is warm parchment rather than
+  white. Ornament is mushaf brass.
+
+  Two rules carry product guardrails rather than taste:
+
+  1. Nothing here is red, and there is no colour that means "you got this
+     wrong". A word that did not come back is drawn in muted slate with a
+     dotted rule under it — the visual language of "not yet". Verdant marks
+     what held; nothing marks what did not, beyond going quiet.
+
+  2. The ayah is the largest thing on every screen it appears on. Headlines,
+     labels and controls are all set below it. In a mushaf the Quranic text is
+     the page and everything else is marginal, and the app follows that.
+*/
+
+@theme {
+  --color-night: #0c1218;
+  --color-night-raised: #131b23;
+  --color-night-edge: #253039;
+  --color-parchment: #ece5d5;
+  --color-muted: #8b98a4;
+  --color-brass: #d9b45c;
+  --color-brass-dim: #6f5c2e;
+  --color-verdant: #6fb894;
+
+  --font-display: var(--font-vollkorn), Georgia, serif;
+  --font-body: var(--font-alegreya-sans), system-ui, sans-serif;
+  --font-arabic: var(--font-amiri), 'Amiri Quran', 'Scheherazade New',
+    'Noto Naskh Arabic', 'Traditional Arabic', serif;
+}
+
+@layer base {
+  html {
+    background-color: var(--color-night);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-night);
+    color: var(--color-parchment);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.55;
+    /* A faint warmth overhead, like lamplight falling on a page. */
+    background-image: radial-gradient(
+      120% 70% at 50% -10%,
+      rgba(217, 180, 92, 0.07),
+      transparent 60%
+    );
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    background-color: rgba(217, 180, 92, 0.28);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brass);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.005em;
+  }
+
+  /* Figures that sit in columns or tick upward should not shift width. */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* A fieldset defaults to min-inline-size: min-content, so it refuses to
+     shrink with its container and pushes the whole page sideways on a narrow
+     screen. Nothing here should ever scroll horizontally. */
+  fieldset {
+    min-inline-size: 0;
+  }
+}
+
+@layer components {
+  /*
+    Marginal notation. In a mushaf the margin carries exactly one kind of
+    information — where you are: surah, ayah, juz. This treatment is reserved
+    for that, and is not a general-purpose label style.
+  */
+  .marginal {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .ayah {
+    font-family: var(--font-arabic);
+    direction: rtl;
+    text-align: right;
+    line-height: 2.05;
+    /* The largest type in the app, on every screen it appears on. */
+    font-size: clamp(1.75rem, 6.5vw, 2.75rem);
+    color: var(--color-parchment);
+  }
+
+  /*
+    The signature: a page of the mushaf.
+
+    Printed mushafs set the text inside a double rule — a heavier outer frame
+    with a hairline running just inside it. Both rules are drawn on one element
+    here: the border is the outer, and two stacked inset shadows open a gap and
+    then lay the hairline down inside it.
+  */
+  .mushaf-page {
+    background-color: var(--color-night-raised);
+    border: 1.5px solid var(--color-brass-dim);
+    border-radius: 3px;
+    box-shadow:
+      inset 0 0 0 5px var(--color-night-raised),
+      inset 0 0 0 6px var(--color-brass-dim);
+  }
+
+  /* The surah banner that opens a surah in print, centred and ruled off. */
+  .cartouche {
+    border-bottom: 1px solid var(--color-brass-dim);
+    text-align: center;
+  }
+
+  .cartouche-name {
+    font-family: var(--font-arabic);
+    direction: rtl;
+    font-size: 1.5rem;
+    line-height: 1.6;
+    color: var(--color-brass);
+  }
+
+  /*
+    The line the next ayah belongs on. It has to read as writable while empty,
+    so it keeps a visible rule, a brass caret and the waiting ayah marker at the
+    end of the line — and nothing else. A bordered box here outweighed the ayah
+    above it and broke the page in half.
+  */
+  .writing-line {
+    font-family: var(--font-arabic);
+    direction: rtl;
+    font-size: clamp(1.75rem, 6.5vw, 2.75rem);
+    line-height: 2.05;
+    color: var(--color-parchment);
+    caret-color: var(--color-brass);
+    background-color: transparent;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent calc(2.05em - 1px),
+      var(--color-brass-dim) calc(2.05em - 1px),
+      var(--color-brass-dim) 2.05em
+    );
+    border: 0;
+    outline: 0;
+    resize: none;
+    width: 100%;
+    padding: 0;
+    /* The element is grown to fit its content in JS, so it never scrolls
+       internally -- a long ayah adds lines to the page, as it would in print.
+       How many lines it starts with is the `rows` attribute; this floor is for
+       the plain ruled line the home page draws with no textarea behind it. */
+    overflow: hidden;
+    min-height: 2.05em;
+  }
+
+  /*
+    Sits the waiting ayah marker on the first written line rather than the last.
+    The em here has to resolve against the ayah size, not the body size, so the
+    marker is given the same font-size as the line it belongs to.
+  */
+  .line-marker {
+    font-size: clamp(1.75rem, 6.5vw, 2.75rem);
+    /* Sit the marker on the first line's baseline, where a printed one sits. */
+    padding-top: calc(1.35em - 13px);
+    flex-shrink: 0;
+  }
+
+  /*
+    The two shapes of the scope picker. Both stay deliberately plain: the
+    mushaf page is the one loud element on this screen, and a grid of 30
+    ornamented tiles would compete with it. Selection is carried by the brass
+    border alone.
+
+    Notably these are not rosettes. A rosette means "ayah boundary" everywhere
+    else in the app, and borrowing it to number a juz would spend a meaning
+    that is doing real work elsewhere.
+  */
+  .scope-tile,
+  .scope-row {
+    cursor: pointer;
+    border: 1px solid var(--color-night-edge);
+    transition:
+      border-color 0.15s,
+      background-color 0.15s;
+  }
+
+  .scope-tile {
+    display: block;
+    border-radius: 0.5rem;
+    padding: 0.625rem 0.5rem;
+    text-align: center;
+  }
+
+  .scope-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-width: 0 0 1px 0;
+    padding: 0.625rem 0.875rem;
+  }
+
+  .scope-row:last-child {
+    border-bottom-width: 0;
+  }
+
+  .scope-tile:hover,
+  .scope-row:hover {
+    background-color: var(--color-night-raised);
+  }
+
+  .scope-tile:has(:checked),
+  .scope-row:has(:checked) {
+    border-color: var(--color-brass);
+    background-color: var(--color-night-raised);
+  }
+
+  /* The radio itself is visually hidden, so its focus ring is drawn here. */
+  .scope-tile:has(:focus-visible),
+  .scope-row:has(:focus-visible) {
+    outline: 2px solid var(--color-brass);
+    outline-offset: 2px;
+  }
+
+  .writing-line::placeholder {
+    color: transparent;
+  }
+
+  .writing-line:focus {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent calc(2.05em - 1px),
+      var(--color-brass) calc(2.05em - 1px),
+      var(--color-brass) 2.05em
+    );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

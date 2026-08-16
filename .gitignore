@@ -1,0 +1,9 @@
+node_modules/
+.next/
+.data/
+next-env.d.ts
+*.tsbuildinfo
+.env*.local
+
+# personal, per-machine Claude Code settings
+.claude/settings.local.json
