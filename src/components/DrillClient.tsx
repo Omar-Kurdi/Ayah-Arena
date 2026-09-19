@@ -5,11 +5,12 @@ import { useRouter } from 'next/navigation';
 import { Rosette, RosetteRow } from './Rosette';
 import { MushafPage, AyahLine, PendingMarker } from './MushafPage';
 import { AyahRecall, RecallLegend } from './AyahRecall';
+import { ListenCheck, suggestedGrade } from './ListenCheck';
 import { looksArabic } from '@/lib/arabic';
 import type { AnswerPayload, PromptPayload, RoundResult } from '@/lib/drill';
 import type { ScopeType } from '@/lib/quran';
 import type { DrillMode } from '@/lib/store';
-import type { SelfGrade } from '@/lib/score';
+import type { Grade, SelfGrade } from '@/lib/score';
 import { dict, num, percent, type Locale } from '@/lib/i18n';
 
 export interface DrillConfig {
@@ -54,6 +55,11 @@ export function DrillClient({ config, locale }: { config: DrillConfig; locale: L
   const [wasShown, setWasShown] = useState(false);
   const [elapsed, setElapsed] = useState(0);
   const [submitting, setSubmitting] = useState(false);
+  // What the on-device listener made of a recited round (null grade: it could
+  // not hear anything usable). Only ever a suggestion to the reader.
+  const [listened, setListened] = useState<{ grade: Grade | null } | null>(null);
+  // Once a reader turns listening on, later rounds open ready to listen.
+  const [listenOn, setListenOn] = useState(false);
 
   const startedAt = useRef<number>(Date.now());
   // In recite-aloud mode the clock stops when the ayah is revealed, so time
@@ -148,26 +154,29 @@ export function DrillClient({ config, locale }: { config: DrillConfig; locale: L
     [sessionId, prompt, text, submitting]
   );
 
+  const fetchAnswer = useCallback(async (): Promise<AnswerPayload> => {
+    const res = await fetch('/api/drill/reveal', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ sessionId, index: prompt?.index }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error ?? t.couldNotReveal);
+    return data.answer;
+  }, [sessionId, prompt]);
+
   const reveal = useCallback(async () => {
     if (!sessionId || !prompt) return;
-    frozenMs.current = Date.now() - startedAt.current;
+    frozenMs.current ??= Date.now() - startedAt.current;
 
     try {
-      const res = await fetch('/api/drill/reveal', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ sessionId, index: prompt.index }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? t.couldNotReveal);
-
-      setRevealed(data.answer);
+      setRevealed(await fetchAnswer());
       setPhase('revealed');
     } catch (err) {
       setError(failure(err, t.couldNotReveal));
       setPhase('error');
     }
-  }, [sessionId, prompt]);
+  }, [sessionId, prompt, fetchAnswer]);
 
   const advance = useCallback(() => {
     if (!result) return;
@@ -180,6 +189,7 @@ export function DrillClient({ config, locale }: { config: DrillConfig; locale: L
     setText('');
     setRevealed(null);
     setWasShown(false);
+    setListened(null);
     setElapsed(0);
     frozenMs.current = null;
     startedAt.current = Date.now();
@@ -218,6 +228,13 @@ export function DrillClient({ config, locale }: { config: DrillConfig; locale: L
     prompt.ayahNumber
   );
   const typing = phase === 'prompting' && config.mode === 'type';
+  const answerShown = result?.answer ?? revealed;
+  const recall =
+    result && result.grade.words.length > 0 && !wasShown
+      ? result.grade.words
+      : listened?.grade?.words.some((w) => w.status !== 'missed')
+        ? listened.grade.words
+        : null;
 
   return (
     <div className="mx-auto w-full max-w-[34rem]">
@@ -274,15 +291,11 @@ export function DrillClient({ config, locale }: { config: DrillConfig; locale: L
                 />
                 <PendingMarker marker={prompt.answerAyahNumber} />
               </>
-            ) : result && result.grade.words.length > 0 && !wasShown ? (
+            ) : recall && answerShown ? (
               <p className="ayah grow">
-                <AyahRecall
-                  words={result.grade.words}
-                  glyphs={result.answer.glyphs}
-                  text={result.answer.uthmani}
-                />{' '}
+                <AyahRecall words={recall} glyphs={answerShown.glyphs} text={answerShown.uthmani} />{' '}
                 <span className="inline-block translate-y-1 px-1 align-baseline">
-                  <Rosette label={result.answer.ayahNumber} state="done" size={26} numerals="arabic" />
+                  <Rosette label={answerShown.ayahNumber} state="done" size={26} numerals="arabic" />
                 </span>
               </p>
             ) : revealed || result ? (
@@ -333,13 +346,31 @@ export function DrillClient({ config, locale }: { config: DrillConfig; locale: L
       {phase === 'prompting' && config.mode === 'recite' && (
         <div className="mt-5">
           <p className="text-muted">{t.reciteHint(prompt.answerAyahNumber)}</p>
-          <button
-            type="button"
-            onClick={() => void reveal()}
-            className="mt-4 rounded-lg bg-brass px-5 py-2.5 font-medium text-night transition-opacity hover:opacity-90"
-          >
-            {t.reveal}
-          </button>
+          <div className="mt-4 flex flex-wrap items-start gap-3">
+            <button
+              type="button"
+              onClick={() => void reveal()}
+              className="rounded-lg bg-brass px-5 py-2.5 font-medium text-night transition-opacity hover:opacity-90"
+            >
+              {t.reveal}
+            </button>
+            <ListenCheck
+              key={prompt.index}
+              locale={locale}
+              answerAyahNumber={prompt.answerAyahNumber}
+              autoOpen={listenOn}
+              fetchAnswer={fetchAnswer}
+              onStop={() => {
+                frozenMs.current = Date.now() - startedAt.current;
+              }}
+              onHeard={(answer, grade) => {
+                setListenOn(true);
+                setRevealed(answer);
+                setListened({ grade });
+                setPhase('revealed');
+              }}
+            />
+          </div>
         </div>
       )}
 
@@ -348,6 +379,7 @@ export function DrillClient({ config, locale }: { config: DrillConfig; locale: L
           onGrade={(grade) => void submit({ selfGrade: grade })}
           submitting={submitting}
           locale={locale}
+          listened={listened}
         />
       )}
 
@@ -362,9 +394,9 @@ export function DrillClient({ config, locale }: { config: DrillConfig; locale: L
             {verdict(result.grade.accuracy, locale)}
           </h2>
 
-          {result.grade.words.length > 0 && !wasShown && (
+          {recall && (
             <div className="mt-3">
-              <RecallLegend words={result.grade.words} labels={t.legend} />
+              <RecallLegend words={recall} labels={t.legend} />
             </div>
           )}
 
@@ -404,22 +436,34 @@ export function DrillClient({ config, locale }: { config: DrillConfig; locale: L
 
 /**
  * Recite-aloud mode: the ayah is revealed on the page above, and the reader
- * reports how it went. Self-report is the only honest grade for spoken recall
- * until audio input exists, and it is the signal the revision queue will need.
+ * reports how it went. Self-report stays the grade even when the listener ran:
+ * it can mishear, so it only pre-selects a suggestion and the reader decides.
  */
 function SelfGradeChoices({
   onGrade,
   submitting,
   locale,
+  listened,
 }: {
   onGrade: (grade: SelfGrade) => void;
   submitting: boolean;
   locale: Locale;
+  listened: { grade: Grade | null } | null;
 }) {
   const t = dict(locale).drill;
+  const heard = listened?.grade?.words.some((w) => w.status !== 'missed') ? listened.grade : null;
+  const suggested = heard ? suggestedGrade(heard.accuracy) : null;
   return (
     <section className="mt-6">
       <h2 className="text-2xl">{t.howDidItGo}</h2>
+      {heard && (
+        <div className="mt-3">
+          <RecallLegend words={heard.words} labels={t.legend} />
+        </div>
+      )}
+      {listened && (
+        <p className="mt-2 text-sm text-muted">{heard ? t.listen.suggestion : t.listen.heardNothing}</p>
+      )}
       <div className="mt-3 grid gap-2 sm:grid-cols-3">
         {SELF_GRADES.map((grade) => (
           <button
@@ -427,7 +471,9 @@ function SelfGradeChoices({
             type="button"
             disabled={submitting}
             onClick={() => onGrade(grade)}
-            className="rounded-lg border border-night-edge px-4 py-3 text-start transition-colors hover:border-brass disabled:opacity-60"
+            className={`rounded-lg border px-4 py-3 text-start transition-colors hover:border-brass disabled:opacity-60 ${
+              grade === suggested ? 'border-brass bg-night-raised' : 'border-night-edge'
+            }`}
           >
             <span className="block font-medium text-parchment">{t.selfGrades[grade].label}</span>
             <span className="block text-sm text-muted">{t.selfGrades[grade].hint}</span>

@@ -12,6 +12,7 @@
     "check": "node --import ./scripts/ts-resolve.mjs scripts/check-scoring.ts"
   },
   "dependencies": {
+    "@huggingface/transformers": "^3.8.1",
     "next": "^15.5.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"

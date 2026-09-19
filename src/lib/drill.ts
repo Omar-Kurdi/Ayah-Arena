@@ -52,6 +52,8 @@ export interface AnswerPayload {
   uthmani: string;
   glyphs: Glyph[];
   imlaei: string;
+  /** Undiacritized spelling, the third one grading accepts. */
+  simple: string;
 }
 
 export interface RoundResult {
@@ -145,6 +147,7 @@ export function revealAnswer(input: {
     uthmani: answer.uthmani,
     glyphs: answer.glyphs,
     imlaei: answer.imlaei,
+    simple: answer.simple,
   };
 }
 
@@ -202,6 +205,7 @@ export function submitAttempt(input: {
       uthmani: answer.uthmani,
       glyphs: answer.glyphs,
       imlaei: answer.imlaei,
+    simple: answer.simple,
     },
     next,
     runningPoints,
