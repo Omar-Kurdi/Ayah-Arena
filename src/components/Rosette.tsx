@@ -28,12 +28,13 @@ export function Rosette({
 }: {
   label: number;
   state: RosetteState;
-  size?: number;
+  /** Pixels, or a CSS length such as '1.05em' to scale with the ayah text. */
+  size?: number | string;
   numerals?: 'latin' | 'arabic';
 }) {
   const petals = Array.from({ length: PETALS }, (_, i) => {
     const angle = (i / PETALS) * Math.PI * 2;
-    return { cx: 12 + Math.cos(angle) * 8.2, cy: 12 + Math.sin(angle) * 8.2 };
+    return { cx: 12 + Math.cos(angle) * 9, cy: 12 + Math.sin(angle) * 9 };
   });
 
   const stroke =
@@ -53,7 +54,7 @@ export function Rosette({
           key={i}
           cx={p.cx}
           cy={p.cy}
-          r={2.6}
+          r={2.4}
           fill={state === 'done' ? 'var(--color-brass-dim)' : 'transparent'}
           fillOpacity={0.45}
           stroke={state === 'current' ? 'var(--color-brass)' : stroke}
@@ -63,7 +64,7 @@ export function Rosette({
       <circle
         cx={12}
         cy={12}
-        r={6.4}
+        r={7.6}
         fill="var(--color-night)"
         stroke={state === 'current' ? 'var(--color-brass)' : stroke}
         strokeWidth={state === 'current' ? 1.2 : 0.8}
@@ -73,9 +74,12 @@ export function Rosette({
         y={12.4}
         textAnchor="middle"
         dominantBaseline="central"
-        fontSize={numerals === 'arabic' ? 8 : 7}
+        // Three figures step down to fit inside the disc.
+        fontSize={text.length > 2 ? 8 : 10}
         fontFamily={
-          numerals === 'arabic' ? 'var(--font-arabic)' : 'var(--font-body)'
+          // The Quran font draws its digits deliberately tiny (they sit inside its
+          // own ayah-end glyph), so the rosette sets them in the interface face.
+          numerals === 'arabic' ? 'var(--font-plex-arabic), var(--font-arabic)' : 'var(--font-body)'
         }
         fill={
           state === 'upcoming' ? 'var(--color-muted)' : 'var(--color-brass)'

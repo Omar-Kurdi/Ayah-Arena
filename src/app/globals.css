@@ -248,8 +248,9 @@ html:lang(ar) {
   */
   .line-marker {
     font-size: clamp(1.75rem, 6.5vw, 2.75rem);
-    /* Sit the marker on the first line's baseline, where a printed one sits. */
-    padding-top: calc(1.35em - 13px);
+    /* Sit the marker on the first line's baseline, where a printed one sits
+       (half its own 1.25em height above it). */
+    padding-top: calc(1.35em - 0.625em);
     flex-shrink: 0;
   }
 

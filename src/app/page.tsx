@@ -61,7 +61,70 @@ export default async function Home() {
       <form action="/drill" method="get" className="mt-11">
         <h2 className="text-2xl">{t.setUp}</h2>
 
-        <div className="mt-5">
+        <fieldset className="mt-5">
+          <legend className="font-medium">{t.howYouAnswer}</legend>
+          <div className="mt-2 grid gap-2 sm:grid-cols-3">
+            <label className="flex cursor-pointer gap-3 rounded-lg border border-night-edge px-4 py-3 transition-colors has-checked:border-brass">
+              <input
+                type="radio"
+                name="mode"
+                value="listen"
+                defaultChecked
+                className="mt-1.5 accent-[var(--color-brass)]"
+              />
+              <span>
+                <span className="block font-medium">{t.reciteIt}</span>
+                <span className="block text-sm text-muted">{t.reciteItHint}</span>
+                <span className="mt-1 block text-sm text-verdant">{t.onDevice}</span>
+              </span>
+            </label>
+            <label className="flex cursor-pointer gap-3 rounded-lg border border-night-edge px-4 py-3 transition-colors has-checked:border-brass">
+              <input
+                type="radio"
+                name="mode"
+                value="type"
+                className="mt-1.5 accent-[var(--color-brass)]"
+              />
+              <span>
+                <span className="block font-medium">{t.typeIt}</span>
+                <span className="block text-sm text-muted">{t.typeItHint}</span>
+              </span>
+            </label>
+            <label className="flex cursor-pointer gap-3 rounded-lg border border-night-edge px-4 py-3 transition-colors has-checked:border-brass">
+              <input
+                type="radio"
+                name="mode"
+                value="recite"
+                className="mt-1.5 accent-[var(--color-brass)]"
+              />
+              <span>
+                <span className="block font-medium">{t.selfCheck}</span>
+                <span className="block text-sm text-muted">{t.selfCheckHint}</span>
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div className="mt-6 max-w-xs">
+          <label htmlFor="rounds" className="block font-medium">
+            {t.howMany}
+          </label>
+          <select
+            id="rounds"
+            name="rounds"
+            defaultValue={String(DEFAULT_ROUNDS)}
+            className="mt-1.5 w-full rounded-lg border border-night-edge bg-night-raised px-3 py-2.5 text-parchment"
+          >
+            {ROUND_OPTIONS.map((count) => (
+              <option key={count} value={count}>
+                {t.roundOption(count)}
+              </option>
+            ))}
+          </select>
+          <p className="mt-1.5 text-sm text-muted">{t.howManyHint}</p>
+        </div>
+
+        <div className="mt-6">
           <p className="font-medium">{t.whatToPractise}</p>
           <div className="mt-2">
             {/* Projected down to what the picker draws — the index entries
@@ -91,66 +154,10 @@ export default async function Home() {
                 pairCount: s.pairCount,
               }))}
               defaultScope="juz:30"
+              startLabel={t.start}
             />
           </div>
         </div>
-
-        <div className="mt-6 max-w-xs">
-          <label htmlFor="rounds" className="block font-medium">
-            {t.howMany}
-          </label>
-          <select
-            id="rounds"
-            name="rounds"
-            defaultValue={String(DEFAULT_ROUNDS)}
-            className="mt-1.5 w-full rounded-lg border border-night-edge bg-night-raised px-3 py-2.5 text-parchment"
-          >
-            {ROUND_OPTIONS.map((count) => (
-              <option key={count} value={count}>
-                {t.roundOption(count)}
-              </option>
-            ))}
-          </select>
-          <p className="mt-1.5 text-sm text-muted">{t.howManyHint}</p>
-        </div>
-
-        <fieldset className="mt-6">
-          <legend className="font-medium">{t.howYouAnswer}</legend>
-          <div className="mt-2 grid gap-2 sm:grid-cols-2">
-            <label className="flex cursor-pointer gap-3 rounded-lg border border-night-edge px-4 py-3 transition-colors has-checked:border-brass">
-              <input
-                type="radio"
-                name="mode"
-                value="type"
-                defaultChecked
-                className="mt-1.5 accent-[var(--color-brass)]"
-              />
-              <span>
-                <span className="block font-medium">{t.typeIt}</span>
-                <span className="block text-sm text-muted">{t.typeItHint}</span>
-              </span>
-            </label>
-            <label className="flex cursor-pointer gap-3 rounded-lg border border-night-edge px-4 py-3 transition-colors has-checked:border-brass">
-              <input
-                type="radio"
-                name="mode"
-                value="recite"
-                className="mt-1.5 accent-[var(--color-brass)]"
-              />
-              <span>
-                <span className="block font-medium">{t.reciteIt}</span>
-                <span className="block text-sm text-muted">{t.reciteItHint}</span>
-              </span>
-            </label>
-          </div>
-        </fieldset>
-
-        <button
-          type="submit"
-          className="mt-7 w-full rounded-lg bg-brass px-6 py-3.5 text-lg font-medium text-night transition-opacity hover:opacity-90 sm:w-auto"
-        >
-          {t.start}
-        </button>
       </form>
 
       {stats && stats.ayahsPracticed > 0 && (
@@ -177,7 +184,7 @@ export default async function Home() {
           <p className="mt-3 text-sm text-muted">
             {t.totalsOnly}{' '}
             <Link
-              href="/drill?scope=juz:30&mode=type&rounds=7"
+              href="/drill?scope=juz:30&mode=listen&rounds=7"
               className="text-brass underline underline-offset-4"
             >
               {t.pickUp}

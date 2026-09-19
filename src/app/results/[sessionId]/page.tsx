@@ -21,10 +21,15 @@ function closing(accuracy: number, scored: number, locale: Locale): string {
 
 export default async function ResultsPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ sessionId: string }>;
+  searchParams: Promise<{ listen?: string }>;
 }) {
   const { sessionId } = await params;
+  // Listening is a client-side choice the session does not record; the drill
+  // passes it along so "another round" keeps it.
+  const listen = (await searchParams).listen === '1';
   const session = getSession(sessionId);
   const playerId = await readPlayerId();
 
@@ -125,7 +130,7 @@ export default async function ResultsPage({
 
       <div className="mt-10 flex flex-wrap gap-3">
         <Link
-          href={`/drill?scope=${session.scopeType}:${session.scopeId}&mode=${session.mode}&rounds=${session.totalRounds}`}
+          href={`/drill?scope=${session.scopeType}:${session.scopeId}&mode=${session.mode === 'recite' && listen ? 'listen' : session.mode}&rounds=${session.totalRounds}`}
           className="rounded-lg bg-brass px-5 py-2.5 font-medium text-night transition-opacity hover:opacity-90"
         >
           {t.another}

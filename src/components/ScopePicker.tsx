@@ -53,11 +53,14 @@ export function ScopePicker({
   juz,
   surahs,
   defaultScope,
+  startLabel,
 }: {
   locale: Locale;
   juz: JuzOption[];
   surahs: SurahOption[];
   defaultScope: string;
+  /** The form's submit button lives here, so it can name the selection. */
+  startLabel: string;
 }) {
   const [view, setView] = useState<View>(defaultScope.startsWith('surah:') ? 'surah' : 'juz');
   const [scope, setScope] = useState(defaultScope);
@@ -209,6 +212,17 @@ export function ScopePicker({
           </div>
         )}
       </fieldset>
+
+      {/* Stays pinned to the bottom of the screen while the grid scrolls past,
+          so a reader who taps a juz halfway down never has to hunt for Start. */}
+      <div className="sticky bottom-0 z-10 mt-4 border-t border-night-edge bg-night/95 py-3 backdrop-blur">
+        <button
+          type="submit"
+          className="w-full rounded-lg bg-brass px-6 py-3.5 text-lg font-medium text-night transition-opacity hover:opacity-90"
+        >
+          {startLabel} · {selected.title}
+        </button>
+      </div>
     </div>
   );
 }

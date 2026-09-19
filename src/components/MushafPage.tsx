@@ -54,18 +54,21 @@ export function AyahLine({
   return (
     <p className="ayah">
       <QuranGlyphs glyphs={glyphs} text={text} />{' '}
-      <span className="inline-block translate-y-1 px-1 align-baseline">
-        <Rosette label={marker} state="done" size={26} numerals="arabic" />
+      <span className="inline-block translate-y-[0.2em] px-1 align-baseline">
+        <Rosette label={marker} state="done" size={MARKER_SIZE} numerals="arabic" />
       </span>
     </p>
   );
 }
 
+/** Ayah markers scale with the ayah text they close, as printed ones do. */
+export const MARKER_SIZE = '1.25em';
+
 /** The rosette waiting at the end of the line still being written. */
 export function PendingMarker({ marker }: { marker: number }) {
   return (
     <span className="line-marker">
-      <Rosette label={marker} state="current" size={26} numerals="arabic" />
+      <Rosette label={marker} state="current" size={MARKER_SIZE} numerals="arabic" />
     </span>
   );
 }

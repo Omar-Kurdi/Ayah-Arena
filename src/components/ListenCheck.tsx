@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { gradeTyped, type Grade, type SelfGrade } from '@/lib/score';
 import type { AnswerPayload } from '@/lib/drill';
-import { loadListener, startRecording, transcribe, type Recording } from '@/lib/listen/listener';
+import { loadListener, micProblem, startRecording, transcribe, type Recording } from '@/lib/listen/listener';
 import { dict, type Locale } from '@/lib/i18n';
 
 /**
@@ -84,7 +84,8 @@ export function ListenCheck({
 }: {
   locale: Locale;
   answerAyahNumber: number;
-  /** Listening was already on last round: skip straight to getting ready. */
+  /** A listening round: open straight away (the consent panel first, if the
+   *  reader has not agreed yet) rather than waiting for a tap. */
   autoOpen: boolean;
   /** The ayah to grade against. Held here, never drawn, until the reader finishes. */
   fetchAnswer: () => Promise<AnswerPayload>;
@@ -126,7 +127,7 @@ export function ListenCheck({
   };
 
   useEffect(() => {
-    if (autoOpen && hasConsent()) void prepare();
+    if (autoOpen) open();
     // Once per round; the component is keyed by round.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -152,8 +153,9 @@ export function ListenCheck({
   const start = async () => {
     try {
       recording.current = await startRecording();
-    } catch {
-      setStage({ name: 'unavailable', message: t.micBlocked });
+    } catch (err) {
+      console.error('microphone did not open:', err);
+      setStage({ name: 'unavailable', message: t.mic[await micProblem(err)] });
       return;
     }
     finished.current = false;
@@ -201,9 +203,12 @@ export function ListenCheck({
   switch (stage.name) {
     case 'idle':
       return (
-        <button type="button" onClick={open} className={secondary}>
-          {t.open}
-        </button>
+        <div>
+          <button type="button" onClick={open} className={secondary}>
+            {t.open}
+          </button>
+          <p className="mt-1.5 text-sm text-verdant">{t.onDevice}</p>
+        </div>
       );
 
     case 'consent':

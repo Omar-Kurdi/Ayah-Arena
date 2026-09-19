@@ -27,7 +27,10 @@ function parseConfig(params: Record<string, string | string[] | undefined>): Dri
   return {
     scopeType: scope.type,
     scopeId: scope.id,
-    mode: (params.mode === 'recite' ? 'recite' : 'type') as DrillMode,
+    // "listen" is recite-aloud with the on-device listener on; "recite" is
+    // recite-aloud checked by the reader alone. Both are recite rounds.
+    mode: (params.mode === 'type' ? 'type' : 'recite') as DrillMode,
+    listen: params.mode !== 'type' && params.mode !== 'recite',
     rounds: ROUND_OPTIONS.includes(rounds as (typeof ROUND_OPTIONS)[number])
       ? rounds
       : DEFAULT_ROUNDS,
@@ -49,7 +52,8 @@ export default async function DrillPage({
     <div className="mx-auto flex min-h-dvh max-w-[34rem] flex-col px-5 py-8 sm:py-12">
       <div className="mb-8 flex items-baseline justify-between gap-4">
         <p className="marginal">
-          {label} · {config.mode === 'type' ? t.typed : t.recited}
+          {label} ·{' '}
+          {config.mode === 'type' ? t.typed : config.listen ? t.recited : t.selfChecked}
         </p>
         <Link
           href="/"

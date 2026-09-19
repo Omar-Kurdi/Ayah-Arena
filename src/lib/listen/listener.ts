@@ -82,29 +82,89 @@ export interface Recording {
   stop(): void;
 }
 
+export type MicProblem = 'insecure' | 'deniedSite' | 'deniedApp' | 'missing' | 'other';
+
+/** Why the microphone could not be opened, in terms a reader can act on. A
+ *  refusal with no prompt shown usually means the phone has not given the
+ *  browser app itself the microphone, rather than the site being blocked --
+ *  the site permission tells the two apart. */
+export async function micProblem(err: unknown): Promise<MicProblem> {
+  const name = err instanceof DOMException || err instanceof Error ? err.name : '';
+  if (name === 'InsecureContextError') return 'insecure';
+  if (name === 'NotAllowedError' || name === 'SecurityError' || name === 'PermissionDeniedError') {
+    try {
+      const status = await navigator.permissions.query({ name: 'microphone' as PermissionName });
+      return status.state === 'denied' ? 'deniedSite' : 'deniedApp';
+    } catch {
+      return 'deniedSite';
+    }
+  }
+  if (name === 'NotFoundError' || name === 'DevicesNotFoundError' || name === 'OverconstrainedError') return 'missing';
+  return 'other';
+}
+
 /** Asks for the microphone -- only ever call this from a click. The capture
  *  runs at the device's own rate and is resampled on demand, because some
  *  browsers refuse to connect a microphone to a 16kHz audio context. */
 export async function startRecording(): Promise<Recording> {
-  const stream = await navigator.mediaDevices.getUserMedia({
-    audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true },
-  });
-  const ctx = new AudioContext();
-  const url = URL.createObjectURL(new Blob([TAP], { type: 'application/javascript' }));
-  try {
-    await ctx.audioWorklet.addModule(url);
-  } finally {
-    URL.revokeObjectURL(url);
+  // Browsers only offer the microphone to secure pages (https, or localhost).
+  if (!window.isSecureContext || !navigator.mediaDevices?.getUserMedia) {
+    const err = new Error('microphone needs a secure (https) page');
+    err.name = 'InsecureContextError';
+    throw err;
   }
+  // Created before any await, while the click still counts as a user gesture:
+  // Safari keeps an audio context made later suspended, and it records silence.
+  const ctx = new AudioContext();
+  let stream: MediaStream;
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({
+      audio: { echoCancellation: true, noiseSuppression: true },
+    });
+  } catch (err) {
+    void ctx.close();
+    throw err;
+  }
+  if (ctx.state === 'suspended') await ctx.resume().catch(() => {});
+
   const source = ctx.createMediaStreamSource(stream);
-  const tap = new AudioWorkletNode(ctx, 'tap');
   const blocks: Float32Array[] = [];
   let length = 0;
-  tap.port.onmessage = (event: MessageEvent<Float32Array>) => {
-    blocks.push(event.data);
-    length += event.data.length;
+  const take = (block: Float32Array) => {
+    blocks.push(block);
+    length += block.length;
   };
-  source.connect(tap);
+
+  // An AudioWorklet where the browser allows one; the older script processor
+  // otherwise (some in-app browsers and older iOS refuse worklet modules).
+  let node: AudioNode;
+  let detach: () => void;
+  try {
+    const url = URL.createObjectURL(new Blob([TAP], { type: 'application/javascript' }));
+    try {
+      await ctx.audioWorklet.addModule(url);
+    } finally {
+      URL.revokeObjectURL(url);
+    }
+    const tap = new AudioWorkletNode(ctx, 'tap');
+    tap.port.onmessage = (event: MessageEvent<Float32Array>) => take(event.data);
+    node = tap;
+    detach = () => {
+      tap.port.onmessage = null;
+    };
+  } catch {
+    const proc = ctx.createScriptProcessor(4096, 1, 1);
+    proc.onaudioprocess = (event) => take(event.inputBuffer.getChannelData(0).slice());
+    // A script processor only runs while connected through to the output; it
+    // writes nothing to its output buffer, so this plays silence.
+    proc.connect(ctx.destination);
+    node = proc;
+    detach = () => {
+      proc.onaudioprocess = null;
+      proc.disconnect();
+    };
+  }
+  source.connect(node);
 
   return {
     seconds: () => length / ctx.sampleRate,
@@ -135,7 +195,7 @@ export async function startRecording(): Promise<Recording> {
     },
     stop() {
       source.disconnect();
-      tap.port.onmessage = null;
+      detach();
       for (const track of stream.getTracks()) track.stop();
       void ctx.close();
     },

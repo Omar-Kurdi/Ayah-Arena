@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Rosette, RosetteRow } from './Rosette';
-import { MushafPage, AyahLine, PendingMarker } from './MushafPage';
+import { MushafPage, AyahLine, PendingMarker, MARKER_SIZE } from './MushafPage';
 import { AyahRecall, RecallLegend } from './AyahRecall';
 import { ListenCheck, suggestedGrade } from './ListenCheck';
 import { looksArabic } from '@/lib/arabic';
@@ -17,6 +17,8 @@ export interface DrillConfig {
   scopeType: ScopeType;
   scopeId: number;
   mode: DrillMode;
+  /** Recite-aloud with the on-device listener. The server only sees 'recite'. */
+  listen: boolean;
   rounds: number;
 }
 
@@ -59,7 +61,7 @@ export function DrillClient({ config, locale }: { config: DrillConfig; locale: L
   // not hear anything usable). Only ever a suggestion to the reader.
   const [listened, setListened] = useState<{ grade: Grade | null } | null>(null);
   // Once a reader turns listening on, later rounds open ready to listen.
-  const [listenOn, setListenOn] = useState(false);
+  const [listenOn, setListenOn] = useState(config.listen);
 
   const startedAt = useRef<number>(Date.now());
   // In recite-aloud mode the clock stops when the ayah is revealed, so time
@@ -181,7 +183,7 @@ export function DrillClient({ config, locale }: { config: DrillConfig; locale: L
   const advance = useCallback(() => {
     if (!result) return;
     if (!result.next) {
-      router.push(`/results/${sessionId}`);
+      router.push(`/results/${sessionId}${config.listen ? '?listen=1' : ''}`);
       return;
     }
     setPrompt(result.next);
@@ -194,7 +196,7 @@ export function DrillClient({ config, locale }: { config: DrillConfig; locale: L
     frozenMs.current = null;
     startedAt.current = Date.now();
     setPhase('prompting');
-  }, [result, router, sessionId]);
+  }, [result, router, sessionId, config.listen]);
 
   if (phase === 'loading') {
     return (
@@ -294,8 +296,8 @@ export function DrillClient({ config, locale }: { config: DrillConfig; locale: L
             ) : recall && answerShown ? (
               <p className="ayah grow">
                 <AyahRecall words={recall} glyphs={answerShown.glyphs} text={answerShown.uthmani} />{' '}
-                <span className="inline-block translate-y-1 px-1 align-baseline">
-                  <Rosette label={answerShown.ayahNumber} state="done" size={26} numerals="arabic" />
+                <span className="inline-block translate-y-[0.2em] px-1 align-baseline">
+                  <Rosette label={answerShown.ayahNumber} state="done" size={MARKER_SIZE} numerals="arabic" />
                 </span>
               </p>
             ) : revealed || result ? (
@@ -345,31 +347,40 @@ export function DrillClient({ config, locale }: { config: DrillConfig; locale: L
 
       {phase === 'prompting' && config.mode === 'recite' && (
         <div className="mt-5">
-          <p className="text-muted">{t.reciteHint(prompt.answerAyahNumber)}</p>
-          <div className="mt-4 flex flex-wrap items-start gap-3">
+          {/* A listening round carries its own instructions in the panel. */}
+          {!config.listen && <p className="mb-4 text-muted">{t.reciteHint(prompt.answerAyahNumber)}</p>}
+          <div className="flex flex-wrap items-start gap-3">
+            {config.listen && (
+              <ListenCheck
+                key={prompt.index}
+                locale={locale}
+                answerAyahNumber={prompt.answerAyahNumber}
+                autoOpen={listenOn}
+                fetchAnswer={fetchAnswer}
+                onStop={() => {
+                  frozenMs.current = Date.now() - startedAt.current;
+                }}
+                onHeard={(answer, grade) => {
+                  setListenOn(true);
+                  setRevealed(answer);
+                  setListened({ grade });
+                  setPhase('revealed');
+                }}
+              />
+            )}
+            {/* In listening rounds this is the way out when the microphone is
+                not an option, so it steps back to a quieter button. */}
             <button
               type="button"
               onClick={() => void reveal()}
-              className="rounded-lg bg-brass px-5 py-2.5 font-medium text-night transition-opacity hover:opacity-90"
+              className={
+                config.listen
+                  ? 'rounded-lg border border-night-edge px-5 py-2.5 text-parchment transition-colors hover:border-brass'
+                  : 'rounded-lg bg-brass px-5 py-2.5 font-medium text-night transition-opacity hover:opacity-90'
+              }
             >
               {t.reveal}
             </button>
-            <ListenCheck
-              key={prompt.index}
-              locale={locale}
-              answerAyahNumber={prompt.answerAyahNumber}
-              autoOpen={listenOn}
-              fetchAnswer={fetchAnswer}
-              onStop={() => {
-                frozenMs.current = Date.now() - startedAt.current;
-              }}
-              onHeard={(answer, grade) => {
-                setListenOn(true);
-                setRevealed(answer);
-                setListened({ grade });
-                setPhase('revealed');
-              }}
-            />
           </div>
         </div>
       )}
