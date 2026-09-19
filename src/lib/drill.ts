@@ -5,9 +5,11 @@ import {
   pickRandom,
   expectedAyah,
   scopeLabel,
+  type Glyph,
   type Scope,
 } from './quran';
 import { gradeTyped, gradeSelfReported, type Grade, type SelfGrade } from './score';
+import type { Locale } from './i18n';
 import {
   createSession,
   getSession,
@@ -39,6 +41,7 @@ export interface PromptPayload {
   ayahNumber: number;
   verseKey: string;
   uthmani: string;
+  glyphs: Glyph[];
   /** Ayah number the reader is being asked to recall. */
   answerAyahNumber: number;
 }
@@ -47,6 +50,7 @@ export interface AnswerPayload {
   verseKey: string;
   ayahNumber: number;
   uthmani: string;
+  glyphs: Glyph[];
   imlaei: string;
 }
 
@@ -82,6 +86,7 @@ function promptFor(sessionId: string, index: number): PromptPayload | null {
     ayahNumber: prompt.ayah,
     verseKey: prompt.key,
     uthmani: prompt.uthmani,
+    glyphs: prompt.glyphs,
     answerAyahNumber: answer.ayah,
   };
 }
@@ -138,6 +143,7 @@ export function revealAnswer(input: {
     verseKey: answer.key,
     ayahNumber: answer.ayah,
     uthmani: answer.uthmani,
+    glyphs: answer.glyphs,
     imlaei: answer.imlaei,
   };
 }
@@ -194,6 +200,7 @@ export function submitAttempt(input: {
       verseKey: answer.key,
       ayahNumber: answer.ayah,
       uthmani: answer.uthmani,
+      glyphs: answer.glyphs,
       imlaei: answer.imlaei,
     },
     next,
@@ -204,6 +211,7 @@ export function submitAttempt(input: {
 export interface SummaryAyah {
   verseKey: string;
   surahName: string;
+  surahNameArabic: string;
   ayahNumber: number;
   accuracy: number;
   /** Shown rather than attempted, so it carries no score. */
@@ -227,7 +235,7 @@ export interface SessionSummary {
   strongest: SummaryAyah[];
 }
 
-export function sessionSummary(sessionId: string): SessionSummary | null {
+export function sessionSummary(sessionId: string, locale: Locale = 'en'): SessionSummary | null {
   const session = getSession(sessionId);
   if (!session) return null;
 
@@ -238,6 +246,7 @@ export function sessionSummary(sessionId: string): SessionSummary | null {
     return {
       verseKey: attempt.answerKey,
       surahName: surahMeta(verse.surah).nameSimple,
+      surahNameArabic: surahMeta(verse.surah).nameArabic,
       ayahNumber: verse.ayah,
       accuracy: attempt.accuracy,
       skipped: attempt.skipped,
@@ -248,7 +257,7 @@ export function sessionSummary(sessionId: string): SessionSummary | null {
   // of things to look at again -- that is what asking to be shown one means.
   const scored = attempts.filter((a) => !a.skipped);
 
-  const label = scopeLabel({ type: session.scopeType, id: session.scopeId });
+  const label = scopeLabel({ type: session.scopeType, id: session.scopeId }, locale);
 
   const points = attempts.reduce((sum, a) => sum + a.points, 0);
   const totalMs = attempts.reduce((sum, a) => sum + a.elapsedMs, 0);

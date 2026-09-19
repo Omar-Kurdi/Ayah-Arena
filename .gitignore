@@ -7,3 +7,14 @@ next-env.d.ts
 
 # personal, per-machine Claude Code settings
 .claude/settings.local.json
+CLAUDE.md
+
+# Source archives for the mushaf fonts. Everything the app uses is extracted
+# into public/fonts; these are only the downloads it came from.
+data/*.zip
+data/*.bz2
+
+# ASR spike: cached model weights and audio, and results from your own voice
+# recordings, which stay on your machine.
+scripts/asr-spike/.cache/
+scripts/asr-spike/results-own.json

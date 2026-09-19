@@ -6,10 +6,11 @@ import { Rosette, RosetteRow } from './Rosette';
 import { MushafPage, AyahLine, PendingMarker } from './MushafPage';
 import { AyahRecall, RecallLegend } from './AyahRecall';
 import { looksArabic } from '@/lib/arabic';
-import type { PromptPayload, RoundResult } from '@/lib/drill';
+import type { AnswerPayload, PromptPayload, RoundResult } from '@/lib/drill';
 import type { ScopeType } from '@/lib/quran';
 import type { DrillMode } from '@/lib/store';
 import type { SelfGrade } from '@/lib/score';
+import { dict, num, percent, type Locale } from '@/lib/i18n';
 
 export interface DrillConfig {
   scopeType: ScopeType;
@@ -22,21 +23,23 @@ type Phase = 'loading' | 'prompting' | 'revealed' | 'error';
 
 /** Deliberately warm and specific, and never about falling short. The lowest
  *  band still ends by handing the ayah back rather than commenting on it. */
-function verdict(accuracy: number): string {
-  if (accuracy >= 0.999) return 'Word for word.';
-  if (accuracy >= 0.85) return "That's the ayah.";
-  if (accuracy >= 0.5) return 'Most of it came back.';
-  if (accuracy > 0) return 'Some of it came back.';
-  return 'Here it is.';
+function verdict(accuracy: number, locale: Locale): string {
+  const t = dict(locale).drill.verdict;
+  if (accuracy >= 0.999) return t.whole;
+  if (accuracy >= 0.85) return t.held;
+  if (accuracy >= 0.5) return t.most;
+  if (accuracy > 0) return t.some;
+  return t.none;
 }
 
-const SELF_GRADES: { value: SelfGrade; label: string; hint: string }[] = [
-  { value: 'got_it', label: 'Got it', hint: 'Recited it as written' },
-  { value: 'almost', label: 'Almost', hint: 'A word or two off' },
-  { value: 'not_yet', label: 'Not yet', hint: 'Worth another look' },
-];
+const SELF_GRADES: SelfGrade[] = ['got_it', 'almost', 'not_yet'];
 
-export function DrillClient({ config }: { config: DrillConfig }) {
+export function DrillClient({ config, locale }: { config: DrillConfig; locale: Locale }) {
+  const t = dict(locale).drill;
+  // Server messages are English and written for developers. The Arabic
+  // interface shows its own message rather than leaking one.
+  const failure = (err: unknown, fallback: string) =>
+    locale === 'ar' || !(err instanceof Error) ? fallback : err.message;
   const router = useRouter();
   const [phase, setPhase] = useState<Phase>('loading');
   const [error, setError] = useState<string | null>(null);
@@ -44,7 +47,7 @@ export function DrillClient({ config }: { config: DrillConfig }) {
   const [prompt, setPrompt] = useState<PromptPayload | null>(null);
   const [result, setResult] = useState<RoundResult | null>(null);
   const [text, setText] = useState('');
-  const [revealed, setRevealed] = useState<string | null>(null);
+  const [revealed, setRevealed] = useState<AnswerPayload | null>(null);
   // A round the reader asked to be shown. The ayah is displayed plainly for it:
   // marking every word "look again" would treat asking for help like getting
   // the whole ayah wrong.
@@ -74,14 +77,14 @@ export function DrillClient({ config }: { config: DrillConfig }) {
           body: JSON.stringify(config),
         });
         const data = await res.json();
-        if (!res.ok) throw new Error(data.error ?? 'Could not start the round');
+        if (!res.ok) throw new Error(data.error ?? t.couldNotStart);
 
         setSessionId(data.sessionId);
         setPrompt(data.prompt);
         setPhase('prompting');
         startedAt.current = Date.now();
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Could not start the round');
+        setError(failure(err, t.couldNotStart));
         setPhase('error');
       }
     })();
@@ -130,13 +133,13 @@ export function DrillClient({ config }: { config: DrillConfig }) {
           }),
         });
         const data = await res.json();
-        if (!res.ok) throw new Error(data.error ?? 'Could not save that attempt');
+        if (!res.ok) throw new Error(data.error ?? t.couldNotSave);
 
         setResult(data);
         setPhase('revealed');
         headingRef.current?.focus();
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Could not save that attempt');
+        setError(failure(err, t.couldNotSave));
         setPhase('error');
       } finally {
         setSubmitting(false);
@@ -156,12 +159,12 @@ export function DrillClient({ config }: { config: DrillConfig }) {
         body: JSON.stringify({ sessionId, index: prompt.index }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? 'Could not reveal that ayah');
+      if (!res.ok) throw new Error(data.error ?? t.couldNotReveal);
 
-      setRevealed(data.answer.uthmani);
+      setRevealed(data.answer);
       setPhase('revealed');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Could not reveal that ayah');
+      setError(failure(err, t.couldNotReveal));
       setPhase('error');
     }
   }, [sessionId, prompt]);
@@ -186,7 +189,7 @@ export function DrillClient({ config }: { config: DrillConfig }) {
   if (phase === 'loading') {
     return (
       <p className="marginal py-24 text-center" role="status">
-        Setting up your ayat
+        {t.loading}
       </p>
     );
   }
@@ -194,13 +197,13 @@ export function DrillClient({ config }: { config: DrillConfig }) {
   if (phase === 'error') {
     return (
       <div className="mx-auto max-w-md rounded-lg border border-night-edge bg-night-raised p-6 text-center">
-        <h2 className="text-2xl">That round did not start</h2>
+        <h2 className="text-2xl">{t.didNotStart}</h2>
         <p className="mt-2 text-muted">{error}</p>
         <a
           href="/"
           className="mt-5 inline-block rounded-lg border border-brass px-5 py-2.5 text-brass"
         >
-          Back to the start
+          {t.backToStart}
         </a>
       </div>
     );
@@ -210,17 +213,25 @@ export function DrillClient({ config }: { config: DrillConfig }) {
 
   const showKeyboardHint =
     config.mode === 'type' && text.trim().length > 0 && !looksArabic(text);
-  const locative = `${prompt.surahName} \u00b7 ayah ${prompt.ayahNumber}`;
+  const locative = dict(locale).locative(
+    locale === 'ar' ? prompt.surahNameArabic : prompt.surahName,
+    prompt.ayahNumber
+  );
   const typing = phase === 'prompting' && config.mode === 'type';
 
   return (
     <div className="mx-auto w-full max-w-[34rem]">
       <header className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <RosetteRow total={prompt.total} currentIndex={prompt.index} />
+        <RosetteRow
+          total={prompt.total}
+          currentIndex={prompt.index}
+          label={t.progressLabel(prompt.index + 1, prompt.total)}
+          numerals={locale === 'ar' ? 'arabic' : 'latin'}
+        />
         <p className="marginal tabular shrink-0">
           {phase === 'prompting'
-            ? `${elapsed}s elapsed`
-            : `${prompt.index + 1} of ${prompt.total}`}
+            ? t.elapsed(elapsed)
+            : t.position(prompt.index + 1, prompt.total)}
         </p>
       </header>
 
@@ -231,15 +242,19 @@ export function DrillClient({ config }: { config: DrillConfig }) {
           if (typing) void submit();
         }}
       >
-        <MushafPage surahNameArabic={prompt.surahNameArabic} locative={locative}>
-          <AyahLine text={prompt.uthmani} marker={prompt.ayahNumber} />
+        <MushafPage
+          surahId={prompt.surahNumber}
+          surahNameArabic={prompt.surahNameArabic}
+          locative={locative}
+        >
+          <AyahLine glyphs={prompt.glyphs} text={prompt.uthmani} marker={prompt.ayahNumber} />
 
           {/* The next line of the same page — written on, or filled in. */}
           <div className="mt-4 flex items-start gap-2" dir="rtl">
             {typing ? (
               <>
                 <label htmlFor="attempt" className="sr-only">
-                  Write ayah {prompt.answerAyahNumber}
+                  {t.writeLabel(prompt.answerAyahNumber)}
                 </label>
                 <textarea
                   id="attempt"
@@ -260,8 +275,12 @@ export function DrillClient({ config }: { config: DrillConfig }) {
                 <PendingMarker marker={prompt.answerAyahNumber} />
               </>
             ) : result && result.grade.words.length > 0 && !wasShown ? (
-              <p className="ayah grow" lang="ar">
-                <AyahRecall words={result.grade.words} />{' '}
+              <p className="ayah grow">
+                <AyahRecall
+                  words={result.grade.words}
+                  glyphs={result.answer.glyphs}
+                  text={result.answer.uthmani}
+                />{' '}
                 <span className="inline-block translate-y-1 px-1 align-baseline">
                   <Rosette label={result.answer.ayahNumber} state="done" size={26} numerals="arabic" />
                 </span>
@@ -269,7 +288,8 @@ export function DrillClient({ config }: { config: DrillConfig }) {
             ) : revealed || result ? (
               <div className="grow">
                 <AyahLine
-                  text={revealed ?? result!.answer.uthmani}
+                  glyphs={(revealed ?? result!.answer).glyphs}
+                  text={(revealed ?? result!.answer).uthmani}
                   marker={prompt.answerAyahNumber}
                 />
               </div>
@@ -286,8 +306,8 @@ export function DrillClient({ config }: { config: DrillConfig }) {
           <>
             <p className="mt-3 text-sm text-muted">
               {showKeyboardHint
-                ? 'That is Latin script. Switch your keyboard to Arabic to be scored.'
-                : `Write ayah ${prompt.answerAyahNumber} on the line. Harakat are optional, and spelling is graded gently.`}
+                ? t.latinHint
+                : t.writeHint(prompt.answerAyahNumber)}
             </p>
             <div className="mt-4 flex flex-wrap items-center gap-4">
               <button
@@ -295,7 +315,7 @@ export function DrillClient({ config }: { config: DrillConfig }) {
                 disabled={submitting}
                 className="rounded-lg bg-brass px-5 py-2.5 font-medium text-night transition-opacity hover:opacity-90 disabled:opacity-60"
               >
-                {submitting ? 'Checking\u2026' : 'Check my answer'}
+                {submitting ? t.checking : t.check}
               </button>
               <button
                 type="button"
@@ -303,7 +323,7 @@ export function DrillClient({ config }: { config: DrillConfig }) {
                 disabled={submitting}
                 className="text-sm text-muted underline underline-offset-4 hover:text-parchment"
               >
-                Show me this one
+                {t.showMe}
               </button>
             </div>
           </>
@@ -312,16 +332,13 @@ export function DrillClient({ config }: { config: DrillConfig }) {
 
       {phase === 'prompting' && config.mode === 'recite' && (
         <div className="mt-5">
-          <p className="text-muted">
-            Recite ayah {prompt.answerAyahNumber} out loud, then reveal it to see how
-            it went.
-          </p>
+          <p className="text-muted">{t.reciteHint(prompt.answerAyahNumber)}</p>
           <button
             type="button"
             onClick={() => void reveal()}
             className="mt-4 rounded-lg bg-brass px-5 py-2.5 font-medium text-night transition-opacity hover:opacity-90"
           >
-            Reveal the ayah
+            {t.reveal}
           </button>
         </div>
       )}
@@ -330,6 +347,7 @@ export function DrillClient({ config }: { config: DrillConfig }) {
         <SelfGradeChoices
           onGrade={(grade) => void submit({ selfGrade: grade })}
           submitting={submitting}
+          locale={locale}
         />
       )}
 
@@ -341,31 +359,33 @@ export function DrillClient({ config }: { config: DrillConfig }) {
             className="text-3xl outline-none"
             aria-live="polite"
           >
-            {verdict(result.grade.accuracy)}
+            {verdict(result.grade.accuracy, locale)}
           </h2>
 
           {result.grade.words.length > 0 && !wasShown && (
             <div className="mt-3">
-              <RecallLegend words={result.grade.words} />
+              <RecallLegend words={result.grade.words} labels={t.legend} />
             </div>
           )}
 
           <dl className="mt-5 flex flex-wrap gap-x-9 gap-y-3">
             <div>
-              <dt className="marginal">recalled</dt>
+              <dt className="marginal">{t.recalled}</dt>
               <dd className="tabular font-display text-2xl">
-                {Math.round(result.grade.accuracy * 100)}%
+                {percent(result.grade.accuracy, locale)}
               </dd>
             </div>
             <div>
-              <dt className="marginal">points</dt>
+              <dt className="marginal">{t.points}</dt>
               <dd className="tabular font-display text-2xl text-brass">
-                +{result.grade.points}
+                +{num(result.grade.points, locale)}
               </dd>
             </div>
             <div>
-              <dt className="marginal">running total</dt>
-              <dd className="tabular font-display text-2xl">{result.runningPoints}</dd>
+              <dt className="marginal">{t.runningTotal}</dt>
+              <dd className="tabular font-display text-2xl">
+                {num(result.runningPoints, locale)}
+              </dd>
             </div>
           </dl>
 
@@ -374,7 +394,7 @@ export function DrillClient({ config }: { config: DrillConfig }) {
             onClick={advance}
             className="mt-6 rounded-lg bg-brass px-5 py-2.5 font-medium text-night transition-opacity hover:opacity-90"
           >
-            {result.next ? 'Next ayah' : 'See how it went'}
+            {result.next ? t.next : t.finish}
           </button>
         </section>
       )}
@@ -390,24 +410,27 @@ export function DrillClient({ config }: { config: DrillConfig }) {
 function SelfGradeChoices({
   onGrade,
   submitting,
+  locale,
 }: {
   onGrade: (grade: SelfGrade) => void;
   submitting: boolean;
+  locale: Locale;
 }) {
+  const t = dict(locale).drill;
   return (
     <section className="mt-6">
-      <h2 className="text-2xl">How did that go?</h2>
+      <h2 className="text-2xl">{t.howDidItGo}</h2>
       <div className="mt-3 grid gap-2 sm:grid-cols-3">
-        {SELF_GRADES.map((option) => (
+        {SELF_GRADES.map((grade) => (
           <button
-            key={option.value}
+            key={grade}
             type="button"
             disabled={submitting}
-            onClick={() => onGrade(option.value)}
-            className="rounded-lg border border-night-edge px-4 py-3 text-left transition-colors hover:border-brass disabled:opacity-60"
+            onClick={() => onGrade(grade)}
+            className="rounded-lg border border-night-edge px-4 py-3 text-start transition-colors hover:border-brass disabled:opacity-60"
           >
-            <span className="block font-medium text-parchment">{option.label}</span>
-            <span className="block text-sm text-muted">{option.hint}</span>
+            <span className="block font-medium text-parchment">{t.selfGrades[grade].label}</span>
+            <span className="block text-sm text-muted">{t.selfGrades[grade].hint}</span>
           </button>
         ))}
       </div>

@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { ExpectedAyah } from './score';
+import { dict, type Locale } from './i18n';
 
 /**
  * Loads the verified Quran text bundled by scripts/fetch-quran.mjs and builds
@@ -14,10 +15,22 @@ import type { ExpectedAyah } from './score';
  * looked up by its own key rather than through whichever juz it fell in.
  */
 
+/** One word as the QPC V2 mushaf fonts draw it: glyph `c` from page font `p`. */
+export interface Glyph {
+  p: number;
+  c: string;
+  /** Graded words this glyph spans, when not 1 -- the mushaf draws 'بَعْدَ مَا'
+   *  as one word where the Unicode text has two. */
+  n?: number;
+}
+
 export interface Verse {
   key: string;
   surah: number;
   ayah: number;
+  /** One per mushaf word, in order. Their spans (`n`) add up to the words
+   *  grading reports -- the check script asserts it on every ayah. */
+  glyphs: Glyph[];
   /** Uthmani script, as displayed. */
   uthmani: string;
   /** The standard written spelling. */
@@ -221,10 +234,11 @@ export function scopePairCount(scope: Scope): number {
     : surahEntries()[scope.id - 1].pairCount;
 }
 
-export function scopeLabel(scope: Scope): string {
-  return scope.type === 'juz'
-    ? `Juz ${scope.id}`
-    : (surahEntries()[scope.id - 1]?.nameSimple ?? `Surah ${scope.id}`);
+export function scopeLabel(scope: Scope, locale: Locale = 'en'): string {
+  const t = dict(locale).scope;
+  if (scope.type === 'juz') return t.juz(scope.id);
+  const surah = surahEntries()[scope.id - 1];
+  return t.surah(locale === 'ar' ? surah.nameArabic : surah.nameSimple);
 }
 
 /**

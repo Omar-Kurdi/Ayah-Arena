@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react';
+import type { Glyph } from '@/lib/quran';
 import { Rosette } from './Rosette';
+import { QuranGlyphs, SurahName } from './QuranText';
 
 /**
  * A page of the mushaf: the double-ruled frame, the surah banner, and the
@@ -11,10 +13,12 @@ import { Rosette } from './Rosette';
  * next line of the same passage, which is what it is.
  */
 export function MushafPage({
+  surahId,
   surahNameArabic,
   locative,
   children,
 }: {
+  surahId: number;
   surahNameArabic: string;
   locative: string;
   children: ReactNode;
@@ -22,8 +26,8 @@ export function MushafPage({
   return (
     <section className="mushaf-page px-4 pb-6 pt-3 sm:px-7 sm:pb-8">
       <header className="cartouche pb-3">
-        <p className="cartouche-name" lang="ar">
-          {surahNameArabic}
+        <p className="cartouche-name">
+          <SurahName id={surahId} nameArabic={surahNameArabic} />
         </p>
         <p className="marginal mt-0.5">{locative}</p>
       </header>
@@ -35,11 +39,21 @@ export function MushafPage({
 /**
  * One ayah, closed by its numbered rosette. In right-to-left text the line ends
  * on the left, so that is where the marker lands — inline, exactly as printed.
+ * The rosette is the app's own rather than the font's ayah-end glyph, because
+ * it also has to show round state.
  */
-export function AyahLine({ text, marker }: { text: string; marker: number }) {
+export function AyahLine({
+  glyphs,
+  text,
+  marker,
+}: {
+  glyphs: Glyph[];
+  text: string;
+  marker: number;
+}) {
   return (
-    <p className="ayah" lang="ar">
-      {text}{' '}
+    <p className="ayah">
+      <QuranGlyphs glyphs={glyphs} text={text} />{' '}
       <span className="inline-block translate-y-1 px-1 align-baseline">
         <Rosette label={marker} state="done" size={26} numerals="arabic" />
       </span>

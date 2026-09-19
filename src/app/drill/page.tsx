@@ -3,6 +3,8 @@ import { DrillClient, type DrillConfig } from '@/components/DrillClient';
 import { ROUND_OPTIONS, DEFAULT_ROUNDS } from '@/lib/drill';
 import { isValidScope, scopeLabel, type Scope } from '@/lib/quran';
 import type { DrillMode } from '@/lib/store';
+import { getLocale } from '@/lib/locale';
+import { dict } from '@/lib/i18n';
 
 export const dynamic = 'force-dynamic';
 
@@ -39,30 +41,29 @@ export default async function DrillPage({
 }) {
   const params = await searchParams;
   const config = parseConfig(params);
-  const label = scopeLabel({ type: config.scopeType, id: config.scopeId });
+  const locale = await getLocale();
+  const t = dict(locale).drill;
+  const label = scopeLabel({ type: config.scopeType, id: config.scopeId }, locale);
 
   return (
     <div className="mx-auto flex min-h-dvh max-w-[34rem] flex-col px-5 py-8 sm:py-12">
       <div className="mb-8 flex items-baseline justify-between gap-4">
         <p className="marginal">
-          {label} · {config.mode === 'type' ? 'typed' : 'recited'}
+          {label} · {config.mode === 'type' ? t.typed : t.recited}
         </p>
         <Link
           href="/"
           className="shrink-0 text-sm text-muted underline underline-offset-4 hover:text-parchment"
         >
-          Leave the round
+          {t.leave}
         </Link>
       </div>
 
       <div className="my-auto w-full">
-        <DrillClient config={config} />
+        <DrillClient config={config} locale={locale} />
       </div>
 
-      <p className="mt-auto pt-10 text-sm text-muted">
-        Leaving keeps everything you have answered so far. There is no penalty for
-        stopping.
-      </p>
+      <p className="mt-auto pt-10 text-sm text-muted">{t.leaveNote}</p>
     </div>
   );
 }

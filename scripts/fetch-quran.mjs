@@ -18,6 +18,7 @@
 import { writeFile, readFile, mkdir, rm } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { normalizeArabic } from '../src/lib/arabic.ts';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const API = 'https://api.quran.com/api/v4';
@@ -60,13 +61,16 @@ async function fetchChapters() {
  *  result is checked against both the API's own count and the chapter metadata. */
 async function fetchSurahVerses(surah, expectedCount) {
   const fields = 'text_uthmani,text_imlaei,text_imlaei_simple';
+  // code_v2 is the glyph each word is drawn with in the QPC V2 mushaf fonts,
+  // and v2_page names which of the 604 page fonts holds it.
+  const wordFields = 'code_v2,v2_page,text_uthmani';
   const verses = [];
   let page = 1;
   let reported = null;
 
   for (;;) {
     const data = await api(
-      `/verses/by_chapter/${surah}?fields=${fields}&per_page=50&page=${page}`
+      `/verses/by_chapter/${surah}?fields=${fields}&words=true&word_fields=${wordFields}&per_page=50&page=${page}`
     );
     verses.push(...data.verses);
     reported ??= data.pagination.total_records;
@@ -85,6 +89,44 @@ async function fetchSurahVerses(surah, expectedCount) {
   return verses;
 }
 
+/**
+ * How many of the ayah's written words each mushaf word covers. Usually 1, but
+ * the mushaf draws a few pairs the Unicode text spaces apart as one word --
+ * 'بَعْدَ مَا', 'إِلْ يَاسِينَ' -- and grading counts those as two. Aligned by letters
+ * through the grader's own normalizer rather than by counting spaces: the
+ * word-level data occasionally carries a stray space inside one word (5:52
+ * 'دَآئِرَ ةٌ') or spells it differently from the ayah text (11:13 'افْتَرَاهُ'
+ * against 'ٱفْتَرَىٰهُ'), and the normalizer is what already reconciles those.
+ * Throws if the two ever disagree, since the review draws graded words by
+ * these spans.
+ */
+function wordSpans(key, verseText, words) {
+  // Exactly the words grading counts: pause-mark tokens normalize to nothing.
+  const tokens = verseText.trim().split(/\s+/).map(normalizeArabic).filter(Boolean);
+  let t = 0;
+  const spans = words.map((w) => {
+    const target = normalizeArabic(w.text_uthmani).replace(/ /g, '');
+    let acc = '';
+    let n = 0;
+    while (acc.length < target.length && t < tokens.length) {
+      acc += tokens[t++];
+      n++;
+    }
+    if (acc !== target) throw new Error(`${key}: mushaf word "${w.text_uthmani}" does not align with the ayah text`);
+    return n;
+  });
+  if (t !== tokens.length) throw new Error(`${key}: ${tokens.length - t} written words left without a mushaf word`);
+  return spans;
+}
+
+function glyphsFor(v) {
+  const words = v.words.filter((w) => w.char_type_name === 'word');
+  const spans = wordSpans(v.verse_key, v.text_uthmani, words);
+  return words.map((w, i) =>
+    spans[i] === 1 ? { p: w.v2_page, c: w.code_v2 } : { p: w.v2_page, c: w.code_v2, n: spans[i] }
+  );
+}
+
 function buildSurah(meta, rawVerses) {
   const verses = rawVerses.map((v) => {
     const [surah, ayah] = v.verse_key.split(':').map(Number);
@@ -100,6 +142,11 @@ function buildSurah(meta, rawVerses) {
       simple: v.text_imlaei_simple.trim(),
       page: v.page_number,
       juz: v.juz_number,
+      // One entry per word, in order, as the mushaf fonts draw it. The API's
+      // "end" entry (the ayah-number glyph) is left out: the app draws its own
+      // ayah marker, which carries round state a font glyph cannot. Pause marks
+      // are already fused into the preceding word's glyph run here.
+      glyphs: glyphsFor(v),
     };
   });
 
@@ -113,6 +160,9 @@ function buildSurah(meta, rawVerses) {
     }
     if (!Number.isInteger(v.juz) || v.juz < 1 || v.juz > 30) {
       throw new Error(`surah ${meta.id}: ${v.key} has juz ${v.juz}`);
+    }
+    if (v.glyphs.length === 0 || v.glyphs.some((g) => !g.c || !(g.p >= 1 && g.p <= 604))) {
+      throw new Error(`surah ${meta.id}: ${v.key} has missing or out-of-range glyphs`);
     }
   });
 

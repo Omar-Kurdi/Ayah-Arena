@@ -1,44 +1,56 @@
-import type { ScoredWord } from '@/lib/score';
+import type { Glyph } from '@/lib/quran';
+import type { ScoredWord, WordStatus } from '@/lib/score';
+import { QuranGlyphs } from './QuranText';
 
 /**
- * The ayah shown back after an attempt, word by word.
+ * The ayah shown back after an attempt, word by word, in the mushaf font.
  *
  * Words that came back are parchment, near-misses are brass, and words that
  * did not come back are muted with a dotted rule under them. Nothing is red
  * and nothing is struck through: the reader is looking at an ayah, and the
  * marks are there to show where to look again, not to mark it wrong.
  *
- * Renders bare spans so the caller can place them on a mushaf line alongside
- * the ayah marker, rather than in a block of their own.
+ * Each glyph covers `n` graded words, usually one; the check script asserts
+ * the spans add up to the grader's word count on every ayah. The four glyphs
+ * that cover two ('بَعْدَ مَا', 'إِلْ يَاسِينَ') read as "nearly" when only half came
+ * back, rather than claiming either extreme.
+ *
+ * Renders inline so the caller can place it on a mushaf line alongside the
+ * ayah marker, rather than in a block of their own.
  */
-export function AyahRecall({ words }: { words: ScoredWord[] }) {
-  return (
-    <>
-      {words.map((word, i) => (
-        <span
-          key={`${word.word}-${i}`}
-          className={
-            word.status === 'exact'
-              ? 'text-parchment'
-              : word.status === 'close'
-                ? 'text-brass'
-                : 'text-muted underline decoration-dotted decoration-from-font underline-offset-8'
-          }
-        >
-          {word.word}
-          {i < words.length - 1 ? ' ' : ''}
-        </span>
-      ))}
-    </>
-  );
+export function AyahRecall({
+  words,
+  glyphs,
+  text,
+}: {
+  words: ScoredWord[];
+  glyphs: Glyph[];
+  text: string;
+}) {
+  let next = 0;
+  const statuses = glyphs.map((glyph): WordStatus => {
+    const covered = words.slice(next, next + (glyph.n ?? 1)).map((w) => w.status);
+    next += glyph.n ?? 1;
+    if (covered.every((s) => s === 'exact')) return 'exact';
+    if (covered.every((s) => s === 'missed')) return 'missed';
+    return 'close';
+  });
+
+  return <QuranGlyphs glyphs={glyphs} text={text} statuses={statuses} />;
 }
 
-export function RecallLegend({ words }: { words: ScoredWord[] }) {
+export function RecallLegend({
+  words,
+  labels,
+}: {
+  words: ScoredWord[];
+  labels: Record<WordStatus, string>;
+}) {
   const has = (status: ScoredWord['status']) => words.some((w) => w.status === status);
   const items = [
-    has('exact') && { label: 'came back', className: 'bg-verdant' },
-    has('close') && { label: 'nearly', className: 'bg-brass' },
-    has('missed') && { label: 'look again', className: 'bg-muted' },
+    has('exact') && { label: labels.exact, className: 'bg-verdant' },
+    has('close') && { label: labels.close, className: 'bg-brass' },
+    has('missed') && { label: labels.missed, className: 'bg-muted' },
   ].filter(Boolean) as { label: string; className: string }[];
 
   if (items.length < 2) return null;

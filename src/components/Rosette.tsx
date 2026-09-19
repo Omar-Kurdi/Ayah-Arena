@@ -90,9 +90,14 @@ export function Rosette({
 export function RosetteRow({
   total,
   currentIndex,
+  label,
+  numerals = 'latin',
 }: {
   total: number;
   currentIndex: number;
+  /** Already in the reader's language, e.g. "Ayah 2 of 7". */
+  label: string;
+  numerals?: 'latin' | 'arabic';
 }) {
   return (
     <div
@@ -101,13 +106,14 @@ export function RosetteRow({
       aria-valuemin={1}
       aria-valuemax={total}
       aria-valuenow={currentIndex + 1}
-      aria-label={`Ayah ${currentIndex + 1} of ${total}`}
+      aria-label={label}
     >
       {Array.from({ length: total }, (_, i) => (
         <Rosette
           key={i}
           label={i + 1}
           state={i < currentIndex ? 'done' : i === currentIndex ? 'current' : 'upcoming'}
+          numerals={numerals}
         />
       ))}
     </div>

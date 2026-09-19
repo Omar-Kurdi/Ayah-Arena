@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start -p 3210",
     "lint": "next lint",
-    "fetch:quran": "node scripts/fetch-quran.mjs",
+    "fetch:quran": "node --import ./scripts/ts-resolve.mjs scripts/fetch-quran.mjs",
     "check": "node --import ./scripts/ts-resolve.mjs scripts/check-scoring.ts"
   },
   "dependencies": {

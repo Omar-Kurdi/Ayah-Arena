@@ -153,6 +153,19 @@ for (const v of allVerses) {
   const words = v.uthmani.trim().split(/\s+/).filter((t) => normalizeArabic(t) !== '');
   if (shown.join(' ') !== words.join(' ')) wrongScript.push(v.key);
 }
+// The review draws each graded word with its mushaf-font glyph by index, so
+// every graded word has to fall under exactly one glyph.
+const misaligned: string[] = [];
+for (const v of allVerses) {
+  const graded = gradeTyped(expectedAyah(v), v.simple, 20_000).words.length;
+  const spanned = v.glyphs.reduce((sum, g) => sum + (g.n ?? 1), 0);
+  if (graded !== spanned) misaligned.push(`${v.key} (${graded} vs ${spanned})`);
+}
+check(
+  `graded words line up with the mushaf-font glyphs on all ${total} ayat`,
+  misaligned.length === 0,
+  `${misaligned.length} do not, e.g. ${misaligned.slice(0, 5).join(', ')}`
+);
 check(
   `a keyboard attempt is shown the mushaf spelling on all ${total} ayat`,
   wrongScript.length === 0,
