@@ -1,0 +1,9 @@
+{
+  "name": "ayah-arena-asr-spike",
+  "private": true,
+  "type": "module",
+  "description": "Step 0: can an on-device Quran speech model tell a correct recitation from a wrong one? Kept out of the app's dependencies.",
+  "dependencies": {
+    "@huggingface/transformers": "^3.7.0"
+  }
+}

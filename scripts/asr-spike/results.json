@@ -1,0 +1,1189 @@
+{
+  "model": "eventhorizon0/tarteel-ai-onnx-whisper-base-ar-quran",
+  "dtype": {
+    "encoder_model": "fp32",
+    "decoder_model_merged": "q4"
+  },
+  "heldAt": 0.85,
+  "ranAt": "2026-09-19T17:31:39.752Z",
+  "tooLong": [
+    {
+      "reciter": "Alafasy",
+      "key": "9:24",
+      "seconds": 50.8
+    },
+    {
+      "reciter": "Alafasy",
+      "key": "27:64",
+      "seconds": 29.7
+    },
+    {
+      "reciter": "Alafasy",
+      "key": "46:26",
+      "seconds": 54.1
+    },
+    {
+      "reciter": "Alafasy",
+      "key": "2:203",
+      "seconds": 33.9
+    },
+    {
+      "reciter": "Husary",
+      "key": "9:24",
+      "seconds": 97.8
+    },
+    {
+      "reciter": "Husary",
+      "key": "42:36",
+      "seconds": 34.1
+    },
+    {
+      "reciter": "Husary",
+      "key": "18:37",
+      "seconds": 29.2
+    },
+    {
+      "reciter": "Husary",
+      "key": "27:64",
+      "seconds": 42.1
+    },
+    {
+      "reciter": "Husary",
+      "key": "46:26",
+      "seconds": 68.8
+    },
+    {
+      "reciter": "Husary",
+      "key": "45:5",
+      "seconds": 45.2
+    },
+    {
+      "reciter": "Husary",
+      "key": "2:203",
+      "seconds": 48.2
+    },
+    {
+      "reciter": "Husary",
+      "key": "3:129",
+      "seconds": 31.2
+    },
+    {
+      "reciter": "Minshawi",
+      "key": "9:24",
+      "seconds": 44.3
+    },
+    {
+      "reciter": "Minshawi",
+      "key": "46:26",
+      "seconds": 38.6
+    },
+    {
+      "reciter": "Minshawi",
+      "key": "2:203",
+      "seconds": 29.5
+    },
+    {
+      "reciter": "AbdulBaset",
+      "key": "85:9",
+      "seconds": 29.4
+    },
+    {
+      "reciter": "AbdulBaset",
+      "key": "9:24",
+      "seconds": 98.9
+    },
+    {
+      "reciter": "AbdulBaset",
+      "key": "42:36",
+      "seconds": 49
+    },
+    {
+      "reciter": "AbdulBaset",
+      "key": "18:37",
+      "seconds": 35.6
+    },
+    {
+      "reciter": "AbdulBaset",
+      "key": "27:64",
+      "seconds": 56.7
+    },
+    {
+      "reciter": "AbdulBaset",
+      "key": "46:26",
+      "seconds": 114.7
+    },
+    {
+      "reciter": "AbdulBaset",
+      "key": "45:5",
+      "seconds": 52.9
+    },
+    {
+      "reciter": "AbdulBaset",
+      "key": "2:203",
+      "seconds": 55.1
+    },
+    {
+      "reciter": "AbdulBaset",
+      "key": "3:129",
+      "seconds": 39.6
+    }
+  ],
+  "rows": [
+    {
+      "reciter": "Alafasy",
+      "style": "murattal",
+      "key": "98:7",
+      "amma": true,
+      "seconds": 11.6,
+      "ms": 801,
+      "right": 1,
+      "wrong": 0.03571428571428571,
+      "transcript": "إِنَّ الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ أُولَئِكَ هُمْ خَيْرُ الْبَرِيَّةِ"
+    },
+    {
+      "reciter": "Alafasy",
+      "style": "murattal",
+      "key": "83:35",
+      "amma": true,
+      "seconds": 7.7,
+      "ms": 509,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "عَلَى الْأَرَائِكِ يَنْظُرُونَ"
+    },
+    {
+      "reciter": "Alafasy",
+      "style": "murattal",
+      "key": "79:10",
+      "amma": true,
+      "seconds": 7.1,
+      "ms": 430,
+      "right": 1,
+      "wrong": 0.1875,
+      "transcript": "يَقُولُونَ أَإِنَّا لَمَرْدُودُونَ فِي الْحَافِرَةِ"
+    },
+    {
+      "reciter": "Alafasy",
+      "style": "murattal",
+      "key": "100:4",
+      "amma": true,
+      "seconds": 3,
+      "ms": 431,
+      "right": 1,
+      "wrong": 0.3333333333333333,
+      "transcript": "فَأَثَرْنَ بِهِ نَقْعًا"
+    },
+    {
+      "reciter": "Alafasy",
+      "style": "murattal",
+      "key": "78:16",
+      "amma": true,
+      "seconds": 4.1,
+      "ms": 358,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "وَجَنَّاتٍ أَلْفَافًا"
+    },
+    {
+      "reciter": "Alafasy",
+      "style": "murattal",
+      "key": "85:9",
+      "amma": true,
+      "seconds": 13.5,
+      "ms": 608,
+      "right": 1,
+      "wrong": 0.10714285714285714,
+      "transcript": "الَّذِي لَهُ مُلْكُ السَّمَاوَاتِ وَالْأَرْضِ وَاللَّهُ عَلَى كُلِّ شَيْءٍ شَهِيدٌ"
+    },
+    {
+      "reciter": "Alafasy",
+      "style": "murattal",
+      "key": "83:30",
+      "amma": true,
+      "seconds": 5.8,
+      "ms": 430,
+      "right": 1,
+      "wrong": 0.16666666666666666,
+      "transcript": "وَإِذَا مَرُّوا بِهِمْ يَتَغَامَزُونَ"
+    },
+    {
+      "reciter": "Alafasy",
+      "style": "murattal",
+      "key": "92:4",
+      "amma": true,
+      "seconds": 4.2,
+      "ms": 364,
+      "right": 1,
+      "wrong": 0.1875,
+      "transcript": "إِنَّ سَعْيَكُمْ لَشَتَّى"
+    },
+    {
+      "reciter": "Alafasy",
+      "style": "murattal",
+      "key": "78:3",
+      "amma": true,
+      "seconds": 5.9,
+      "ms": 488,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "الَّذِي هُمْ فِيهِ مُخْتَلِفُونَ"
+    },
+    {
+      "reciter": "Alafasy",
+      "style": "murattal",
+      "key": "85:16",
+      "amma": true,
+      "seconds": 4.8,
+      "ms": 352,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "فَعَّالٌ لِمَا يُرِيدُ"
+    },
+    {
+      "reciter": "Alafasy",
+      "style": "murattal",
+      "key": "56:24",
+      "amma": false,
+      "seconds": 8.9,
+      "ms": 361,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "جَزَاءً بِمَا كَانُوا يَعْمَلُونَ"
+    },
+    {
+      "reciter": "Alafasy",
+      "style": "murattal",
+      "key": "18:97",
+      "amma": false,
+      "seconds": 9.2,
+      "ms": 571,
+      "right": 1,
+      "wrong": 0.05,
+      "transcript": "فَمَا اسْطَاعُوا أَنْ يَظْهَرُوهُ وَمَا اسْتَطَاعُوا لَهُ نَقْبًا"
+    },
+    {
+      "reciter": "Alafasy",
+      "style": "murattal",
+      "key": "41:7",
+      "amma": false,
+      "seconds": 9.3,
+      "ms": 611,
+      "right": 1,
+      "wrong": 0.19444444444444445,
+      "transcript": "الَّذِينَ لَا يُؤْتُونَ الزَّكَاةَ وَهُمْ بِالْآخِرَةِ هُمْ كَافِرُونَ"
+    },
+    {
+      "reciter": "Alafasy",
+      "style": "murattal",
+      "key": "42:36",
+      "amma": false,
+      "seconds": 24.7,
+      "ms": 1231,
+      "right": 1,
+      "wrong": 0.075,
+      "transcript": "فَمَا أُوتِيتُمْ مِنْ شَيْءٍ فَمَتَاعُ الْحَيَاةِ الدُّنْيَا وَمَا عِنْدَ اللَّهِ خَيْرٌ وَأَبْقَى لِلَّذِينَ آمَنُوا وَعَلَى رَبِّهِمْ يَتَوَكَّلُونَ"
+    },
+    {
+      "reciter": "Alafasy",
+      "style": "murattal",
+      "key": "58:21",
+      "amma": false,
+      "seconds": 11.1,
+      "ms": 518,
+      "right": 1,
+      "wrong": 0.09313725490196079,
+      "transcript": "كَتَبَ اللَّهُ لَأَغْلِبَنَّ أَنَا وَرُسُلِي إِنَّ اللَّهَ قَوِيٌّ عَزِيزٌ"
+    },
+    {
+      "reciter": "Alafasy",
+      "style": "murattal",
+      "key": "18:37",
+      "amma": false,
+      "seconds": 21.9,
+      "ms": 739,
+      "right": 1,
+      "wrong": 0.09375,
+      "transcript": "قَالَ لَهُ صَاحِبُهُ وَهُوَ يُحَاوِرُهُ أَكَفَرْتَ بِالَّذِي خَلَقَكَ مِنْ تُرَابٍ ثُمَّ مِنْ نُطْفَةٍ ثُمَّ سَوَّاكَ رَجُلًا"
+    },
+    {
+      "reciter": "Alafasy",
+      "style": "murattal",
+      "key": "26:200",
+      "amma": false,
+      "seconds": 6.7,
+      "ms": 407,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "كَذَلِكَ سَلَكْنَاهُ فِي قُلُوبِ الْمُجْرِمِينَ"
+    },
+    {
+      "reciter": "Alafasy",
+      "style": "murattal",
+      "key": "21:38",
+      "amma": false,
+      "seconds": 8.7,
+      "ms": 554,
+      "right": 1,
+      "wrong": 0.046875,
+      "transcript": "وَيَقُولُونَ مَتَى هَذَا الْوَعْدُ إِنْ كُنْتُمْ صَادِقِينَ"
+    },
+    {
+      "reciter": "Alafasy",
+      "style": "murattal",
+      "key": "28:26",
+      "amma": false,
+      "seconds": 14.7,
+      "ms": 633,
+      "right": 1,
+      "wrong": 0.08620689655172414,
+      "transcript": "قَالَتْ إِحْدَاهُمَا يَا أَبَتِ اسْتَأْجِرْهُ إِنَّ خَيْرَ مَنِ اسْتَأْجَرْتَ الْقَوِيُّ الْأَمِينُ"
+    },
+    {
+      "reciter": "Alafasy",
+      "style": "murattal",
+      "key": "10:42",
+      "amma": false,
+      "seconds": 17.5,
+      "ms": 620,
+      "right": 1,
+      "wrong": 0.6363636363636364,
+      "transcript": "وَمِنْهُمْ مَنْ يَسْتَمِعُونَ إِلَيْكَ أَفَأَنْتَ تُسْمِعُ الصُّمَّ وَلَوْ كَانُوا لَا يَعْقِلُونَ"
+    },
+    {
+      "reciter": "Alafasy",
+      "style": "murattal",
+      "key": "69:15",
+      "amma": false,
+      "seconds": 5.2,
+      "ms": 417,
+      "right": 1,
+      "wrong": 0.15,
+      "transcript": "فَيَوْمَئِذٍ وَقَعَتِ الْوَاقِعَةُ"
+    },
+    {
+      "reciter": "Alafasy",
+      "style": "murattal",
+      "key": "45:5",
+      "amma": false,
+      "seconds": 24.1,
+      "ms": 899,
+      "right": 1,
+      "wrong": 0.16666666666666666,
+      "transcript": "وَاخْتِلَافِ اللَّيْلِ وَالنَّهَارِ وَمَا أَنْزَلَ اللَّهُ مِنَ السَّمَاءِ مِنْ رِزْقٍ فَأَحْيَا بِهِ الْأَرْضَ بَعْدَ مَوْتِهَا وَتَصْرِيفِ الرِّيَاحِ آيَاتٌ لِقَوْمٍ يَعْقِلُونَ"
+    },
+    {
+      "reciter": "Alafasy",
+      "style": "murattal",
+      "key": "52:5",
+      "amma": false,
+      "seconds": 4.6,
+      "ms": 331,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "وَالسَّقْفِ الْمَرْفُوعِ"
+    },
+    {
+      "reciter": "Alafasy",
+      "style": "murattal",
+      "key": "3:129",
+      "amma": false,
+      "seconds": 19.9,
+      "ms": 714,
+      "right": 1,
+      "wrong": 0.125,
+      "transcript": "وَلِلَّهِ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ يَغْفِرُ لِمَنْ يَشَاءُ وَيُعَذِّبُ مَنْ يَشَاءُ وَاللَّهُ غَفُورٌ رَحِيمٌ"
+    },
+    {
+      "reciter": "Alafasy",
+      "style": "murattal",
+      "key": "26:128",
+      "amma": false,
+      "seconds": 8.1,
+      "ms": 442,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "أَتَبْنُونَ بِكُلِّ رِيعٍ آيَةً تَعْبَثُونَ"
+    },
+    {
+      "reciter": "Alafasy",
+      "style": "murattal",
+      "key": "38:14",
+      "amma": false,
+      "seconds": 8.6,
+      "ms": 411,
+      "right": 1,
+      "wrong": 0.1,
+      "transcript": "إِنْ كُلٌّ إِلَّا كَذَّبَ الرُّسُلَ فَحَقَّ عِقَابِ"
+    },
+    {
+      "reciter": "Husary",
+      "style": "murattal",
+      "key": "98:7",
+      "amma": true,
+      "seconds": 17.7,
+      "ms": 555,
+      "right": 1,
+      "wrong": 0.03571428571428571,
+      "transcript": "إِنَّ الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ أُولَئِكَ هُمْ خَيْرُ الْبَرِيَّةِ"
+    },
+    {
+      "reciter": "Husary",
+      "style": "murattal",
+      "key": "83:35",
+      "amma": true,
+      "seconds": 8.2,
+      "ms": 338,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "عَلَى الْأَرَائِكِ يَنْظُرُونَ"
+    },
+    {
+      "reciter": "Husary",
+      "style": "murattal",
+      "key": "79:10",
+      "amma": true,
+      "seconds": 11.2,
+      "ms": 508,
+      "right": 1,
+      "wrong": 0.1875,
+      "transcript": "يَقُولُونَ أَإِنَّا لَمَرْدُودُونَ فِي الْحَافِرَةِ"
+    },
+    {
+      "reciter": "Husary",
+      "style": "murattal",
+      "key": "100:4",
+      "amma": true,
+      "seconds": 5.5,
+      "ms": 394,
+      "right": 1,
+      "wrong": 0.3333333333333333,
+      "transcript": "فَأَثَرْنَ بِهِ نَقْعًا"
+    },
+    {
+      "reciter": "Husary",
+      "style": "murattal",
+      "key": "78:16",
+      "amma": true,
+      "seconds": 6.6,
+      "ms": 357,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "وَجَنَّاتٍ أَلْفَافًا"
+    },
+    {
+      "reciter": "Husary",
+      "style": "murattal",
+      "key": "85:9",
+      "amma": true,
+      "seconds": 20.5,
+      "ms": 512,
+      "right": 1,
+      "wrong": 0.10714285714285714,
+      "transcript": "الَّذِي لَهُ مُلْكُ السَّمَاوَاتِ وَالْأَرْضِ وَاللَّهُ عَلَى كُلِّ شَيْءٍ شَهِيدٌ"
+    },
+    {
+      "reciter": "Husary",
+      "style": "murattal",
+      "key": "83:30",
+      "amma": true,
+      "seconds": 9.5,
+      "ms": 432,
+      "right": 1,
+      "wrong": 0.16666666666666666,
+      "transcript": "وَإِذَا مَرُّوا بِهِمْ يَتَغَامَزُونَ"
+    },
+    {
+      "reciter": "Husary",
+      "style": "murattal",
+      "key": "92:4",
+      "amma": true,
+      "seconds": 6.6,
+      "ms": 345,
+      "right": 1,
+      "wrong": 0.1875,
+      "transcript": "إِنَّ سَعْيَكُمْ لَشَتَّى"
+    },
+    {
+      "reciter": "Husary",
+      "style": "murattal",
+      "key": "78:3",
+      "amma": true,
+      "seconds": 7.7,
+      "ms": 409,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "الَّذِي هُمْ فِيهِ مُخْتَلِفُونَ"
+    },
+    {
+      "reciter": "Husary",
+      "style": "murattal",
+      "key": "85:16",
+      "amma": true,
+      "seconds": 6.9,
+      "ms": 341,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "فَعَّالٌ لِمَا يُرِيدُ"
+    },
+    {
+      "reciter": "Husary",
+      "style": "murattal",
+      "key": "56:24",
+      "amma": false,
+      "seconds": 12,
+      "ms": 443,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "جَزَاءً بِمَا كَانُوا يَعْمَلُونَ"
+    },
+    {
+      "reciter": "Husary",
+      "style": "murattal",
+      "key": "18:97",
+      "amma": false,
+      "seconds": 9.7,
+      "ms": 442,
+      "right": 1,
+      "wrong": 0.05,
+      "transcript": "فَمَا اسْطَاعُوا أَنْ يَظْهَرُوهُ وَمَا اسْتَطَاعُوا لَهُ نَقْبًا"
+    },
+    {
+      "reciter": "Husary",
+      "style": "murattal",
+      "key": "41:7",
+      "amma": false,
+      "seconds": 12.8,
+      "ms": 469,
+      "right": 1,
+      "wrong": 0.19444444444444445,
+      "transcript": "الَّذِينَ لَا يُؤْتُونَ الزَّكَاةَ وَهُمْ بِالْآخِرَةِ هُمْ كَافِرُونَ"
+    },
+    {
+      "reciter": "Husary",
+      "style": "murattal",
+      "key": "58:21",
+      "amma": false,
+      "seconds": 19.3,
+      "ms": 526,
+      "right": 1,
+      "wrong": 0.09313725490196079,
+      "transcript": "كَتَبَ اللَّهُ لَأَغْلِبَنَّ أَنَا وَرُسُلِي إِنَّ اللَّهَ قَوِيٌّ عَزِيزٌ"
+    },
+    {
+      "reciter": "Husary",
+      "style": "murattal",
+      "key": "26:200",
+      "amma": false,
+      "seconds": 11.8,
+      "ms": 473,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "كَذَلِكَ سَلَكْنَاهُ فِي قُلُوبِ الْمُجْرِمِينَ"
+    },
+    {
+      "reciter": "Husary",
+      "style": "murattal",
+      "key": "21:38",
+      "amma": false,
+      "seconds": 10.8,
+      "ms": 452,
+      "right": 1,
+      "wrong": 0.046875,
+      "transcript": "وَيَقُولُونَ مَتَى هَذَا الْوَعْدُ إِنْ كُنْتُمْ صَادِقِينَ"
+    },
+    {
+      "reciter": "Husary",
+      "style": "murattal",
+      "key": "28:26",
+      "amma": false,
+      "seconds": 24.4,
+      "ms": 692,
+      "right": 1,
+      "wrong": 0.08620689655172414,
+      "transcript": "قَالَتْ إِحْدَاهُمَا يَا أَبَتِ اسْتَأْجِرْهُ إِنَّ خَيْرَ مَنِ اسْتَأْجَرْتَ الْقَوِيُّ الْأَمِينُ"
+    },
+    {
+      "reciter": "Husary",
+      "style": "murattal",
+      "key": "10:42",
+      "amma": false,
+      "seconds": 19.9,
+      "ms": 579,
+      "right": 1,
+      "wrong": 0.6363636363636364,
+      "transcript": "وَمِنْهُمْ مَنْ يَسْتَمِعُونَ إِلَيْكَ أَفَأَنْتَ تُسْمِعُ الصُّمَّ وَلَوْ كَانُوا لَا يَعْقِلُونَ"
+    },
+    {
+      "reciter": "Husary",
+      "style": "murattal",
+      "key": "69:15",
+      "amma": false,
+      "seconds": 6.2,
+      "ms": 382,
+      "right": 1,
+      "wrong": 0.15,
+      "transcript": "فَيَوْمَئِذٍ وَقَعَتِ الْوَاقِعَةُ"
+    },
+    {
+      "reciter": "Husary",
+      "style": "murattal",
+      "key": "52:5",
+      "amma": false,
+      "seconds": 4.3,
+      "ms": 340,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "وَالسَّقْفِ الْمَرْفُوعِ"
+    },
+    {
+      "reciter": "Husary",
+      "style": "murattal",
+      "key": "26:128",
+      "amma": false,
+      "seconds": 13.1,
+      "ms": 372,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "أَتَبْنُونَ بِكُلِّ رِيعٍ آيَةً تَعْبَثُونَ"
+    },
+    {
+      "reciter": "Husary",
+      "style": "murattal",
+      "key": "38:14",
+      "amma": false,
+      "seconds": 15.2,
+      "ms": 435,
+      "right": 1,
+      "wrong": 0.1,
+      "transcript": "إِنْ كُلٌّ إِلَّا كَذَّبَ الرُّسُلَ فَحَقَّ عِقَابِ"
+    },
+    {
+      "reciter": "Minshawi",
+      "style": "murattal",
+      "key": "98:7",
+      "amma": true,
+      "seconds": 14.2,
+      "ms": 566,
+      "right": 1,
+      "wrong": 0.03571428571428571,
+      "transcript": "إِنَّ الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ أُولَئِكَ هُمْ خَيْرُ الْبَرِيَّةِ"
+    },
+    {
+      "reciter": "Minshawi",
+      "style": "murattal",
+      "key": "83:35",
+      "amma": true,
+      "seconds": 6.3,
+      "ms": 434,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "عَلَى الْأَرَائِكِ يَنْظُرُونَ"
+    },
+    {
+      "reciter": "Minshawi",
+      "style": "murattal",
+      "key": "79:10",
+      "amma": true,
+      "seconds": 8.5,
+      "ms": 403,
+      "right": 1,
+      "wrong": 0.1875,
+      "transcript": "يَقُولُونَ أَإِنَّا لَمَرْدُودُونَ فِي الْحَافِرَةِ"
+    },
+    {
+      "reciter": "Minshawi",
+      "style": "murattal",
+      "key": "100:4",
+      "amma": true,
+      "seconds": 4,
+      "ms": 372,
+      "right": 1,
+      "wrong": 0.3333333333333333,
+      "transcript": "فَأَثَرْنَ بِهِ نَقْعًا"
+    },
+    {
+      "reciter": "Minshawi",
+      "style": "murattal",
+      "key": "78:16",
+      "amma": true,
+      "seconds": 5,
+      "ms": 325,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "وَجَنَّاتٍ أَلْفَافًا"
+    },
+    {
+      "reciter": "Minshawi",
+      "style": "murattal",
+      "key": "85:9",
+      "amma": true,
+      "seconds": 14.8,
+      "ms": 581,
+      "right": 1,
+      "wrong": 0.10714285714285714,
+      "transcript": "الَّذِي لَهُ مُلْكُ السَّمَاوَاتِ وَالْأَرْضِ وَاللَّهُ عَلَى كُلِّ شَيْءٍ شَهِيدٌ"
+    },
+    {
+      "reciter": "Minshawi",
+      "style": "murattal",
+      "key": "83:30",
+      "amma": true,
+      "seconds": 6.2,
+      "ms": 422,
+      "right": 1,
+      "wrong": 0.16666666666666666,
+      "transcript": "وَإِذَا مَرُّوا بِهِمْ يَتَغَامَزُونَ"
+    },
+    {
+      "reciter": "Minshawi",
+      "style": "murattal",
+      "key": "92:4",
+      "amma": true,
+      "seconds": 5.3,
+      "ms": 537,
+      "right": 1,
+      "wrong": 0.1875,
+      "transcript": "إِنَّ سَعْيَكُمْ لَشَتَّى"
+    },
+    {
+      "reciter": "Minshawi",
+      "style": "murattal",
+      "key": "78:3",
+      "amma": true,
+      "seconds": 5.5,
+      "ms": 366,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "الَّذِي هُمْ فِيهِ مُخْتَلِفُونَ"
+    },
+    {
+      "reciter": "Minshawi",
+      "style": "murattal",
+      "key": "85:16",
+      "amma": true,
+      "seconds": 4.5,
+      "ms": 313,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "فَعَّالٌ لِمَا يُرِيدُ"
+    },
+    {
+      "reciter": "Minshawi",
+      "style": "murattal",
+      "key": "56:24",
+      "amma": false,
+      "seconds": 7.7,
+      "ms": 374,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "جَزَاءً بِمَا كَانُوا يَعْمَلُونَ"
+    },
+    {
+      "reciter": "Minshawi",
+      "style": "murattal",
+      "key": "18:97",
+      "amma": false,
+      "seconds": 9.2,
+      "ms": 503,
+      "right": 1,
+      "wrong": 0.05,
+      "transcript": "فَمَا اسْطَاعُوا أَنْ يَظْهَرُوهُ وَمَا اسْتَطَاعُوا لَهُ نَقْبًا"
+    },
+    {
+      "reciter": "Minshawi",
+      "style": "murattal",
+      "key": "41:7",
+      "amma": false,
+      "seconds": 8.7,
+      "ms": 531,
+      "right": 1,
+      "wrong": 0.19444444444444445,
+      "transcript": "الَّذِينَ لَا يُؤْتُونَ الزَّكَاةَ وَهُمْ بِالْآخِرَةِ هُمْ كَافِرُونَ"
+    },
+    {
+      "reciter": "Minshawi",
+      "style": "murattal",
+      "key": "42:36",
+      "amma": false,
+      "seconds": 20.7,
+      "ms": 866,
+      "right": 1,
+      "wrong": 0.075,
+      "transcript": "فَمَا أُوتِيتُمْ مِنْ شَيْءٍ فَمَتَاعُ الْحَيَاةِ الدُّنْيَا وَمَا عِنْدَ اللَّهِ خَيْرٌ وَأَبْقَى لِلَّذِينَ آمَنُوا وَعَلَى رَبِّهِمْ يَتَوَكَّلُونَ"
+    },
+    {
+      "reciter": "Minshawi",
+      "style": "murattal",
+      "key": "58:21",
+      "amma": false,
+      "seconds": 10,
+      "ms": 529,
+      "right": 1,
+      "wrong": 0.09313725490196079,
+      "transcript": "كَتَبَ اللَّهُ لَأَغْلِبَنَّ أَنَا وَرُسُلِي إِنَّ اللَّهَ قَوِيٌّ عَزِيزٌ"
+    },
+    {
+      "reciter": "Minshawi",
+      "style": "murattal",
+      "key": "18:37",
+      "amma": false,
+      "seconds": 24.5,
+      "ms": 789,
+      "right": 1,
+      "wrong": 0.09375,
+      "transcript": "قَالَ لَهُ صَاحِبُهُ وَهُوَ يُحَاوِرُهُ أَكَفَرْتَ بِالَّذِي خَلَقَكَ مِنْ تُرَابٍ ثُمَّ مِنْ نُطْفَةٍ ثُمَّ سَوَّاكَ رَجُلًا"
+    },
+    {
+      "reciter": "Minshawi",
+      "style": "murattal",
+      "key": "26:200",
+      "amma": false,
+      "seconds": 5.7,
+      "ms": 422,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "كَذَلِكَ سَلَكْنَاهُ فِي قُلُوبِ الْمُجْرِمِينَ"
+    },
+    {
+      "reciter": "Minshawi",
+      "style": "murattal",
+      "key": "21:38",
+      "amma": false,
+      "seconds": 9.3,
+      "ms": 502,
+      "right": 1,
+      "wrong": 0.046875,
+      "transcript": "وَيَقُولُونَ مَتَى هَذَا الْوَعْدُ إِنْ كُنْتُمْ صَادِقِينَ"
+    },
+    {
+      "reciter": "Minshawi",
+      "style": "murattal",
+      "key": "28:26",
+      "amma": false,
+      "seconds": 12.9,
+      "ms": 693,
+      "right": 1,
+      "wrong": 0.08620689655172414,
+      "transcript": "قَالَتْ إِحْدَاهُمَا يَا أَبَتِ اسْتَأْجِرْهُ إِنَّ خَيْرَ مَنِ اسْتَأْجَرْتَ الْقَوِيُّ الْأَمِينُ"
+    },
+    {
+      "reciter": "Minshawi",
+      "style": "murattal",
+      "key": "10:42",
+      "amma": false,
+      "seconds": 15.9,
+      "ms": 676,
+      "right": 1,
+      "wrong": 0.6363636363636364,
+      "transcript": "وَمِنْهُمْ مَنْ يَسْتَمِعُونَ إِلَيْكَ أَفَأَنْتَ تُسْمِعُ الصُّمَّ وَلَوْ كَانُوا لَا يَعْقِلُونَ"
+    },
+    {
+      "reciter": "Minshawi",
+      "style": "murattal",
+      "key": "27:64",
+      "amma": false,
+      "seconds": 23.9,
+      "ms": 888,
+      "right": 1,
+      "wrong": 0.25,
+      "transcript": "أَمَّنْ يَبْدَأُ الْخَلْقَ ثُمَّ يُعِيدُهُ وَمَنْ يَرْزُقُكُمْ مِنَ السَّمَاءِ وَالْأَرْضِ أَإِلَهٌ مَعَ اللَّهِ قُلْ هَاتُوا بُرْهَانَكُمْ إِنْ كُنْتُمْ صَادِقِينَ"
+    },
+    {
+      "reciter": "Minshawi",
+      "style": "murattal",
+      "key": "69:15",
+      "amma": false,
+      "seconds": 5.7,
+      "ms": 438,
+      "right": 1,
+      "wrong": 0.15,
+      "transcript": "فَيَوْمَئِذٍ وَقَعَتِ الْوَاقِعَةُ"
+    },
+    {
+      "reciter": "Minshawi",
+      "style": "murattal",
+      "key": "45:5",
+      "amma": false,
+      "seconds": 26.2,
+      "ms": 967,
+      "right": 1,
+      "wrong": 0.16666666666666666,
+      "transcript": "وَاخْتِلَافِ اللَّيْلِ وَالنَّهَارِ وَمَا أَنْزَلَ اللَّهُ مِنَ السَّمَاءِ مِنْ رِزْقٍ فَأَحْيَا بِهِ الْأَرْضَ بَعْدَ مَوْتِهَا وَتَصْرِيفِ الرِّيَاحِ آيَاتٌ لِقَوْمٍ يَعْقِلُونَ"
+    },
+    {
+      "reciter": "Minshawi",
+      "style": "murattal",
+      "key": "52:5",
+      "amma": false,
+      "seconds": 3,
+      "ms": 332,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "وَالسَّقْفِ الْمَرْفُوعِ"
+    },
+    {
+      "reciter": "Minshawi",
+      "style": "murattal",
+      "key": "3:129",
+      "amma": false,
+      "seconds": 22.8,
+      "ms": 726,
+      "right": 1,
+      "wrong": 0.125,
+      "transcript": "وَلِلَّهِ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ يَغْفِرُ لِمَنْ يَشَاءُ وَيُعَذِّبُ مَنْ يَشَاءُ وَاللَّهُ غَفُورٌ رَحِيمٌ"
+    },
+    {
+      "reciter": "Minshawi",
+      "style": "murattal",
+      "key": "26:128",
+      "amma": false,
+      "seconds": 6.4,
+      "ms": 380,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "أَتَبْنُونَ بِكُلِّ رِيعٍ آيَةً تَعْبَثُونَ"
+    },
+    {
+      "reciter": "Minshawi",
+      "style": "murattal",
+      "key": "38:14",
+      "amma": false,
+      "seconds": 8.1,
+      "ms": 495,
+      "right": 1,
+      "wrong": 0.1,
+      "transcript": "إِنْ كُلٌّ إِلَّا كَذَّبَ الرُّسُلَ فَحَقَّ عِقَابِ"
+    },
+    {
+      "reciter": "AbdulBaset",
+      "style": "mujawwad",
+      "key": "98:7",
+      "amma": true,
+      "seconds": 24.6,
+      "ms": 657,
+      "right": 1,
+      "wrong": 0.03571428571428571,
+      "transcript": "إِنَّ الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ أُولَئِكَ هُمْ خَيْرُ الْبَرِيَّةِ"
+    },
+    {
+      "reciter": "AbdulBaset",
+      "style": "mujawwad",
+      "key": "83:35",
+      "amma": true,
+      "seconds": 11.9,
+      "ms": 460,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "عَلَى الْأَرَائِكِ يَنْظُرُونَ"
+    },
+    {
+      "reciter": "AbdulBaset",
+      "style": "mujawwad",
+      "key": "79:10",
+      "amma": true,
+      "seconds": 12.9,
+      "ms": 417,
+      "right": 1,
+      "wrong": 0.1875,
+      "transcript": "يَقُولُونَ أَإِنَّا لَمَرْدُودُونَ فِي الْحَافِرَةِ"
+    },
+    {
+      "reciter": "AbdulBaset",
+      "style": "mujawwad",
+      "key": "100:4",
+      "amma": true,
+      "seconds": 8.7,
+      "ms": 350,
+      "right": 1,
+      "wrong": 0.3333333333333333,
+      "transcript": "فَأَثَرْنَ بِهِ نَقْعًا"
+    },
+    {
+      "reciter": "AbdulBaset",
+      "style": "mujawwad",
+      "key": "78:16",
+      "amma": true,
+      "seconds": 7.5,
+      "ms": 320,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "وَجَنَّاتٍ أَلْفَافًا"
+    },
+    {
+      "reciter": "AbdulBaset",
+      "style": "mujawwad",
+      "key": "83:30",
+      "amma": true,
+      "seconds": 12.4,
+      "ms": 399,
+      "right": 1,
+      "wrong": 0.16666666666666666,
+      "transcript": "وَإِذَا مَرُّوا بِهِمْ يَتَغَامَزُونَ"
+    },
+    {
+      "reciter": "AbdulBaset",
+      "style": "mujawwad",
+      "key": "92:4",
+      "amma": true,
+      "seconds": 11,
+      "ms": 408,
+      "right": 1,
+      "wrong": 0.1875,
+      "transcript": "إِنَّ سَعْيَكُمْ لَشَتَّى"
+    },
+    {
+      "reciter": "AbdulBaset",
+      "style": "mujawwad",
+      "key": "78:3",
+      "amma": true,
+      "seconds": 10.9,
+      "ms": 365,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "الَّذِي هُمْ فِيهِ مُخْتَلِفُونَ"
+    },
+    {
+      "reciter": "AbdulBaset",
+      "style": "mujawwad",
+      "key": "85:16",
+      "amma": true,
+      "seconds": 7.9,
+      "ms": 349,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "فَعَّالٌ لِمَا يُرِيدُ"
+    },
+    {
+      "reciter": "AbdulBaset",
+      "style": "mujawwad",
+      "key": "56:24",
+      "amma": false,
+      "seconds": 15.6,
+      "ms": 438,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "جَزَاءً بِمَا كَانُوا يَعْمَلُونَ"
+    },
+    {
+      "reciter": "AbdulBaset",
+      "style": "mujawwad",
+      "key": "18:97",
+      "amma": false,
+      "seconds": 18.4,
+      "ms": 486,
+      "right": 1,
+      "wrong": 0.05,
+      "transcript": "فَمَا اسْطَاعُوا أَنْ يَظْهَرُوهُ وَمَا اسْتَطَاعُوا لَهُ نَقْبًا"
+    },
+    {
+      "reciter": "AbdulBaset",
+      "style": "mujawwad",
+      "key": "41:7",
+      "amma": false,
+      "seconds": 21.5,
+      "ms": 611,
+      "right": 1,
+      "wrong": 0.19444444444444445,
+      "transcript": "الَّذِينَ لَا يُؤْتُونَ الزَّكَاةَ وَهُمْ بِالْآخِرَةِ هُمْ كَافِرُونَ"
+    },
+    {
+      "reciter": "AbdulBaset",
+      "style": "mujawwad",
+      "key": "58:21",
+      "amma": false,
+      "seconds": 26.6,
+      "ms": 574,
+      "right": 1,
+      "wrong": 0.09313725490196079,
+      "transcript": "كَتَبَ اللَّهُ لَأَغْلِبَنَّ أَنَا وَرُسُلِي إِنَّ اللَّهَ قَوِيٌّ عَزِيزٌ"
+    },
+    {
+      "reciter": "AbdulBaset",
+      "style": "mujawwad",
+      "key": "26:200",
+      "amma": false,
+      "seconds": 17,
+      "ms": 379,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "كَذَلِكَ سَلَكْنَاهُ فِي قُلُوبِ الْمُجْرِمِينَ"
+    },
+    {
+      "reciter": "AbdulBaset",
+      "style": "mujawwad",
+      "key": "21:38",
+      "amma": false,
+      "seconds": 20,
+      "ms": 454,
+      "right": 1,
+      "wrong": 0.046875,
+      "transcript": "وَيَقُولُونَ مَتَى هَذَا الْوَعْدُ إِنْ كُنْتُمْ صَادِقِينَ"
+    },
+    {
+      "reciter": "AbdulBaset",
+      "style": "mujawwad",
+      "key": "28:26",
+      "amma": false,
+      "seconds": 26.1,
+      "ms": 708,
+      "right": 1,
+      "wrong": 0.08620689655172414,
+      "transcript": "قَالَتْ إِحْدَاهُمَا يَا أَبَتِ اسْتَأْجِرْهُ إِنَّ خَيْرَ مَنِ اسْتَأْجَرْتَ الْقَوِيُّ الْأَمِينُ"
+    },
+    {
+      "reciter": "AbdulBaset",
+      "style": "mujawwad",
+      "key": "10:42",
+      "amma": false,
+      "seconds": 26.2,
+      "ms": 622,
+      "right": 1,
+      "wrong": 0.6363636363636364,
+      "transcript": "وَمِنْهُمْ مَنْ يَسْتَمِعُونَ إِلَيْكَ أَفَأَنْتَ تُسْمِعُ الصُّمَّ وَلَوْ كَانُوا لَا يَعْقِلُونَ"
+    },
+    {
+      "reciter": "AbdulBaset",
+      "style": "mujawwad",
+      "key": "69:15",
+      "amma": false,
+      "seconds": 10.9,
+      "ms": 419,
+      "right": 1,
+      "wrong": 0.15,
+      "transcript": "فَيَوْمَئِذٍ وَقَعَتِ الْوَاقِعَةُ"
+    },
+    {
+      "reciter": "AbdulBaset",
+      "style": "mujawwad",
+      "key": "52:5",
+      "amma": false,
+      "seconds": 9.9,
+      "ms": 348,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "وَالسَّقْفِ الْمَرْفُوعِ"
+    },
+    {
+      "reciter": "AbdulBaset",
+      "style": "mujawwad",
+      "key": "26:128",
+      "amma": false,
+      "seconds": 17.7,
+      "ms": 400,
+      "right": 1,
+      "wrong": 0,
+      "transcript": "أَتَبْنُونَ بِكُلِّ رِيعٍ آيَةً تَعْبَثُونَ"
+    },
+    {
+      "reciter": "AbdulBaset",
+      "style": "mujawwad",
+      "key": "38:14",
+      "amma": false,
+      "seconds": 14.7,
+      "ms": 425,
+      "right": 1,
+      "wrong": 0.1,
+      "transcript": "إِنْ كُلٌّ إِلَّا كَذَّبَ الرُّسُلَ فَحَقَّ عِقَابِ"
+    }
+  ]
+}
