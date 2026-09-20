@@ -112,8 +112,8 @@ export interface AyahPair {
   surah: SurahMeta;
 }
 
-export const SURAH_COUNT = 114;
-export const JUZ_COUNT = 30;
+const SURAH_COUNT = 114;
+const JUZ_COUNT = 30;
 
 const dataDir = () => join(process.cwd(), 'data');
 
@@ -150,22 +150,14 @@ export function surahMeta(surah: number): SurahMeta {
   return loadSurahFile(surah).meta;
 }
 
-export function surahEntries(): SurahEntry[] {
+function surahEntries(): SurahEntry[] {
   return loadIndex().surahs;
 }
 
-export function juzEntries(): JuzEntry[] {
-  return loadIndex().juz;
-}
-
-export function juzEntry(juz: number): JuzEntry {
+function juzEntry(juz: number): JuzEntry {
   const entry = loadIndex().juz[juz - 1];
   if (!entry) throw new Error(`juz ${juz} does not exist`);
   return entry;
-}
-
-export function sourceMeta(): SourceMeta {
-  return loadIndex().source;
 }
 
 /**

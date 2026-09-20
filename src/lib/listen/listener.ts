@@ -70,7 +70,7 @@ const TAP = `registerProcessor('tap', class extends AudioWorkletProcessor {
   process(inputs) { const ch = inputs[0][0]; if (ch) this.port.postMessage(ch.slice(0)); return true; }
 });`;
 
-export const SAMPLE_RATE = 16_000;
+const SAMPLE_RATE = 16_000;
 
 export interface Recording {
   /** What has been heard so far, resampled to 16kHz mono -- all of it, or

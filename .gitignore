@@ -18,3 +18,10 @@ data/*.bz2
 # recordings, which stay on your machine.
 scripts/asr-spike/.cache/
 scripts/asr-spike/results-own.json
+
+# Skylos: the reviewed baseline is committed as .skylos/baseline.portable.json,
+# with repo-relative paths. Skylos itself only reads .skylos/baseline.json,
+# which holds this checkout's absolute paths and is rebuilt by
+# scripts/skylos-baseline.mjs. Its lookup cache is rebuilt on every scan.
+.skylos/cache/
+.skylos/baseline.json

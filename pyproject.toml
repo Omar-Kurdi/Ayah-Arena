@@ -1,0 +1,18 @@
+# Skylos (static analysis) settings, and nothing else.
+#
+# This is a Next.js/TypeScript project, not a Python one: Skylos is a
+# standalone CLI installed with pipx, and it only discovers its configuration
+# from a pyproject.toml. No Python package is declared here.
+
+[tool.skylos]
+# Skylos already skips anything .gitignore hides and its own default folders,
+# which include node_modules and .next. They are listed anyway so the scan
+# does not depend on either. The rest is committed but is not source: the
+# Quran data files, the mushaf fonts, and the ASR spike's model/audio cache.
+exclude = [
+  "node_modules",
+  ".next",
+  "data/**",
+  "public/fonts/**",
+  "scripts/asr-spike/.cache/**",
+]

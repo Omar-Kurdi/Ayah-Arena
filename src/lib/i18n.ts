@@ -365,7 +365,7 @@ const ar: Dictionary = {
   },
 };
 
-export const dictionaries: Record<Locale, Dictionary> = { en, ar };
+const dictionaries: Record<Locale, Dictionary> = { en, ar };
 
 export function dict(locale: Locale): Dictionary {
   return dictionaries[locale];
