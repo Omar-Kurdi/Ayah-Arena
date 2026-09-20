@@ -10,6 +10,9 @@ summary. Duels, result cards, circles and spaced-repetition revision are not bui
 
 ## Running it
 
+Node 22.5 or newer — progress is stored through Node's built-in `node:sqlite`, which does
+not exist before that. CI runs Node 22 LTS.
+
 ```bash
 npm install
 ```
@@ -36,6 +39,43 @@ npm run check
 ```
 
 Runs the scope, normalization and scoring checks against all 6,236 real ayat.
+
+## Checks and tests
+
+```bash
+npm run verify
+```
+
+Typecheck, ESLint, the whole-corpus data check, unit tests, the Skylos gate, a dependency
+audit and the integration tests — in that order, cheapest signal first. It needs no browser
+and downloads nothing, so it stays quick enough to run before every commit.
+
+The browser suites are separate because they build the app and drive Chromium:
+
+```bash
+npm run test:e2e            # journeys, guardrails, accessibility, the 375px layout
+npm run test:e2e:listener   # the real microphone path, with the real speech model
+```
+
+| Layer | Runs | Touches |
+|---|---|---|
+| `npm run check` | grading and scope over all 6,236 ayat | the committed Quran data |
+| `npm test` | unit tests (Vitest) | pure functions only |
+| `npm run test:integration` | the real API route handlers | real SQLite, one throwaway database per test |
+| `npm run test:e2e` | Playwright, desktop and 375px | a production build, its own database directory |
+| `npm run test:e2e:listener` | Chromium with a recitation played into a fake microphone | the real on-device model, fetched once and cached |
+
+No test reaches the network: `verify`'s one networked step is the dependency audit, which
+asks npm about advisories. The listener suite fetches two pinned things the first time — a
+recitation, verified by SHA-256, and the speech model at a pinned revision — into `.cache/`,
+which is gitignored. Neither is committed: the recording is someone else's work, and the
+model and its runtime files come to about 220MB.
+
+Every push and pull request runs **Fast checks** (the `verify` list) and **Browser tests**.
+The listener workflow runs nightly and on demand instead, since it is slow and needs that
+model. Static analysis is [Skylos](https://github.com/duriantaco/skylos) against a reviewed
+baseline — every accepted finding is justified by hand in `.skylos/REVIEW.md` — and
+`npm audit --omit=dev --audit-level=high` is the dependency gate.
 
 ## How it works
 
@@ -79,6 +119,18 @@ memorizing hifz should never be handed the answer in a script their mushaf does 
 Asking to be shown an ayah is recorded as a skip rather than a blank answer, and skips
 stay out of every accuracy figure.
 
+**Three ways to answer.** Type it (needs an Arabic keyboard), recite it with the device
+listening, or check yourself — say it from memory, reveal the ayah, and mark how it went.
+The third needs no microphone and no download, and it is how the app works for anyone who
+would rather not be recorded at all.
+
+**Reciting out loud happens on the device.** With the reader's consent — asked for before
+anything is downloaded — a Whisper fine-tune for Quranic Arabic is fetched once and run in
+the browser. It exists to answer one question: which of the expected words came back. The
+audio is never uploaded or stored, the transcript is graded and discarded rather than shown,
+and the result only pre-selects a self-grade that the reader can overrule. It does not judge
+tajweed or pronunciation, and it never generates text of its own.
+
 **Gentleness is in the scoring function, not just the copy.** A word within one edit of
 the expected word still earns 75% credit. Speed is a small bonus on top of accurate
 recall and never a penalty. Nothing in the UI is red, nothing is struck through, and
@@ -98,7 +150,13 @@ src/lib/quran.ts          data loading, scope resolution, prompt/answer pairs
 src/components/ScopePicker.tsx   choosing among 30 juz and 114 surahs
 src/lib/drill.ts          round orchestration, server-authoritative
 src/lib/store.ts          all persistence, the one file a Postgres swap touches
+src/lib/listen/           the on-device listener: recorder and model worker
+src/lib/i18n.ts           both dictionaries; the language lives in a cookie
 src/app/                  home, drill, results, API routes
+tests/integration/        real route handlers against real SQLite
+tests/e2e/                Playwright: journeys, guardrails, accessibility, layout
+scripts/listener-fixtures.mjs   pinned recitation + model revision for the listener suite
+.github/workflows/        CI (fast checks, browser tests) and the listener workflow
 ```
 
 ## Decisions worth knowing
@@ -116,7 +174,11 @@ src/app/                  home, drill, results, API routes
   ayah** — exactly what the spaced-repetition queue will need, so phase 5 does not
   start with a migration.
 - **The tab and home-screen name are just "Arena".** Many readers share a phone.
-- **No AI features.** Nothing here generates religious content of any kind.
+- **Two languages, and the choice lives in a cookie.** English and Arabic (RTL, Arabic-Indic
+  numerals), not a URL segment, so a shared link opens in the recipient's own language.
+- **The only model runs on the reader's device, and only to match words.** Nothing here
+  generates religious content of any kind — no tajweed judgement, no rulings, no
+  explanations.
 
 ## What's next
 

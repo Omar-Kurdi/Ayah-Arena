@@ -1,0 +1,34 @@
+version: 2
+
+# Updates arrive as pull requests and nothing merges itself. Each one runs the
+# normal gate -- Fast checks and Browser tests -- so a bad bump fails there.
+# The listener workflow stays manual and nightly, by design.
+
+updates:
+  # The application's own dependencies. scripts/asr-spike has a lockfile of its
+  # own, but it is a one-off experiment that nothing ships, so it is left out.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      # One pull request for the routine bumps; anything major arrives alone,
+      # where it can be read on its own terms.
+      routine:
+        update-types:
+          - minor
+          - patch
+
+  # Workflow actions are pinned by commit SHA, which is exactly what makes a
+  # bot useful here: nobody watches a pinned hash for security releases.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      routine:
+        update-types:
+          - minor
+          - patch

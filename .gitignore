@@ -7,7 +7,11 @@ next-env.d.ts
 
 # personal, per-machine Claude Code settings
 .claude/settings.local.json
+
+# The project instructions Claude Code loads are tracked at .claude/CLAUDE.md.
+# A CLAUDE.md anywhere else is someone's own working copy of them, kept local.
 CLAUDE.md
+!.claude/CLAUDE.md
 
 # Source archives for the mushaf fonts. Everything the app uses is extracted
 # into public/fonts; these are only the downloads it came from.

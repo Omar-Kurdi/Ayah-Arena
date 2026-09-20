@@ -46,7 +46,7 @@ jobs:
       # to either fetches fresh bytes instead of trusting a stale cache.
       - name: Work out the fixture cache key
         id: fixtures
-        run: echo "key=$(node scripts/listener-fixtures.mjs key)" >> "$GITHUB_OUTPUT"
+        run: echo "key=$(npm run --silent fixtures:listener:key)" >> "$GITHUB_OUTPUT"
 
       - name: Restore the model and the recitation
         id: fixture-cache
@@ -68,7 +68,7 @@ jobs:
       # Downloads the pinned recitation and checks its digest, or confirms the
       # one the cache restored. The model itself is mirrored by the test run.
       - name: Fetch the recitation
-        run: node scripts/listener-fixtures.mjs audio
+        run: npm run fixtures:listener
 
       - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
@@ -78,11 +78,9 @@ jobs:
       # The full browser, not the headless shell: only it has media capture.
       - run: npx playwright install --with-deps chromium
 
-      - run: npx next build
-        env:
-          NEXT_DIST_DIR: .next-e2e
+      - run: npm run build:e2e
 
-      - run: npx playwright test --project=listener
+      - run: npm run test:e2e:listener:run
         id: listener
 
       - if: failure() && steps.listener.conclusion == 'failure'

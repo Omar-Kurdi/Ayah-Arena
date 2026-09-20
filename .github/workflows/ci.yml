@@ -1,8 +1,15 @@
 name: CI
 
-# The fast gate: the same checks `npm run verify` runs locally, in one job so
-# dependencies are installed once. Tests and browser runs arrive in later
-# stages.
+# The pull-request gate, in two jobs:
+#
+#   Fast checks    the same checks `npm run verify` runs locally, in one job
+#                  so dependencies are installed once. No browser, no model.
+#   Browser tests  the Playwright suites against a production build.
+#
+# The real microphone path is slow and needs a ~220MB model, so it lives in
+# listener.yml and runs nightly or by hand -- never on a pull request.
+#
+# Steps call the project's npm scripts, so what CI runs is what you can run.
 
 on:
   pull_request:
@@ -13,7 +20,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: ci-${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -41,9 +48,6 @@ jobs:
       # by any check here.
       - run: npm ci --ignore-scripts
 
-      # Skylos is a developer CLI, not a project dependency, so it is installed
-      # the same way as locally: pipx, pinned to the version the baseline was
-      # reviewed against.
       - run: npm run typecheck
 
       - run: npm run lint
@@ -59,6 +63,9 @@ jobs:
       # npm audit is the dependency gate.
       - run: npm run audit:prod
 
+      # Skylos is a developer CLI, not a project dependency, so it is installed
+      # the same way as locally: pipx, pinned to the version the baseline was
+      # reviewed against.
       - name: Install Skylos
         run: |
           pipx install skylos==4.37.0
@@ -108,7 +115,6 @@ jobs:
       # Chromium only: one engine, and the browser download is the slow part of
       # this job, so it is cached against the Playwright version in the lockfile.
       - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
-        id: browser-cache
         with:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
@@ -116,9 +122,9 @@ jobs:
       - run: npx playwright install --with-deps chromium
 
       # The production build the tests run against, in its own directory.
-      - run: npx next build
-        env:
-          NEXT_DIST_DIR: .next-e2e
+      # Separate from the test step so a broken build is not reported as a
+      # test failure, and does not try to upload a report that cannot exist.
+      - run: npm run build:e2e
 
       # Playwright starts the server itself, with a throwaway database
       # directory it creates and removes; axe runs inside the same suite. The
