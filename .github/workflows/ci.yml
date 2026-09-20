@@ -121,8 +121,10 @@ jobs:
           NEXT_DIST_DIR: .next-e2e
 
       # Playwright starts the server itself, with a throwaway database
-      # directory it creates and removes; axe runs inside the same suite.
-      - run: npx playwright test
+      # directory it creates and removes; axe runs inside the same suite. The
+      # script names the projects, so this cannot drift into running the
+      # listener suite, which needs a model and a fake microphone.
+      - run: npm run test:e2e:run
         id: e2e
 
       # Only when the tests themselves failed, so the report and traces are
