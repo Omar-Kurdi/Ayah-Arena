@@ -12,9 +12,10 @@
     "check": "node --import ./scripts/ts-resolve.mjs scripts/check-scoring.ts",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:integration": "vitest run --config vitest.integration.config.ts",
     "skylos": "node scripts/skylos-baseline.mjs check",
     "audit:prod": "npm audit --omit=dev --audit-level=high",
-    "verify": "npm run typecheck && npm run lint && npm run check && npm test && npm run skylos && npm run audit:prod",
+    "verify": "npm run typecheck && npm run lint && npm run check && npm test && npm run skylos && npm run audit:prod && npm run test:integration",
     "fetch:quran": "node --import ./scripts/ts-resolve.mjs scripts/fetch-quran.mjs"
   },
   "dependencies": {

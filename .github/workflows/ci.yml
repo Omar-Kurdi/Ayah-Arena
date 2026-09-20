@@ -76,6 +76,11 @@ jobs:
       - name: Baseline was not modified by the run
         run: git diff --exit-code -- .skylos/baseline.portable.json
 
+      # Integration tests: the real route handlers and real SQLite, each test
+      # against its own throwaway database. Last, because they are the slowest
+      # of the fast checks and the cheapest signals should fail first.
+      - run: npm run test:integration
+
       - name: Generated baseline stays untracked
         run: |
           git check-ignore -q .skylos/baseline.json

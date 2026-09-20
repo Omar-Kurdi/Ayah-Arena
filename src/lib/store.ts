@@ -59,10 +59,16 @@ export interface AttemptRow {
 // database at all.
 const globalRef = globalThis as typeof globalThis & { __ayahArenaDb?: DatabaseSync };
 
+/** Where the database file lives. Normally beside the app; integration tests
+ *  point this at a throwaway directory so they never open the real one. */
+function dataDir(): string {
+  return process.env.AYAH_ARENA_DATA_DIR || join(process.cwd(), '.data');
+}
+
 function connect(): DatabaseSync {
   if (globalRef.__ayahArenaDb) return globalRef.__ayahArenaDb;
 
-  const dir = join(process.cwd(), '.data');
+  const dir = dataDir();
   mkdirSync(dir, { recursive: true });
   const handle = new DatabaseSync(join(dir, 'ayah-arena.db'));
 
