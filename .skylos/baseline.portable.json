@@ -32,7 +32,7 @@
     "SKY-D216:scripts/asr-spike/eval.mjs:97",
     "SKY-D216:scripts/fetch-quran.mjs:36",
     "SKY-D216:scripts/listener-fixtures.mjs:105",
-    "SKY-D216:tests/e2e/model-mirror.ts:91",
+    "SKY-D216:tests/e2e/model-mirror.ts:93",
     "SKY-D230:src/app/locale/route.ts:21",
     "SKY-D253:scripts/listener-fixtures.mjs:110",
     "SKY-D280:src/app/api/drill/answer/route.ts:10",

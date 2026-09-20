@@ -1,4 +1,4 @@
-import { createHash } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import {
   createReadStream,
   createWriteStream,
@@ -50,6 +50,8 @@ export interface MirrorStats {
   fetched: number;
   /** Off-origin requests the test refused. */
   blocked: string[];
+  /** Requests the mirror could not answer, which the browser saw as a 500. */
+  errors: string[];
 }
 
 export interface Mirror {
@@ -92,12 +94,15 @@ async function ensureMirrored(dir: string, upstream: string, stats: MirrorStats)
   if (!fetched.ok || !fetched.body) throw new Error(`upstream ${fetched.status} for ${upstream}`);
 
   // Written aside and renamed, so an interrupted run cannot leave a half-file
-  // behind that later runs would trust.
-  const partial = `${path}.partial`;
+  // behind that later runs would trust. The name is unique per download: the
+  // cache directory is shared, and two downloads of one file must not write
+  // through each other or race to rename the same path away.
+  const partial = `${path}.${randomUUID()}.partial`;
   const body = Readable.fromWeb(fetched.body as Parameters<typeof Readable.fromWeb>[0]);
   await pipeline(body, createWriteStream(partial));
-  renameSync(partial, path);
+  // The type first, so a file that exists always has its type beside it.
   writeFileSync(`${path}.type`, fetched.headers.get('content-type') ?? typeFor(path, upstream));
+  renameSync(partial, path);
   stats.fetched += 1;
   return path;
 }
@@ -105,7 +110,7 @@ async function ensureMirrored(dir: string, upstream: string, stats: MirrorStats)
 /** Serves the mirrored files, fetching what it does not have yet. */
 export async function startMirror(dir: string): Promise<Mirror> {
   mkdirSync(dir, { recursive: true });
-  const stats: MirrorStats = { served: 0, fetched: 0, blocked: [] };
+  const stats: MirrorStats = { served: 0, fetched: 0, blocked: [], errors: [] };
 
   const server: Server = createServer((request, response) => {
     void (async () => {
@@ -124,8 +129,17 @@ export async function startMirror(dir: string): Promise<Mirror> {
       });
       await pipeline(createReadStream(path), response);
     })().catch((error: unknown) => {
-      if (!response.headersSent) response.writeHead(500);
-      response.end(String(error));
+      // Already streaming: the browser hung up on a file it no longer wants,
+      // which is what closing a page looks like from here. Not a mirror fault.
+      if (response.headersSent) {
+        response.destroy();
+        return;
+      }
+      // The browser only sees a failed fetch, and the model loads in a worker
+      // where the page's console listener cannot reach it, so say it here.
+      stats.errors.push(`${request.url} :: ${String(error)}`);
+      console.log(`[mirror] ${String(error)}`);
+      response.writeHead(500).end(String(error));
     });
   });
 

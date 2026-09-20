@@ -58,6 +58,10 @@ export default defineConfig({
       // project is slow and deliberately left out of `npm run test:e2e`.
       name: 'listener',
       testMatch: /listener\.spec\.ts/,
+      // One at a time: these tests share the mirrored model in .cache/listener,
+      // and on a cold cache running two of them would fetch the same ~220MB
+      // twice, over one runner's bandwidth, against each test's own clock.
+      workers: 1,
       timeout: 5 * 60_000,
       expect: { timeout: 60_000 },
       use: {

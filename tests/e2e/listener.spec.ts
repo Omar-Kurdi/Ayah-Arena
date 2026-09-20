@@ -39,6 +39,9 @@ test.beforeEach(async ({ context, page }) => {
 });
 
 test.afterEach(async () => {
+  // A mirror that could not answer leaves the listener waiting for a model
+  // that never arrives, which otherwise reads as a button that never appeared.
+  expect(mirror.stats.errors, 'the mirror failed to serve the model').toEqual([]);
   await mirror.close();
 });
 
