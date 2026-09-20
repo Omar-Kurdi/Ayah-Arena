@@ -47,7 +47,7 @@ refactors and the wider verification pipeline.
 | `SKY-C304 drill/useDrillSession.ts:61` (144 lines) | The round's state machine: five actions, each short, over one set of state. Splitting it further would spread one transition across files to satisfy a line count. Its complexity is under the limit. |
 | `SKY-C304 ListenCheck.tsx:21` (93 lines) | Split in stage 9: the listening lifecycle moved to `drill/useListening.ts` and the pure decisions to `drill/listening.ts`. Complexity 26 -> under the limit, and it no longer carries `SKY-Q301`. What is left is one arm of markup per stage. |
 | `SKY-C304 drill/useListening.ts:120` (111 lines) | Consent, the model download, the microphone and the finish, in the order they happen. The live-pass loop is its own hook in the same file and is under both limits. Its complexity is under the limit. |
-| `SKY-Q301` + `SKY-C304` `ScopePicker.tsx:51` (12, 178 lines) | Borderline. |
+| `SKY-C304 ScopePicker.tsx:29` (77 lines) | Split in stage 9: the two controls moved to `scope/ScopeChoices.tsx`, which draws one kind of tile for both, and the surah search is a pure function in `scope/matchSurahs.ts` with its own tests. Complexity 12 -> under the limit, and it no longer carries `SKY-Q301`. What is left is the tab bar, the selection line and the sticky Start. |
 | `SKY-Q301` + `SKY-C304` `score.ts:79` `align` (13, 68 lines) | An alignment DP loop; complexity is inherent. |
 | `SKY-C304` `app/page.tsx:15`, `results/[sessionId]/page.tsx:22` | Page components, mostly markup. |
 | `SKY-C304` `listener.ts:109` `startRecording` (95 lines) | Could split the worklet/script-processor fallback out. |
