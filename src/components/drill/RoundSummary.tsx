@@ -2,7 +2,7 @@
 
 import type { RefObject } from 'react';
 import { RecallLegend } from '../AyahRecall';
-import { suggestedGrade } from '../ListenCheck';
+import { suggestedGrade } from './listening';
 import type { RoundResult } from '@/lib/drill';
 import type { Grade, SelfGrade } from '@/lib/score';
 import { dict, num, percent, type Locale } from '@/lib/i18n';

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { keepLit, suggestedGrade } from './ListenCheck';
+import { keepLit, suggestedGrade } from './listening';
 import type { Grade } from '@/lib/score';
 
 // The listening panel's two pure decisions. Everything else about it needs a

@@ -28,7 +28,7 @@ A plain `skylos . -a` still reports all of them; only `--baseline` hides them.
 | `SKY-D216 tests/e2e/model-mirror.ts:93` | The test's model mirror. `isAllowed()` checks the URL against a fixed list of Hugging Face and jsDelivr hosts before the request reaches this line, and the model's own files are re-pointed at a pinned revision. The rule matches `fetch(variable)` syntactically and cannot see either check. |
 | `SKY-D280 src/app/api/drill/{start,answer,reveal}/route.ts` | There are no accounts by design (anonymous httpOnly cookie, see `src/lib/player.ts`). Every route calls `requirePlayerId()`, and `drill.ts:137`/`:165` reject another player's session. `SameSite=Lax` keeps the cookie off cross-site POSTs. (Separate, unflagged: there is no rate limiting.) |
 | `SKY-D230 src/app/locale/route.ts:21` | The open redirect was real and is fixed. The rule matches any `redirect()` with a variable. The target is now resolved and its origin compared with the site's; `/\x`, tab, newline, `//x` and absolute URLs all land on `/` (tested against the running server). |
-| `SKY-L007 src/components/ListenCheck.tsx:40, 187` | Both catch blocks carry a comment explaining why ignoring the error is safe, which is what the rule asks for. Skylos does not read the comment. |
+| `SKY-L007 drill/listening.ts:30`, `drill/useListening.ts:98` | Both catch blocks carry a comment explaining why ignoring the error is safe, which is what the rule asks for: a private window refusing storage, and a live listening pass that missed. Skylos does not read the comment. |
 | `SKY-Q402 scripts/fetch-quran.mjs:72` | Pagination: each page request depends on the previous one. |
 | `SKY-Q402 scripts/fetch-quran.mjs:274, 276` | Sequential on purpose: one surah at a time, politely, with per-surah progress. |
 | `SKY-Q402 scripts/fetch-quran.mjs:194` | Reads 114 small local files once in a one-off dev script. Not worth parallelising. |
@@ -45,7 +45,8 @@ refactors and the wider verification pipeline.
 |---|---|
 | `SKY-C304 DrillClient.tsx:22` (110 lines) | Split in stage 9: the session moved to `drill/useDrillSession.ts` and the sections to `drill/`. Complexity 33 -> under the limit, and it no longer carries `SKY-Q301`. What is left is a page of layout. |
 | `SKY-C304 drill/useDrillSession.ts:61` (144 lines) | The round's state machine: five actions, each short, over one set of state. Splitting it further would spread one transition across files to satisfy a line count. Its complexity is under the limit. |
-| `SKY-Q301` + `SKY-C304` `ListenCheck.tsx:77` (24, 208 lines) | Worth splitting. |
+| `SKY-C304 ListenCheck.tsx:21` (93 lines) | Split in stage 9: the listening lifecycle moved to `drill/useListening.ts` and the pure decisions to `drill/listening.ts`. Complexity 26 -> under the limit, and it no longer carries `SKY-Q301`. What is left is one arm of markup per stage. |
+| `SKY-C304 drill/useListening.ts:120` (111 lines) | Consent, the model download, the microphone and the finish, in the order they happen. The live-pass loop is its own hook in the same file and is under both limits. Its complexity is under the limit. |
 | `SKY-Q301` + `SKY-C304` `ScopePicker.tsx:51` (12, 178 lines) | Borderline. |
 | `SKY-Q301` + `SKY-C304` `score.ts:79` `align` (13, 68 lines) | An alignment DP loop; complexity is inherent. |
 | `SKY-C304` `app/page.tsx:15`, `results/[sessionId]/page.tsx:22` | Page components, mostly markup. |
