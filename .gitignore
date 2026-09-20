@@ -25,3 +25,9 @@ scripts/asr-spike/results-own.json
 # scripts/skylos-baseline.mjs. Its lookup cache is rebuilt on every scan.
 .skylos/cache/
 .skylos/baseline.json
+
+# Playwright: the end-to-end build, its reports and failure artifacts.
+.next-e2e/
+test-results/
+playwright-report/
+blob-report/
