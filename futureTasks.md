@@ -52,7 +52,7 @@ come back". Judging tajweed or pronunciation quality stays off the table.
 | Task | Priority | Status | Notes |
 |---|---|---|---|
 | Full Arabic UI (RTL, Arabic-Indic numerals, Amiri + IBM Plex Sans Arabic) | P1 | ✅ | Language kept in a cookie, not the URL, so shared links open in the reader's language. Tab title stays "Arena". |
-| Native-speaker review of the Arabic copy | P1 | ⬜ | Written to match the English tone; needs a native eye, especially the verdicts and results lines. |
+| Native-speaker review of the Arabic copy | P1 | ⬜ | Written to match the English tone; needs a native eye, especially the verdicts and results lines. `README.ar.md` needs the same read-through. |
 | Check the "+١١٤" points figure in RTL | P3 | ⬜ | Bidi may put the plus sign on the unexpected side. |
 
 ## Picker and drill UX

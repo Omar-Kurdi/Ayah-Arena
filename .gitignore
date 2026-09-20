@@ -5,13 +5,18 @@ next-env.d.ts
 *.tsbuildinfo
 .env*.local
 
-# personal, per-machine Claude Code settings
-.claude/settings.local.json
-
-# The project instructions Claude Code loads are tracked at .claude/CLAUDE.md.
-# A CLAUDE.md anywhere else is someone's own working copy of them, kept local.
+# A CLAUDE.md outside .claude/ is someone's own working copy, kept local.
 CLAUDE.md
+
+# Claude Code's own directory. Nothing in it is committed except the project
+# instructions the whole team shares and the dev-server launch config, so
+# personal settings and anything the tool writes there stay on the machine.
+.claude/*
 !.claude/CLAUDE.md
+!.claude/launch.json
+
+# Where start.sh keeps the running server's pid and log.
+.run/
 
 # Source archives for the mushaf fonts. Everything the app uses is extracted
 # into public/fonts; these are only the downloads it came from.

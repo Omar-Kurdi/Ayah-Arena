@@ -32,7 +32,10 @@ Node 22.5 or newer: progress is stored through `node:sqlite`, which does not exi
 that. CI runs Node 22 LTS, which is the floor this project holds itself to.
 
 ```bash
-npm run dev               # dev server at http://localhost:3210
+./start.sh                # dev server at http://localhost:3210, in its own session
+./start.sh --prod         # build, then serve it the way it is deployed
+./stop.sh                 # stop whichever one is running (pid in .run/, gitignored)
+npm run dev               # the same dev server, in the foreground
 npm run build             # production build
 npm run fetch:quran       # refetch all 114 surahs + rebuild data/index.json
 npm run fetch:quran -- 2 112   # refetch only these surahs, then rebuild the index

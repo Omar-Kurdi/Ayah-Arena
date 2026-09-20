@@ -1,5 +1,7 @@
 # Ayah Arena
 
+[العربية](README.ar.md)
+
 A social Quran recitation-challenge webapp: one ayah appears, you give the next one.
 
 ![Ayah Arena](assets/Ayah-Arena.png)
@@ -14,8 +16,14 @@ Node 22.5 or newer — progress is stored through Node's built-in `node:sqlite`,
 not exist before that. CI runs Node 22 LTS.
 
 ```bash
-npm install
+./start.sh            # the dev server, at http://localhost:3210
+./start.sh --prod     # a production build, served the way it is deployed
+./stop.sh             # stop whichever one you started
 ```
+
+The server runs in its own session, so closing the terminal does not take it with it, and
+its log is at `.run/server.log`. To drive it yourself instead: `npm install`, then
+`npm run dev`.
 
 Quran text is fetched once and committed to `data/`, so no API key and no network call
 at runtime. All 6,236 ayat are already fetched; to refresh them:
@@ -27,18 +35,7 @@ npm run fetch:quran
 Pass surah numbers to refresh only some (`npm run fetch:quran -- 2 112`); the index is
 rebuilt from every surah file on disk either way.
 
-```bash
-npm run dev
-```
-
-The app runs at http://localhost:3210. Progress lands in `.data/ayah-arena.db`
-(SQLite, gitignored).
-
-```bash
-npm run check
-```
-
-Runs the scope, normalization and scoring checks against all 6,236 real ayat.
+Progress lands in `.data/ayah-arena.db` (SQLite, gitignored) — delete it to start over.
 
 ## Checks and tests
 
