@@ -1,10 +1,22 @@
 # Skylos baseline review
 
-`baseline.json` holds 49 findings, every one reviewed by hand on 2026-09-19
-against Skylos 4.37.0 (`skylos . -a`). It started at 47; `SKY-R105` was fixed
-in stage 3, and three entries moved line when that stage edited their files. None was accepted because it was
-inconvenient to investigate. Findings that were real and fixable were fixed
-instead of baselined (see the end of this file).
+`baseline.json` holds 48 findings, every one reviewed by hand against Skylos
+4.37.0 (`skylos . -a`): first on 2026-09-19, and again as each stage changed
+the code. None was accepted because it was inconvenient to investigate.
+Findings that were real and fixable were fixed instead of baselined (see
+"Fixed instead of baselined" below).
+
+How it got here: 47 at the first review, 49 by the end of stage 8 as the
+listener test and its fixtures brought code of their own, and 48 after
+stage 9. Stage 9 was the
+refactoring stage, and it ended three `SKY-Q301` complexity findings by
+splitting the code that earned them -- `DrillClient` (33), `ListenCheck` (26)
+and `ScopePicker` (12) are all under the limit now. Two of the pieces they
+were split into, `drill/useDrillSession.ts` and `drill/useListening.ts`, are
+long enough to earn `SKY-C304` of their own, and those are accepted below.
+Line numbers move whenever a file is edited, so several entries in the same
+files moved with them; every add, removal and move was read one at a time
+against the previous baseline.
 
 A plain `skylos . -a` still reports all of them; only `--baseline` hides them.
 
@@ -36,10 +48,13 @@ A plain `skylos . -a` still reports all of them; only `--baseline` hides them.
 | `SKY-Q402 scripts/asr-spike/eval.mjs:162, 173` | A benchmark that times each clip; running clips concurrently would corrupt the timing it measures. |
 | `SKY-T105 src/lib/quran.ts:124, 138`, `scripts/check-scoring.ts:19` | The JSON is the app's own committed data, written by `scripts/fetch-quran.mjs` (which throws on any mismatch) and checked in full by `npm run check`. It never comes from users. |
 
-## Accepted: genuine debt, deferred to a later stage (19)
+## Accepted: genuine debt, weighed and left (18)
 
-These are accurate. They are not fixed now because this stage excludes
-refactors and the wider verification pipeline.
+These are accurate. Stage 9 fixed the three worth fixing; what is left is
+here with the reason it is left. "Long" is not the same as "tangled": every
+one of these is now under the complexity limit except `align`, and what they
+have in common is length that comes from markup, data or a sequence of steps
+that reads better in one place.
 
 | Fingerprint | Note |
 |---|---|
@@ -48,14 +63,14 @@ refactors and the wider verification pipeline.
 | `SKY-C304 ListenCheck.tsx:21` (93 lines) | Split in stage 9: the listening lifecycle moved to `drill/useListening.ts` and the pure decisions to `drill/listening.ts`. Complexity 26 -> under the limit, and it no longer carries `SKY-Q301`. What is left is one arm of markup per stage. |
 | `SKY-C304 drill/useListening.ts:120` (111 lines) | Consent, the model download, the microphone and the finish, in the order they happen. The live-pass loop is its own hook in the same file and is under both limits. Its complexity is under the limit. |
 | `SKY-C304 ScopePicker.tsx:29` (77 lines) | Split in stage 9: the two controls moved to `scope/ScopeChoices.tsx`, which draws one kind of tile for both, and the surah search is a pure function in `scope/matchSurahs.ts` with its own tests. Complexity 12 -> under the limit, and it no longer carries `SKY-Q301`. What is left is the tab bar, the selection line and the sticky Start. |
-| `SKY-Q301` + `SKY-C304` `score.ts:79` `align` (13, 68 lines) | An alignment DP loop; complexity is inherent. |
+| `SKY-Q301` + `SKY-C304` `score.ts:79` `align` (13, 68 lines) | A Needleman-Wunsch alignment: a scoring loop and a traceback, and the branches are the algorithm. Splitting it would hide it. Covered in full by `npm run check` and the unit tests. |
 | `SKY-C304` `app/page.tsx:15`, `results/[sessionId]/page.tsx:22` | Page components, mostly markup. |
-| `SKY-C304` `listener.ts:109` `startRecording` (95 lines) | Could split the worklet/script-processor fallback out. |
-| `SKY-C304` `Rosette.tsx:23`, `store.ts:62`, `drill.ts:154`, `drill.ts:242`, `fetch-quran.mjs:186`, `eval.mjs:149` | Over the 50-line default (SVG markup, SQL DDL, dev scripts). The threshold may be the better thing to tune. |
-| `SKY-R103 pyproject.toml:7` | No `[tool.skylos.gate]` policy. Belongs to the CI-gate stage. |
-| `SKY-R104` (repo root) | No pre-commit policy. Belongs to the pipeline stage. |
+| `SKY-C304` `listener.ts:131` `startRecording` (87 lines) | The AudioWorklet path and the ScriptProcessor fallback for browsers without it. The fallback has no automated coverage -- the listener end-to-end test exercises whichever path Chromium takes -- and splitting untested code to satisfy a line count is the wrong trade. Worth revisiting if the fallback ever gets a test. |
+| `SKY-C304` `Rosette.tsx:23`, `store.ts:68`, `drill.ts:154`, `drill.ts:242`, `fetch-quran.mjs:186`, `eval.mjs:149` | Over the 50-line default (SVG markup, SQL DDL, dev scripts). The threshold may be the better thing to tune. |
+| `SKY-R103 pyproject.toml:7` | No `[tool.skylos.gate]` policy. The gate this project actually uses is `scripts/skylos-baseline.mjs check` in CI, which fails on any new finding -- stricter than the thresholds `[tool.skylos.gate]` would set. Adding the section to quiet the rule would be configuration written for the checker, not for the project. |
+| `SKY-R104` (repo root) | No pre-commit policy file. The same checks run through `npm run verify` and on every pull request; a hook file would be a second place to keep them in step. Declined deliberately, not overlooked. |
 
-## Fixed instead of baselined (9)
+## Fixed instead of baselined (12)
 
 - `SKY-D230 src/app/locale/route.ts:16`: exploitable open redirect
   (`/locale?next=/%5Cevil.example` returned `307 http://evil.example/`).
@@ -64,6 +79,13 @@ refactors and the wider verification pipeline.
   `juzEntry` (quran.ts), `dictionaries` (i18n.ts), `SAMPLE_RATE` (listener.ts).
 - `SKY-R105 package.json:1` ("no npm script runs tsc"): fixed in stage 3 by the
   `typecheck` script, so the entry left the baseline.
+- `SKY-Q301` on `DrillClient` (complexity 33), `ListenCheck` (26) and
+  `ScopePicker` (12): fixed in stage 9 by splitting each one along its own
+  seams -- the session and its clock out of the drill, the listening lifecycle
+  out of the panel, the two controls and the surah search out of the picker.
+  The behaviour is unchanged and the browser and listener suites both say so.
+  The decisions that came out as pure functions (`recallWords`, `matchSurahs`)
+  gained unit tests they could not have had inside a component.
 
 ## How the baseline is stored, and why
 
