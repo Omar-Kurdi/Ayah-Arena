@@ -2,6 +2,7 @@ import { mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { defineConfig, devices } from '@playwright/test';
+import { fixtureWav } from './scripts/listener-fixtures.mjs';
 
 /**
  * End-to-end tests against a production build, never `next dev`.
@@ -13,6 +14,8 @@ import { defineConfig, devices } from '@playwright/test';
 
 const PORT = Number(process.env.E2E_PORT ?? 3399);
 const HOST = process.env.E2E_HOST ?? '127.0.0.1';
+// Chromium plays this file whenever the page opens the microphone.
+const FIXTURE_WAV = fixtureWav();
 const ORIGIN = `http://${HOST}:${PORT}`;
 const DIST = process.env.NEXT_DIST_DIR ?? '.next-e2e';
 
@@ -40,7 +43,7 @@ export default defineConfig({
     {
       name: 'desktop',
       use: { ...devices['Desktop Chrome'] },
-      testIgnore: /layout-375\.spec\.ts/,
+      testIgnore: /(layout-375|listener)\.spec\.ts/,
     },
     {
       // The phone width the layout rules are written for. Only the layout
@@ -48,6 +51,28 @@ export default defineConfig({
       name: 'mobile-375',
       use: { ...devices['Desktop Chrome'], viewport: { width: 375, height: 812 } },
       testMatch: /layout-375\.spec\.ts/,
+    },
+    {
+      // The real microphone path. Chromium plays a recitation into a fake
+      // capture device, and the listener downloads and runs its model, so this
+      // project is slow and deliberately left out of `npm run test:e2e`.
+      name: 'listener',
+      testMatch: /listener\.spec\.ts/,
+      timeout: 5 * 60_000,
+      expect: { timeout: 60_000 },
+      use: {
+        ...devices['Desktop Chrome'],
+        // The full browser, not chrome-headless-shell: the shell has no media
+        // capture, so a fake microphone is "NotSupportedError" there.
+        channel: 'chromium',
+        permissions: ['microphone'],
+        launchOptions: {
+          args: [
+            '--use-fake-device-for-media-stream',
+            `--use-file-for-fake-audio-capture=${FIXTURE_WAV}`,
+          ],
+        },
+      },
     },
   ],
   webServer: {

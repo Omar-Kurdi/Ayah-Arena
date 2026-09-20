@@ -31,3 +31,7 @@ scripts/asr-spike/results-own.json
 test-results/
 playwright-report/
 blob-report/
+
+# Listener end-to-end fixtures: the recitation and the mirrored speech model,
+# fetched by scripts/listener-fixtures.mjs.
+.cache/

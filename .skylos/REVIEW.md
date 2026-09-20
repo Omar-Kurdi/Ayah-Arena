@@ -1,6 +1,6 @@
 # Skylos baseline review
 
-`baseline.json` holds 46 findings, every one reviewed by hand on 2026-09-19
+`baseline.json` holds 48 findings, every one reviewed by hand on 2026-09-19
 against Skylos 4.37.0 (`skylos . -a`). It started at 47; `SKY-R105` was fixed
 in stage 3, and three entries moved line when that stage edited their files. None was accepted because it was
 inconvenient to investigate. Findings that were real and fixable were fixed
@@ -15,7 +15,7 @@ A plain `skylos . -a` still reports all of them; only `--baseline` hides them.
 | `dead:unused_variables:nextConfig` | `next.config.mjs` default-exports it; Next.js loads that file by convention. Its webpack alias is what lets the listener worker build. |
 | `SKY-E003 postcss.config.mjs:1` | Next.js loads `postcss.config.mjs` by convention. It is the only thing that runs Tailwind (`@import 'tailwindcss'` in globals.css). |
 
-## Accepted: verified false positives (25)
+## Accepted: verified false positives (27)
 
 | Fingerprint | Why it is wrong |
 |---|---|
@@ -23,6 +23,8 @@ A plain `skylos . -a` still reports all of them; only `--baseline` hides them.
 | `dead:unused_functions:closing` | Called at `src/app/results/[sessionId]/page.tsx:58`, from ResultsPage. Same Skylos inconsistency. |
 | `SKY-D212 src/lib/store.ts:69, 70, 71, 129` | `handle.exec(...)` is `node:sqlite` `DatabaseSync.exec` with constant SQL. `child_process` is not imported. The rule matches any `.exec(` member call. |
 | `SKY-D216 scripts/fetch-quran.mjs:36`, `scripts/asr-spike/eval.mjs:97` | Local developer CLI scripts, not server code. Host is hard-coded (`api.quran.com`); surah numbers are validated 1-114. No attacker-controlled input reaches `fetch`. |
+| `SKY-D216 scripts/listener-fixtures.mjs:70` | Fetches the recitation for the listener test. The URL comes from a Quran.com API response, and the three lines above the `fetch` reject any host but Quran.com's own audio hosts -- the allowlist the rule asks for. Developer tooling, never server code. |
+| `SKY-D216 tests/e2e/model-mirror.ts:91` | The test's model mirror. `isAllowed()` checks the URL against a fixed list of Hugging Face and jsDelivr hosts before the request reaches this line, and the model's own files are re-pointed at a pinned revision. The rule matches `fetch(variable)` syntactically and cannot see either check. |
 | `SKY-D280 src/app/api/drill/{start,answer,reveal}/route.ts` | There are no accounts by design (anonymous httpOnly cookie, see `src/lib/player.ts`). Every route calls `requirePlayerId()`, and `drill.ts:137`/`:165` reject another player's session. `SameSite=Lax` keeps the cookie off cross-site POSTs. (Separate, unflagged: there is no rate limiting.) |
 | `SKY-D230 src/app/locale/route.ts:21` | The open redirect was real and is fixed. The rule matches any `redirect()` with a variable. The target is now resolved and its origin compared with the site's; `/\x`, tab, newline, `//x` and absolute URLs all land on `/` (tested against the running server). |
 | `SKY-L007 src/components/ListenCheck.tsx:40, 187` | Both catch blocks carry a comment explaining why ignoring the error is safe, which is what the rule asks for. Skylos does not read the comment. |
