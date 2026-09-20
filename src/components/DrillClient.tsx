@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Rosette, RosetteRow } from './Rosette';
 import { MushafPage, AyahLine, PendingMarker, MARKER_SIZE } from './MushafPage';
@@ -37,12 +38,14 @@ function verdict(accuracy: number, locale: Locale): string {
 
 const SELF_GRADES: SelfGrade[] = ['got_it', 'almost', 'not_yet'];
 
+/** Server messages are English and written for developers. The Arabic
+ *  interface shows its own message rather than leaking one. */
+function failure(err: unknown, fallback: string, locale: Locale): string {
+  return locale === 'ar' || !(err instanceof Error) ? fallback : err.message;
+}
+
 export function DrillClient({ config, locale }: { config: DrillConfig; locale: Locale }) {
   const t = dict(locale).drill;
-  // Server messages are English and written for developers. The Arabic
-  // interface shows its own message rather than leaking one.
-  const failure = (err: unknown, fallback: string) =>
-    locale === 'ar' || !(err instanceof Error) ? fallback : err.message;
   const router = useRouter();
   const [phase, setPhase] = useState<Phase>('loading');
   const [error, setError] = useState<string | null>(null);
@@ -63,7 +66,9 @@ export function DrillClient({ config, locale }: { config: DrillConfig; locale: L
   // Once a reader turns listening on, later rounds open ready to listen.
   const [listenOn, setListenOn] = useState(config.listen);
 
-  const startedAt = useRef<number>(Date.now());
+  // Set when the round actually starts, not while rendering: reading the
+  // clock during render is not a pure render.
+  const startedAt = useRef<number>(0);
   // In recite-aloud mode the clock stops when the ayah is revealed, so time
   // spent choosing an honest self-grade never costs anything.
   const frozenMs = useRef<number | null>(null);
@@ -92,11 +97,12 @@ export function DrillClient({ config, locale }: { config: DrillConfig; locale: L
         setPhase('prompting');
         startedAt.current = Date.now();
       } catch (err) {
-        setError(failure(err, t.couldNotStart));
+        setError(failure(err, t.couldNotStart, locale));
         setPhase('error');
       }
     })();
-  }, [config]);
+    // `t` is dict(locale): one stable object per locale.
+  }, [config, t, locale]);
 
   // A quiet elapsed count, not a countdown. Speed can only ever add points.
   useEffect(() => {
@@ -147,13 +153,13 @@ export function DrillClient({ config, locale }: { config: DrillConfig; locale: L
         setPhase('revealed');
         headingRef.current?.focus();
       } catch (err) {
-        setError(failure(err, t.couldNotSave));
+        setError(failure(err, t.couldNotSave, locale));
         setPhase('error');
       } finally {
         setSubmitting(false);
       }
     },
-    [sessionId, prompt, text, submitting]
+    [sessionId, prompt, text, submitting, t, locale]
   );
 
   const fetchAnswer = useCallback(async (): Promise<AnswerPayload> => {
@@ -165,7 +171,7 @@ export function DrillClient({ config, locale }: { config: DrillConfig; locale: L
     const data = await res.json();
     if (!res.ok) throw new Error(data.error ?? t.couldNotReveal);
     return data.answer;
-  }, [sessionId, prompt]);
+  }, [sessionId, prompt, t]);
 
   const reveal = useCallback(async () => {
     if (!sessionId || !prompt) return;
@@ -175,10 +181,10 @@ export function DrillClient({ config, locale }: { config: DrillConfig; locale: L
       setRevealed(await fetchAnswer());
       setPhase('revealed');
     } catch (err) {
-      setError(failure(err, t.couldNotReveal));
+      setError(failure(err, t.couldNotReveal, locale));
       setPhase('error');
     }
-  }, [sessionId, prompt, fetchAnswer]);
+  }, [sessionId, prompt, fetchAnswer, t, locale]);
 
   const advance = useCallback(() => {
     if (!result) return;
@@ -211,12 +217,12 @@ export function DrillClient({ config, locale }: { config: DrillConfig; locale: L
       <div className="mx-auto max-w-md rounded-lg border border-night-edge bg-night-raised p-6 text-center">
         <h2 className="text-2xl">{t.didNotStart}</h2>
         <p className="mt-2 text-muted">{error}</p>
-        <a
+        <Link
           href="/"
           className="mt-5 inline-block rounded-lg border border-brass px-5 py-2.5 text-brass"
         >
           {t.backToStart}
-        </a>
+        </Link>
       </div>
     );
   }

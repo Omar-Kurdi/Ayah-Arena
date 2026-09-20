@@ -27,14 +27,15 @@ export function AyahRecall({
   glyphs: Glyph[];
   text: string;
 }) {
+  const statuses: WordStatus[] = [];
   let next = 0;
-  const statuses = glyphs.map((glyph): WordStatus => {
+  for (const glyph of glyphs) {
     const covered = words.slice(next, next + (glyph.n ?? 1)).map((w) => w.status);
     next += glyph.n ?? 1;
-    if (covered.every((s) => s === 'exact')) return 'exact';
-    if (covered.every((s) => s === 'missed')) return 'missed';
-    return 'close';
-  });
+    if (covered.every((s) => s === 'exact')) statuses.push('exact');
+    else if (covered.every((s) => s === 'missed')) statuses.push('missed');
+    else statuses.push('close');
+  }
 
   return <QuranGlyphs glyphs={glyphs} text={text} statuses={statuses} />;
 }

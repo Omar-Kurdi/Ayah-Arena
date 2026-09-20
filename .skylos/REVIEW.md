@@ -1,7 +1,8 @@
 # Skylos baseline review
 
-`baseline.json` holds 47 findings, every one reviewed by hand on 2026-09-19
-against Skylos 4.37.0 (`skylos . -a`). None was accepted because it was
+`baseline.json` holds 46 findings, every one reviewed by hand on 2026-09-19
+against Skylos 4.37.0 (`skylos . -a`). It started at 47; `SKY-R105` was fixed
+in stage 3, and three entries moved line when that stage edited their files. None was accepted because it was
 inconvenient to investigate. Findings that were real and fixable were fixed
 instead of baselined (see the end of this file).
 
@@ -32,7 +33,7 @@ A plain `skylos . -a` still reports all of them; only `--baseline` hides them.
 | `SKY-Q402 scripts/asr-spike/eval.mjs:162, 173` | A benchmark that times each clip; running clips concurrently would corrupt the timing it measures. |
 | `SKY-T105 src/lib/quran.ts:124, 138`, `scripts/check-scoring.ts:19` | The JSON is the app's own committed data, written by `scripts/fetch-quran.mjs` (which throws on any mismatch) and checked in full by `npm run check`. It never comes from users. |
 
-## Accepted: genuine debt, deferred to a later stage (20)
+## Accepted: genuine debt, deferred to a later stage (19)
 
 These are accurate. They are not fixed now because this stage excludes
 refactors and the wider verification pipeline.
@@ -48,15 +49,16 @@ refactors and the wider verification pipeline.
 | `SKY-C304` `Rosette.tsx:23`, `store.ts:62`, `drill.ts:154`, `drill.ts:242`, `fetch-quran.mjs:186`, `eval.mjs:149` | Over the 50-line default (SVG markup, SQL DDL, dev scripts). The threshold may be the better thing to tune. |
 | `SKY-R103 pyproject.toml:7` | No `[tool.skylos.gate]` policy. Belongs to the CI-gate stage. |
 | `SKY-R104` (repo root) | No pre-commit policy. Belongs to the pipeline stage. |
-| `SKY-R105 package.json:1` | No npm script runs `tsc`. Belongs to the pipeline stage. |
 
-## Fixed instead of baselined (8)
+## Fixed instead of baselined (9)
 
 - `SKY-D230 src/app/locale/route.ts:16`: exploitable open redirect
   (`/locale?next=/%5Cevil.example` returned `307 http://evil.example/`).
 - `dead:unused_functions:juzEntries`, `sourceMeta` (`src/lib/quran.ts`): removed.
 - `SKY-E004` unnecessary exports: `SURAH_COUNT`, `JUZ_COUNT`, `surahEntries`,
   `juzEntry` (quran.ts), `dictionaries` (i18n.ts), `SAMPLE_RATE` (listener.ts).
+- `SKY-R105 package.json:1` ("no npm script runs tsc"): fixed in stage 3 by the
+  `typecheck` script, so the entry left the baseline.
 
 ## How the baseline is stored, and why
 
@@ -121,8 +123,10 @@ installed `next@15.5.23` (from `package-lock.json`) returns two CRITICAL
 unauthenticated RCE advisories, `GHSA-2xp9-vwfh-vxw4` (image optimization, AVIF)
 and `GHSA-p293-qw3h-jr36` (Windows-hosted servers only), both fixed in
 **15.5.24**. The declared `^15.5.0` range already allows that, so an update
-fixes it without touching `package.json`. Until dependency scanning is covered
-properly, treat `npm audit` (or OSV directly) as the source of truth.
+fixes it without touching `package.json`. Dependency scanning is therefore a separate gate:
+`npm run audit:prod` (`npm audit --omit=dev --audit-level=high`), which reads
+the committed `package-lock.json`. Skylos findings and dependency advisories
+stay separate things; neither substitutes for the other.
 
 ## `skylos verify` is not a gate
 

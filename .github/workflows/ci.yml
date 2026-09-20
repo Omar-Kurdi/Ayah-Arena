@@ -1,7 +1,8 @@
 name: CI
 
-# Stage 2: prove the repository's Skylos gate works on a clean runner.
-# Typecheck, lint, tests and the dependency audit arrive in later stages.
+# The fast gate: the same checks `npm run verify` runs locally, in one job so
+# dependencies are installed once. Tests and browser runs arrive in later
+# stages.
 
 on:
   pull_request:
@@ -16,8 +17,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  skylos:
-    name: Skylos baseline gate
+  verify:
+    name: Fast checks
     runs-on: ubuntu-latest
     steps:
       # Actions are pinned to a commit: a tag can be moved under us.
@@ -43,6 +44,18 @@ jobs:
       # Skylos is a developer CLI, not a project dependency, so it is installed
       # the same way as locally: pipx, pinned to the version the baseline was
       # reviewed against.
+      - run: npm run typecheck
+
+      - run: npm run lint
+
+      # Grading, normalization and glyph alignment over all 6,236 ayat.
+      - run: npm run check
+
+      # Dependency vulnerabilities, kept separate from Skylos: Skylos 4.37.0
+      # cannot resolve this project's caret ranges (see .skylos/REVIEW.md), so
+      # npm audit is the dependency gate.
+      - run: npm run audit:prod
+
       - name: Install Skylos
         run: |
           pipx install skylos==4.37.0
@@ -53,7 +66,7 @@ jobs:
       # then runs the strict gate. The baseline is never regenerated here: a new
       # finding has to fail, not be quietly accepted.
       - name: Skylos baseline gate
-        run: node scripts/skylos-baseline.mjs check
+        run: npm run skylos
 
       # The gate is only trustworthy if the run left the reviewed baseline
       # alone and kept the generated one out of the repository.

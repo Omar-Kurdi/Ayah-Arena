@@ -94,7 +94,15 @@ export function ListenCheck({
   onHeard: (answer: AnswerPayload, grade: Grade | null) => void;
 }) {
   const t = dict(locale).drill.listen;
-  const [stage, setStage] = useState<Stage>({ name: 'idle' });
+  // A listening round is open from the moment it mounts, so the opening stage
+  // is decided here rather than by setting state from an effect.
+  const [stage, setStage] = useState<Stage>(() =>
+    !autoOpen
+      ? { name: 'idle' }
+      : hasConsent()
+        ? { name: 'loading', fraction: null }
+        : { name: 'consent' }
+  );
   const [words, setWords] = useState<Grade['words']>([]);
   const answer = useRef<AnswerPayload | null>(null);
   const recording = useRef<Recording | null>(null);
@@ -104,8 +112,8 @@ export function ListenCheck({
   // Release the microphone if the reader leaves mid-recitation.
   useEffect(() => () => recording.current?.stop(), []);
 
+  // The caller puts the panel into its loading stage; this only does the work.
   const prepare = async () => {
-    setStage({ name: 'loading', fraction: null });
     try {
       const [ans] = await Promise.all([
         fetchAnswer(),
@@ -122,12 +130,14 @@ export function ListenCheck({
   };
 
   const open = () => {
-    if (hasConsent()) void prepare();
-    else setStage({ name: 'consent' });
+    if (!hasConsent()) return setStage({ name: 'consent' });
+    setStage({ name: 'loading', fraction: null });
+    void prepare();
   };
 
   useEffect(() => {
-    if (autoOpen) open();
+    // Only starts the work: the opening stage is already set above.
+    if (autoOpen && hasConsent()) void prepare();
     // Once per round; the component is keyed by round.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -222,7 +232,7 @@ export function ListenCheck({
               className={primary}
               onClick={() => {
                 rememberConsent();
-                void prepare();
+                open();
               }}
             >
               {t.agree}

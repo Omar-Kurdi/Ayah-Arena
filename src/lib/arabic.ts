@@ -22,7 +22,9 @@
 // "mihaadan" into m-h-d while the keyboard spelling is m-h-a-d, and then
 // nothing a reader types can ever match -- 170 of juz 30's 564 ayat diverge.
 const MARKS = new RegExp(
-  '[\\u0610-\\u061A\\u064B-\\u065F\\u0640\\u06D6-\\u06ED\\u08D3-\\u08FF]',
+  // Tatweel (0640) is listed last on purpose: a base letter written directly
+  // before a combining range reads as one grapheme, here and to linters.
+  '[\\u0610-\\u061A\\u064B-\\u065F\\u06D6-\\u06ED\\u08D3-\\u08FF\\u0640]',
   'g'
 );
 
