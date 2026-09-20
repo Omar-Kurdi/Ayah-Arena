@@ -61,7 +61,7 @@ const RANK = { missed: 0, close: 1, exact: 2 } as const;
 
 /** A live dot, once lit, stays lit: a pass that only hears the tail of the
  *  recording should not put out the words before it. */
-function keepLit(before: Grade['words'], now: Grade['words']): Grade['words'] {
+export function keepLit(before: Grade['words'], now: Grade['words']): Grade['words'] {
   return now.map((w, i) => (before[i] && RANK[before[i].status] > RANK[w.status] ? before[i] : w));
 }
 

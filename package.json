@@ -10,9 +10,11 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings=0",
     "check": "node --import ./scripts/ts-resolve.mjs scripts/check-scoring.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "skylos": "node scripts/skylos-baseline.mjs check",
     "audit:prod": "npm audit --omit=dev --audit-level=high",
-    "verify": "npm run typecheck && npm run lint && npm run check && npm run skylos && npm run audit:prod",
+    "verify": "npm run typecheck && npm run lint && npm run check && npm test && npm run skylos && npm run audit:prod",
     "fetch:quran": "node --import ./scripts/ts-resolve.mjs scripts/fetch-quran.mjs"
   },
   "dependencies": {
@@ -35,7 +37,8 @@
     "globals": "^17.12.0",
     "tailwindcss": "^4.1.0",
     "typescript": "^5.8.0",
-    "typescript-eslint": "^8.70.0"
+    "typescript-eslint": "^8.70.0",
+    "vitest": "^5.0.1"
   },
   "overrides": {
     "postcss": "^8.5.28",

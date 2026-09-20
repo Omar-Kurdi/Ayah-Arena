@@ -82,6 +82,28 @@ export interface Recording {
   stop(): void;
 }
 
+/** The last `tailSamples` samples of the captured blocks, joined into one
+ *  buffer -- or all of them when `tailSamples` is null. Split out from the
+ *  recorder because it is just arithmetic, and arithmetic can be tested. */
+export function joinTail(
+  blocks: readonly Float32Array[],
+  tailSamples: number | null
+): Float32Array<ArrayBuffer> {
+  const total = blocks.reduce((n, b) => n + b.length, 0);
+  const skip = tailSamples === null ? 0 : Math.max(0, total - tailSamples);
+  const joined = new Float32Array(total - skip);
+  let offset = 0;
+  let seen = 0;
+  for (const block of blocks) {
+    const from = Math.max(0, skip - seen);
+    seen += block.length;
+    if (from >= block.length) continue;
+    joined.set(block.subarray(from), offset);
+    offset += block.length - from;
+  }
+  return joined;
+}
+
 export type MicProblem = 'insecure' | 'deniedSite' | 'deniedApp' | 'missing' | 'other';
 
 /** Why the microphone could not be opened, in terms a reader can act on. A
@@ -169,19 +191,11 @@ export async function startRecording(): Promise<Recording> {
   return {
     seconds: () => length / ctx.sampleRate,
     async snapshot(tailSeconds) {
-      const all = blocks.slice();
-      const total = all.reduce((n, b) => n + b.length, 0);
-      const skip = tailSeconds ? Math.max(0, total - Math.round(tailSeconds * ctx.sampleRate)) : 0;
-      const raw = new Float32Array(total - skip);
-      let offset = 0;
-      let seen = 0;
-      for (const b of all) {
-        const from = Math.max(0, skip - seen);
-        seen += b.length;
-        if (from >= b.length) continue;
-        raw.set(b.subarray(from), offset);
-        offset += b.length - from;
-      }
+      const raw = joinTail(
+        blocks.slice(),
+        tailSeconds ? Math.round(tailSeconds * ctx.sampleRate) : null
+      );
+      const offset = raw.length;
       const frames = Math.max(1, Math.round((offset / ctx.sampleRate) * SAMPLE_RATE));
       const offline = new OfflineAudioContext(1, frames, SAMPLE_RATE);
       const buffer = offline.createBuffer(1, Math.max(1, offset), ctx.sampleRate);

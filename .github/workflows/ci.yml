@@ -51,6 +51,9 @@ jobs:
       # Grading, normalization and glyph alignment over all 6,236 ayat.
       - run: npm run check
 
+      # Unit tests: pure logic only, no browser, server, database or network.
+      - run: npm test
+
       # Dependency vulnerabilities, kept separate from Skylos: Skylos 4.37.0
       # cannot resolve this project's caret ranges (see .skylos/REVIEW.md), so
       # npm audit is the dependency gate.
