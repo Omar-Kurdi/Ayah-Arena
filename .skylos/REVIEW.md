@@ -43,7 +43,8 @@ refactors and the wider verification pipeline.
 
 | Fingerprint | Note |
 |---|---|
-| `SKY-Q301` + `SKY-C304` `DrillClient.tsx:40` (complexity 34, 407 lines) | Worth splitting. The strongest case in the list. |
+| `SKY-C304 DrillClient.tsx:22` (110 lines) | Split in stage 9: the session moved to `drill/useDrillSession.ts` and the sections to `drill/`. Complexity 33 -> under the limit, and it no longer carries `SKY-Q301`. What is left is a page of layout. |
+| `SKY-C304 drill/useDrillSession.ts:61` (144 lines) | The round's state machine: five actions, each short, over one set of state. Splitting it further would spread one transition across files to satisfy a line count. Its complexity is under the limit. |
 | `SKY-Q301` + `SKY-C304` `ListenCheck.tsx:77` (24, 208 lines) | Worth splitting. |
 | `SKY-Q301` + `SKY-C304` `ScopePicker.tsx:51` (12, 178 lines) | Borderline. |
 | `SKY-Q301` + `SKY-C304` `score.ts:79` `align` (13, 68 lines) | An alignment DP loop; complexity is inherent. |
