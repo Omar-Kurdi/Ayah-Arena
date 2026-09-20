@@ -1,0 +1,70 @@
+name: CI
+
+# Stage 2: prove the repository's Skylos gate works on a clean runner.
+# Typecheck, lint, tests and the dependency audit arrive in later stages.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  skylos:
+    name: Skylos baseline gate
+    runs-on: ubuntu-latest
+    steps:
+      # Actions are pinned to a commit: a tag can be moved under us.
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.0.0
+        with:
+          # Nothing here pushes, so the runner keeps no git credentials.
+          persist-credentials: false
+
+      # Node 22 LTS: the app stores progress in node:sqlite, which needs 22.5
+      # or newer. Local development runs a later Node; this pins the floor CI
+      # holds the project to.
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version: '22'
+          cache: npm
+
+      # --ignore-scripts: dependency lifecycle scripts do not run on the
+      # runner. This job only needs the source tree on disk, and the native
+      # packages those scripts fetch (sharp, onnxruntime-node) are not used
+      # by any check here.
+      - run: npm ci --ignore-scripts
+
+      # Skylos is a developer CLI, not a project dependency, so it is installed
+      # the same way as locally: pipx, pinned to the version the baseline was
+      # reviewed against.
+      - name: Install Skylos
+        run: |
+          pipx install skylos==4.37.0
+          skylos --version
+
+      # scripts/skylos-baseline.mjs rebuilds .skylos/baseline.json (gitignored,
+      # absolute paths for this runner) from the committed portable baseline,
+      # then runs the strict gate. The baseline is never regenerated here: a new
+      # finding has to fail, not be quietly accepted.
+      - name: Skylos baseline gate
+        run: node scripts/skylos-baseline.mjs check
+
+      # The gate is only trustworthy if the run left the reviewed baseline
+      # alone and kept the generated one out of the repository.
+      - name: Baseline was not modified by the run
+        run: git diff --exit-code -- .skylos/baseline.portable.json
+
+      - name: Generated baseline stays untracked
+        run: |
+          git check-ignore -q .skylos/baseline.json
+          test -z "$(git status --porcelain)" || {
+            echo 'CI changed tracked files:'
+            git status --porcelain
+            exit 1
+          }
