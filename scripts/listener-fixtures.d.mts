@@ -9,8 +9,9 @@ export declare const MODEL: { id: string; revision: string };
 export declare const FIXTURE: {
   surah: number;
   ayah: number;
-  reciter: number;
   reciterName: string;
+  url: string;
+  sha256: string;
 };
 
 export declare function fixtureWav(): string;

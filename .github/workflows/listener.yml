@@ -49,14 +49,24 @@ jobs:
         run: echo "key=$(node scripts/listener-fixtures.mjs key)" >> "$GITHUB_OUTPUT"
 
       - name: Restore the model and the recitation
+        id: fixture-cache
         if: ${{ !inputs.cold-cache }}
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
           path: .cache/listener
           key: ${{ runner.os }}-${{ steps.fixtures.outputs.key }}
 
-      # ffmpeg converts the recitation to the 16-bit WAV the fake device reads.
-      # Both this and the model download are skipped when the cache was warm.
+      # The Ubuntu runner image does not ship ffmpeg, and the recitation has to
+      # be converted to the 16-bit WAV the fake capture device reads. Only
+      # needed when the cache did not already bring the WAV along.
+      - name: Install ffmpeg
+        if: ${{ steps.fixture-cache.outputs.cache-hit != 'true' }}
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends ffmpeg
+
+      # Downloads the pinned recitation and checks its digest, or confirms the
+      # one the cache restored. The model itself is mirrored by the test run.
       - name: Fetch the recitation
         run: node scripts/listener-fixtures.mjs audio
 
