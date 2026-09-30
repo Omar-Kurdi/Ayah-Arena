@@ -6,6 +6,7 @@
  *   cd scripts/asr-spike && npm install
  *   cd ../.. && node --import ./scripts/ts-resolve.mjs scripts/asr-spike/eval.mjs [ayatCount]
  *   node --import ./scripts/ts-resolve.mjs scripts/asr-spike/eval.mjs --dir ~/recordings
+ *   ... --model <hf-id> --dtype q8    # try a candidate on the same clips
  *
  * The default run uses professional reciters from Quran.com. Those are very
  * likely in the model's training data (Tarteel's EveryAyah set), so a clean
@@ -38,11 +39,24 @@ const HERE = new URL('.', import.meta.url).pathname;
 const CACHE = join(HERE, '.cache');
 env.cacheDir = CACHE;
 
-// The whisper-base Quran fine-tune from Tarteel (Apache-2.0), in the ONNX form
-// transformers.js loads. The int8 encoder needs an operator onnxruntime's CPU
-// backend lacks, so the encoder runs in fp32 and the decoder in 4-bit.
-const MODEL = 'eventhorizon0/tarteel-ai-onnx-whisper-base-ar-quran';
-const DTYPE = { encoder_model: 'fp32', decoder_model_merged: 'q4' };
+/** A named argument: `--model <id>`, `--dtype q8`, `--dtype '{"...":"..."}'`. */
+const flag = (name, fallback) => {
+  const at = process.argv.indexOf(name);
+  return at > -1 && process.argv[at + 1] ? process.argv[at + 1] : fallback;
+};
+
+// The Quran fine-tune of Whisper from Tarteel (Apache-2.0), in the ONNX form
+// transformers.js loads -- by default the one the app ships, so a run with no
+// arguments measures what readers actually get. `--model` and `--dtype` are
+// how a candidate is put through the same clips before it replaces it.
+const MODEL = flag('--model', 'Sharjeelbaig/whisper-tiny-ar-quran-onnx');
+// Matching src/lib/listen/asr.worker.ts: the quantized encoder in this
+// conversion uses ConvInteger, which onnxruntime cannot run, so the encoder
+// stays fp32 and only the decoder is 8-bit.
+const DTYPE = (() => {
+  const raw = flag('--dtype', '{"encoder_model":"fp32","decoder_model_merged":"q8"}');
+  return raw.startsWith('{') ? JSON.parse(raw) : raw;
+})();
 
 // Whisper hears 30 seconds at a time. Longer ayat need chunking, which is its
 // own design problem; this spike counts them and leaves them out.
@@ -149,7 +163,10 @@ const mean = (xs) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : 0)
 async function main() {
   const dirFlag = process.argv.indexOf('--dir');
   const own = dirFlag > -1 ? ownRecordings(process.argv[dirFlag + 1]) : null;
-  const picks = own ?? sample(Number(process.argv[2] ?? 30));
+  // The ayah count is the one bare number on the line, so it can sit before
+  // or after the flags.
+  const count = process.argv.slice(2).find((arg) => /^\d+$/.test(arg));
+  const picks = own ?? sample(Number(count ?? 30));
   const reciters = own ? [{ id: 0, name: 'you', style: 'own recordings' }] : RECITERS;
   const asr = await pipeline('automatic-speech-recognition', MODEL, { dtype: DTYPE });
 
@@ -170,7 +187,9 @@ async function main() {
         continue;
       }
       const started = Date.now();
-      const { text } = await asr(audio);
+      // The same decoding options the app's worker uses, or this measures
+      // something the reader never runs.
+      const { text } = await asr(audio, { language: 'ar', task: 'transcribe' });
       const ms = Date.now() - started;
 
       const right = gradeTyped(expectedAyah(verse), text, 20_000).accuracy;

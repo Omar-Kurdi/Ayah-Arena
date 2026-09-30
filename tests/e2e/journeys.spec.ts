@@ -15,7 +15,7 @@ import {
  * three answer modes.
  *
  * The listening mode is completed through its reveal-and-mark path: the
- * on-device model is a ~200MB download that the reader opts into, and nothing
+ * on-device model is a ~70MB download that the reader opts into, and nothing
  * here opts in. The real microphone path is stage 7.
  */
 
@@ -146,7 +146,9 @@ test.describe('a listening round, without the microphone', () => {
     await startDrill(page, 'listen');
 
     await expect(page.getByRole('heading', { name: 'Listen on this phone' })).toBeVisible();
-    await expect(page.getByText(/about 200MB/)).toBeVisible();
+    await expect(page.getByText(/about 70MB/)).toBeVisible();
+    // The microphone is asked for as they agree, so the panel says so first.
+    await expect(page.getByText(/ask for the microphone once/)).toBeVisible();
     await expect(page.getByText(/Your voice is never uploaded or saved/)).toBeVisible();
     await expect(page.getByRole('button', { name: 'Download and listen' })).toBeVisible();
     await expect(page.getByRole('button', { name: 'Not now' })).toBeVisible();

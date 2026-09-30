@@ -5,7 +5,7 @@
  *   .cache/listener/model/                      the speech model, mirrored
  *
  * Neither belongs in the repository: the audio is someone else's recording and
- * the model is ~196MB. Both are fetched from pinned sources and are identical
+ * the model is ~70MB. Both are fetched from pinned sources and are identical
  * on every machine, so CI can cache them by the key this script prints.
  *
  *   node scripts/listener-fixtures.mjs audio    # ~100KB, needs ffmpeg
@@ -32,8 +32,8 @@ export const MODEL_DIR = join(CACHE, 'model');
  * serves this revision for those requests, and the cache key names it.
  */
 export const MODEL = {
-  id: 'eventhorizon0/tarteel-ai-onnx-whisper-base-ar-quran',
-  revision: '86aa2ae915f3b11c60b4c031774a7b5123477ba5',
+  id: 'Sharjeelbaig/whisper-tiny-ar-quran-onnx',
+  revision: 'cd93bdec117adc2f84d6c4ab91c10164a2e9bee9',
 };
 
 /**

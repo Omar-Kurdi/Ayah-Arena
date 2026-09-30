@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { joinTail, micProblem } from './listener';
+import { joinTail, micPermission, micProblem } from './listener';
 
 // The recorder itself needs Web Audio and a microphone, so it belongs to the
 // listener end-to-end stage. These are the two pieces of it that are ordinary
@@ -84,6 +84,34 @@ describe('micProblem', () => {
     await expect(micProblem(named('NotAllowedError'))).resolves.toBe('deniedSite');
   });
 
+});
+
+describe('micPermission', () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  const withPermission = (state: PermissionState | 'throws') =>
+    vi.stubGlobal('navigator', {
+      permissions: {
+        query: async () =>
+          state === 'throws' ? Promise.reject(new Error('unsupported')) : { state },
+      },
+    });
+
+  // What the panel asks before opening a round it was not clicked into: only
+  // an outright "granted" lets it touch the microphone without being asked to.
+  it.each(['granted', 'denied', 'prompt'] as const)('passes on "%s"', async (state) => {
+    withPermission(state);
+    await expect(micPermission()).resolves.toBe(state);
+  });
+
+  it('says null where the browser has no answer, rather than guessing one', async () => {
+    // Firefox and older Safari have no microphone entry in the Permissions
+    // API, and "no answer" must not be read as "granted".
+    withPermission('throws');
+    await expect(micPermission()).resolves.toBeNull();
+  });
 });
 
 describe('micProblem: every refusal has a reason', () => {

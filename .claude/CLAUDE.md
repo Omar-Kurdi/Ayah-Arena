@@ -86,7 +86,7 @@ Fixtures for the listener are provisioned by `scripts/listener-fixtures.mjs` int
 (gitignored): a recitation pinned by URL and SHA-256, converted to 16kHz mono 16-bit WAV
 with ffmpeg, and the model mirrored at a pinned revision by `tests/e2e/model-mirror.ts`.
 Never commit the model or the audio — the recording is someone else's work and the model is
-~220MB. The listener Playwright project runs one worker at a time: the tests share that
+~70MB. The listener Playwright project runs one worker at a time: the tests share that
 mirrored model.
 
 ## CI
@@ -177,7 +177,9 @@ intentional groundwork for duels being fair later, not just current-feature scop
 
 **The listener runs in the reader's browser, or not at all.** `src/lib/listen/` holds the
 recorder and the worker; `src/components/ListenCheck.tsx` holds the consent panel, which
-comes before any download. transformers.js runs a Whisper fine-tune on-device; the transcript
+comes before any download. Agreeing is also where the browser is asked for the microphone
+(`requestMicrophone`), once, so later rounds and later visits open it without a prompt;
+`drill/useListening.ts` only asks unprompted when the Permissions API already says granted. transformers.js runs a Whisper fine-tune on-device; the transcript
 is graded and discarded, never rendered and never sent anywhere. The result only pre-selects
 a self-grade — the reader still decides. It may not judge tajweed or pronunciation.
 

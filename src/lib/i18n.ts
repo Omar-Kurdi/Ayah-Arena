@@ -144,7 +144,7 @@ const en = {
       open: 'Check by listening',
       consentHeading: 'Listen on this phone',
       consent:
-        'A speech model is downloaded once (about 200MB, from Hugging Face) and then runs on this device. Your voice is never uploaded or saved. It only notices which words came back; it does not judge tajweed or pronunciation.',
+        'A speech model is downloaded once (about 70MB, from Hugging Face) and then runs on this device. Your browser will ask for the microphone once. Your voice is never uploaded or saved. It only notices which words came back; it does not judge tajweed or pronunciation.',
       agree: 'Download and listen',
       notNow: 'Not now',
       preparing: (pct: number) => `Getting the listener ready… ${pct}%`,
@@ -307,7 +307,7 @@ const ar: Dictionary = {
       open: 'تحقّق بالاستماع',
       consentHeading: 'الاستماع على هذا الجهاز',
       consent:
-        'يُنزَّل نموذج للتعرّف على الكلام مرة واحدة (نحو ٢٠٠ ميغابايت، من Hugging Face) ثم يعمل على جهازك. صوتك لا يُرفع ولا يُحفظ. هو يلاحظ الكلمات التي حضرت فقط، ولا يحكم على التجويد أو النطق.',
+        'يُنزَّل نموذج للتعرّف على الكلام مرة واحدة (نحو ٧٠ ميغابايت، من Hugging Face) ثم يعمل على جهازك. وسيطلب المتصفح إذن الميكروفون مرة واحدة. صوتك لا يُرفع ولا يُحفظ. هو يلاحظ الكلمات التي حضرت فقط، ولا يحكم على التجويد أو النطق.',
       agree: 'نزّله واستمع',
       notNow: 'ليس الآن',
       preparing: (pct) => `نجهّز المستمع… ${num(pct, 'ar')}٪`,

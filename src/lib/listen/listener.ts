@@ -106,6 +106,37 @@ export function joinTail(
 
 export type MicProblem = 'insecure' | 'deniedSite' | 'deniedApp' | 'missing' | 'other';
 
+/** What the browser already knows about this site and the microphone, or null
+ *  where it will not say -- Firefox and older Safari have no Permissions API
+ *  entry for it, and "no answer" is not the same as "not granted". */
+export async function micPermission(): Promise<PermissionState | null> {
+  try {
+    const status = await navigator.permissions.query({ name: 'microphone' as PermissionName });
+    return status.state;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Asks for the microphone and lets it go again.
+ *
+ * This is the permission, not a recording: the browser remembers the answer
+ * for the site, so the reader is asked once -- while they are agreeing to
+ * listening, where the question makes sense -- and not again when they start
+ * reciting, nor in any later round or visit. The tracks are stopped
+ * immediately, so no recording indicator is left on.
+ */
+export async function requestMicrophone(): Promise<void> {
+  if (!window.isSecureContext || !navigator.mediaDevices?.getUserMedia) {
+    const err = new Error('microphone needs a secure (https) page');
+    err.name = 'InsecureContextError';
+    throw err;
+  }
+  const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  for (const track of stream.getTracks()) track.stop();
+}
+
 /** Why the microphone could not be opened, in terms a reader can act on. A
  *  refusal with no prompt shown usually means the phone has not given the
  *  browser app itself the microphone, rather than the site being blocked --
@@ -114,12 +145,10 @@ export async function micProblem(err: unknown): Promise<MicProblem> {
   const name = err instanceof DOMException || err instanceof Error ? err.name : '';
   if (name === 'InsecureContextError') return 'insecure';
   if (name === 'NotAllowedError' || name === 'SecurityError' || name === 'PermissionDeniedError') {
-    try {
-      const status = await navigator.permissions.query({ name: 'microphone' as PermissionName });
-      return status.state === 'denied' ? 'deniedSite' : 'deniedApp';
-    } catch {
-      return 'deniedSite';
-    }
+    // A browser that will not say (null) is treated as a site block: that is
+    // the advice the reader can act on.
+    const state = await micPermission();
+    return state === 'denied' || state === null ? 'deniedSite' : 'deniedApp';
   }
   if (name === 'NotFoundError' || name === 'DevicesNotFoundError' || name === 'OverconstrainedError') return 'missing';
   return 'other';

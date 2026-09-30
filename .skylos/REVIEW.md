@@ -1,14 +1,15 @@
 # Skylos baseline review
 
-`baseline.json` holds 48 findings, every one reviewed by hand against Skylos
+`baseline.json` holds 49 findings, every one reviewed by hand against Skylos
 4.37.0 (`skylos . -a`): first on 2026-09-19, and again as each stage changed
 the code. None was accepted because it was inconvenient to investigate.
 Findings that were real and fixable were fixed instead of baselined (see
 "Fixed instead of baselined" below).
 
 How it got here: 47 at the first review, 49 by the end of stage 8 as the
-listener test and its fixtures brought code of their own, and 48 after
-stage 9. Stage 9 was the
+listener test and its fixtures brought code of their own, 48 after stage 9,
+and 49 again when the listening panel took on the microphone permission
+(below). Stage 9 was the
 refactoring stage, and it ended three `SKY-Q301` complexity findings by
 splitting the code that earned them -- `DrillClient` (33), `ListenCheck` (26)
 and `ScopePicker` (12) are all under the limit now. Two of the pieces they
@@ -40,7 +41,7 @@ A plain `skylos . -a` still reports all of them; only `--baseline` hides them.
 | `SKY-D216 tests/e2e/model-mirror.ts:93` | The test's model mirror. `isAllowed()` checks the URL against a fixed list of Hugging Face and jsDelivr hosts before the request reaches this line, and the model's own files are re-pointed at a pinned revision. The rule matches `fetch(variable)` syntactically and cannot see either check. |
 | `SKY-D280 src/app/api/drill/{start,answer,reveal}/route.ts` | There are no accounts by design (anonymous httpOnly cookie, see `src/lib/player.ts`). Every route calls `requirePlayerId()`, and `drill.ts:137`/`:165` reject another player's session. `SameSite=Lax` keeps the cookie off cross-site POSTs. (Separate, unflagged: there is no rate limiting.) |
 | `SKY-D230 src/app/locale/route.ts:21` | The open redirect was real and is fixed. The rule matches any `redirect()` with a variable. The target is now resolved and its origin compared with the site's; `/\x`, tab, newline, `//x` and absolute URLs all land on `/` (tested against the running server). |
-| `SKY-L007 drill/listening.ts:30`, `drill/useListening.ts:98` | Both catch blocks carry a comment explaining why ignoring the error is safe, which is what the rule asks for: a private window refusing storage, and a live listening pass that missed. Skylos does not read the comment. |
+| `SKY-L007 drill/listening.ts:30`, `drill/useListening.ts:163` | Both catch blocks carry a comment explaining why ignoring the error is safe, which is what the rule asks for: a private window refusing storage, and a live listening pass that missed. Skylos does not read the comment. |
 | `SKY-Q402 scripts/fetch-quran.mjs:72` | Pagination: each page request depends on the previous one. |
 | `SKY-Q402 scripts/fetch-quran.mjs:274, 276` | Sequential on purpose: one surah at a time, politely, with per-surah progress. |
 | `SKY-Q402 scripts/fetch-quran.mjs:194` | Reads 114 small local files once in a one-off dev script. Not worth parallelising. |
@@ -61,11 +62,11 @@ that reads better in one place.
 | `SKY-C304 DrillClient.tsx:22` (110 lines) | Split in stage 9: the session moved to `drill/useDrillSession.ts` and the sections to `drill/`. Complexity 33 -> under the limit, and it no longer carries `SKY-Q301`. What is left is a page of layout. |
 | `SKY-C304 drill/useDrillSession.ts:61` (144 lines) | The round's state machine: five actions, each short, over one set of state. Splitting it further would spread one transition across files to satisfy a line count. Its complexity is under the limit. |
 | `SKY-C304 ListenCheck.tsx:21` (93 lines) | Split in stage 9: the listening lifecycle moved to `drill/useListening.ts` and the pure decisions to `drill/listening.ts`. Complexity 26 -> under the limit, and it no longer carries `SKY-Q301`. What is left is one arm of markup per stage. |
-| `SKY-C304 drill/useListening.ts:120` (111 lines) | Consent, the model download, the microphone and the finish, in the order they happen. The live-pass loop is its own hook in the same file and is under both limits. Its complexity is under the limit. |
+| `SKY-Q301` + `SKY-C304` `drill/useListening.ts:185` (11, 136 lines) | Consent, the model download, the microphone permission, opening the microphone and the finish, in the order they happen. Stage 9 brought this from 26 to 7; asking for the permission as the reader agrees -- so the browser never asks twice -- put it back to 11. The live-pass loop, the load, and both microphone failures are already helpers beside it; what is left is the stage machine itself, and splitting `finish` out of it would mean passing five shared refs as arguments. One over the limit is the honest price of the feature. |
 | `SKY-C304 ScopePicker.tsx:29` (77 lines) | Split in stage 9: the two controls moved to `scope/ScopeChoices.tsx`, which draws one kind of tile for both, and the surah search is a pure function in `scope/matchSurahs.ts` with its own tests. Complexity 12 -> under the limit, and it no longer carries `SKY-Q301`. What is left is the tab bar, the selection line and the sticky Start. |
 | `SKY-Q301` + `SKY-C304` `score.ts:79` `align` (13, 68 lines) | A Needleman-Wunsch alignment: a scoring loop and a traceback, and the branches are the algorithm. Splitting it would hide it. Covered in full by `npm run check` and the unit tests. |
 | `SKY-C304` `app/page.tsx:15`, `results/[sessionId]/page.tsx:22` | Page components, mostly markup. |
-| `SKY-C304` `listener.ts:131` `startRecording` (87 lines) | The AudioWorklet path and the ScriptProcessor fallback for browsers without it. The fallback has no automated coverage -- the listener end-to-end test exercises whichever path Chromium takes -- and splitting untested code to satisfy a line count is the wrong trade. Worth revisiting if the fallback ever gets a test. |
+| `SKY-C304` `listener.ts:160` `startRecording` (87 lines) | The AudioWorklet path and the ScriptProcessor fallback for browsers without it. The fallback has no automated coverage -- the listener end-to-end test exercises whichever path Chromium takes -- and splitting untested code to satisfy a line count is the wrong trade. Worth revisiting if the fallback ever gets a test. |
 | `SKY-C304` `Rosette.tsx:23`, `store.ts:68`, `drill.ts:154`, `drill.ts:242`, `fetch-quran.mjs:186`, `eval.mjs:149` | Over the 50-line default (SVG markup, SQL DDL, dev scripts). The threshold may be the better thing to tune. |
 | `SKY-R103 pyproject.toml:7` | No `[tool.skylos.gate]` policy. The gate this project actually uses is `scripts/skylos-baseline.mjs check` in CI, which fails on any new finding -- stricter than the thresholds `[tool.skylos.gate]` would set. Adding the section to quiet the rule would be configuration written for the checker, not for the project. |
 | `SKY-R104` (repo root) | No pre-commit policy file. The same checks run through `npm run verify` and on every pull request; a hook file would be a second place to keep them in step. Declined deliberately, not overlooked. |

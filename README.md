@@ -66,7 +66,7 @@ No test reaches the network: `verify`'s one networked step is the dependency aud
 asks npm about advisories. The listener suite fetches two pinned things the first time — a
 recitation, verified by SHA-256, and the speech model at a pinned revision — into `.cache/`,
 which is gitignored. Neither is committed: the recording is someone else's work, and the
-model and its runtime files come to about 220MB.
+model and its runtime files come to about 70MB.
 
 Every push and pull request runs **Fast checks** (the `verify` list) and **Browser tests**.
 The listener workflow runs nightly and on demand instead, since it is slow and needs that
@@ -122,8 +122,9 @@ The third needs no microphone and no download, and it is how the app works for a
 would rather not be recorded at all.
 
 **Reciting out loud happens on the device.** With the reader's consent — asked for before
-anything is downloaded — a Whisper fine-tune for Quranic Arabic is fetched once and run in
-the browser. It exists to answer one question: which of the expected words came back. The
+anything is downloaded — a Whisper-tiny fine-tune for Quranic Arabic (about 70MB) is fetched
+once and run in the browser. The browser asks for the microphone at that same moment, once,
+and remembers it. It exists to answer one question: which of the expected words came back. The
 audio is never uploaded or stored, the transcript is graded and discarded rather than shown,
 and the result only pre-selects a self-grade that the reader can overrule. It does not judge
 tajweed or pronunciation, and it never generates text of its own.

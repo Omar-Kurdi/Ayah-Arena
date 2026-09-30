@@ -1,6 +1,7 @@
 /**
- * The on-device listener: Tarteel's Quran fine-tune of Whisper (Apache-2.0),
- * run by transformers.js in a worker so decoding never freezes the page.
+ * The on-device listener: Tarteel's Quran fine-tune of Whisper tiny
+ * (Apache-2.0), run by transformers.js in a worker so decoding never freezes
+ * the page.
  *
  * It is only ever asked what words it heard. It is never shown the expected
  * ayah -- that would bias it toward "correct" -- and its output is used only
@@ -14,10 +15,16 @@ import { env, pipeline, type AutomaticSpeechRecognitionPipeline } from '@hugging
 // so the download happens once. There is no local copy to look for first.
 env.allowLocalModels = false;
 
-const MODEL = 'eventhorizon0/tarteel-ai-onnx-whisper-base-ar-quran';
-// The int8 encoder in this conversion uses an operator onnxruntime cannot
-// run, so the encoder stays fp32 and the decoder is 4-bit.
-const DTYPE = { encoder_model: 'fp32', decoder_model_merged: 'q4' } as const;
+const MODEL = 'Sharjeelbaig/whisper-tiny-ar-quran-onnx';
+// The quantized encoder in this conversion uses ConvInteger, an operator
+// onnxruntime cannot run, so the encoder stays fp32 and the decoder is the
+// 8-bit one: about 70MB together, against 200MB for the base model, for the
+// same score on every clip in scripts/asr-spike/results.json.
+const DTYPE = { encoder_model: 'fp32', decoder_model_merged: 'q8' } as const;
+
+// This conversion carries a multilingual generation config, so without being
+// told it decodes as English. It only ever hears Quranic Arabic.
+const DECODE = { language: 'ar', task: 'transcribe' } as const;
 
 // Whisper hears 30 seconds at a time; longer ayat are heard in overlapping
 // windows and stitched.
@@ -87,7 +94,10 @@ self.onmessage = async (event: MessageEvent<ToWorker>) => {
   try {
     const recognise = await load();
     const long = msg.audio.length > WINDOW_SAMPLES;
-    const out = await recognise(msg.audio, long ? { chunk_length_s: 30, stride_length_s: 5 } : {});
+    const out = await recognise(msg.audio, {
+      ...DECODE,
+      ...(long ? { chunk_length_s: 30, stride_length_s: 5 } : {}),
+    });
     const text = Array.isArray(out) ? out.map((o) => o.text).join(' ') : out.text;
     post({ type: 'text', id: msg.id, text });
   } catch (err) {

@@ -167,17 +167,21 @@ test.describe('when the microphone is refused', () => {
   // a reader who has blocked the site.
   test.use({ permissions: [] });
 
-  test('says so, and leaves a way to finish the round', async ({ page, context }) => {
+  test('says so at once, and leaves a way to finish the round', async ({ page, context }) => {
     await context.clearPermissions();
     await useLanguage(page, 'en');
     await drillAskingForTheFixture(page);
-    await prepareListener(page);
 
-    await page.getByRole('button', { name: 'Start reciting' }).click();
+    // Agreeing is where the microphone is asked for, so this is where a
+    // refusal lands -- and it lands without waiting for the download, which
+    // is the point of asking early.
+    await page.getByRole('button', { name: 'Download and listen' }).click();
+    await expect(page.getByText(/microphone/i)).toBeVisible({ timeout: 30_000 });
 
-    // Not a spinner that never ends: an explanation, and the reveal path.
-    await expect(page.getByText(/microphone/i)).toBeVisible();
+    // Not a spinner that never ends, and no invitation to recite into a
+    // microphone that will not open.
     await expect(page.getByRole('status')).toHaveCount(0);
+    await expect(page.getByRole('button', { name: 'Start reciting' })).toHaveCount(0);
 
     await page.getByRole('button', { name: 'Reveal the ayah' }).click();
     await page.getByRole('button', { name: /Got it/ }).click();
