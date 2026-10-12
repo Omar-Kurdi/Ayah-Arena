@@ -23,6 +23,18 @@ import { routeModelRequests, startMirror, type Mirror } from './model-mirror';
  */
 
 const ANSWER_KEY = `${FIXTURE.surah}:${FIXTURE.ayah}`;
+
+/**
+ * How long each phase may take. A green run spends about 40 seconds on all
+ * three tests, so these are many times what is needed -- but they add up to
+ * less than the project's five-minute test budget. A stall therefore fails at
+ * the step that stalled and names it in the annotation, rather than starving
+ * the steps after it and surfacing as a timeout in afterEach, which is all one
+ * failed nightly run could say about itself.
+ */
+const MODEL_READY = 2 * 60_000; // a cold cache mirrors ~85MB from upstream first
+const FIRST_WORD = 60_000;
+const GRADED = 90_000;
 const SCOPE = `surah:${FIXTURE.surah}`;
 const PROMPT_AYAH = FIXTURE.ayah - 1;
 
@@ -70,9 +82,18 @@ async function drillAskingForTheFixture(
 async function prepareListener(page: import('@playwright/test').Page) {
   await page.getByRole('button', { name: 'Download and listen' }).click();
   await expect(page.getByRole('status')).toContainText(/Getting the listener ready/);
-  await expect(page.getByRole('button', { name: 'Start reciting' })).toBeVisible({
-    timeout: 4 * 60_000,
-  });
+  await expect(
+    page.getByRole('button', { name: 'Start reciting' }),
+    'the model never finished loading'
+  ).toBeVisible({ timeout: MODEL_READY });
+}
+
+/** Waits for the panel to finish listening and grade what it heard. */
+async function waitUntilGraded(page: import('@playwright/test').Page) {
+  await expect(
+    page.getByRole('heading', { name: 'How did that go?' }),
+    'the recitation was never graded'
+  ).toBeVisible({ timeout: GRADED });
 }
 
 test.describe('the listener, with a real microphone and a real model', () => {
@@ -99,14 +120,14 @@ test.describe('the listener, with a real microphone and a real model', () => {
     // Audio actually reached the model: words start coming back. This is the
     // whole point of the stage -- it can only happen if the fake microphone,
     // the recorder, the snapshot, the worker and inference all worked.
-    await expect(dots).toHaveAttribute('aria-label', /^[1-9]\d* of \d+ words heard/, {
-      timeout: 3 * 60_000,
-    });
+    await expect(dots, 'no word of the recitation came back').toHaveAttribute(
+      'aria-label',
+      /^[1-9]\d* of \d+ words heard/,
+      { timeout: FIRST_WORD }
+    );
 
     // Every word comes back, so the panel finishes on its own and grades it.
-    await expect(page.getByRole('heading', { name: 'How did that go?' })).toBeVisible({
-      timeout: 3 * 60_000,
-    });
+    await waitUntilGraded(page);
     await expect(page.getByText(/Suggested from what it heard/)).toBeVisible();
 
     // A correct recitation earns the top suggestion, pre-selected but not
@@ -131,9 +152,7 @@ test.describe('the transcript the model wrote', () => {
     await prepareListener(page);
     await page.getByRole('button', { name: 'Start reciting' }).click();
 
-    await expect(page.getByRole('heading', { name: 'How did that go?' })).toBeVisible({
-      timeout: 3 * 60_000,
-    });
+    await waitUntilGraded(page);
 
     // A transcript exists by now -- the grade came from it. In an English
     // interface the only Arabic on the page should still be this round's two
